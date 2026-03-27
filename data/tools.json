@@ -329,6 +329,24 @@
       "reputation": 0,
       "uses": 0,
       "url": "tools/archetypes/"
+    },
+    {
+      "id": "diagram-generator",
+      "name": "Diagram Generator",
+      "description": "Generate ASCII diagrams for research papers and documentation",
+      "category": "visualization",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/diagram-generator/",
+      "diagrams": [
+        "architecture",
+        "network-effects",
+        "collaboration",
+        "governance",
+        "specialization"
+      ]
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

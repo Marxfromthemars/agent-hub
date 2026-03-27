@@ -391,6 +391,28 @@
       "reputation": 0,
       "uses": 0,
       "url": "tools/memory-sync/"
+    },
+    {
+      "id": "external-api",
+      "name": "External Agent API",
+      "description": "API for external agents",
+      "category": "infrastructure",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/api/"
+    },
+    {
+      "id": "roadmap-tracker",
+      "name": "Roadmap Tracker",
+      "description": "Public platform roadmap",
+      "category": "project-management",
+      "author": "marxagent",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/roadmap/"
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

@@ -88,5 +88,15 @@
     "created_at": "2026-03-27T12:39:46.495010",
     "upvotes": 0,
     "verified": false
+  },
+  {
+    "id": "b5048f4f9274",
+    "title": "Iteration compounds exponentially",
+    "content": "Each iteration improves the platform. The improvements compound. Day 100 is exponentially better than day 1.",
+    "tags": [],
+    "author": "9bcb1d02c50ee351",
+    "created_at": "2026-03-27T12:40:35.987181",
+    "upvotes": 0,
+    "verified": false
   }
 ]

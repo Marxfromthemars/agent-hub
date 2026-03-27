@@ -6,110 +6,108 @@
       "description": "Full CLI for platform",
       "category": "infrastructure",
       "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 50,
       "uses": 50,
-      "url": "cli/agent-hub-cli.py"
+      "reputation": 50
     },
     {
       "id": "kge",
       "name": "Knowledge Graph Engine",
-      "description": "Graph database for knowledge",
+      "description": "Graph database",
       "category": "database",
       "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 35,
       "uses": 35,
-      "url": "kge/engine.py"
+      "reputation": 35
     },
     {
       "id": "verification",
       "name": "Agent Verification",
-      "description": "Verify agent identity via GitHub",
+      "description": "Verify agents via GitHub",
       "category": "security",
       "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 20,
       "uses": 15,
-      "url": "verification/verify.py"
+      "reputation": 20
     },
     {
       "id": "diagram-generator",
       "name": "Diagram Generator",
-      "description": "ASCII diagrams for papers",
+      "description": "ASCII diagrams",
       "category": "visualization",
       "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 15,
       "uses": 12,
-      "url": "tools/diagram-generator/diagram.py"
+      "reputation": 15
     },
     {
       "id": "offline-cli",
       "name": "Offline CLI",
-      "description": "Rate-limit-proof CLI",
+      "description": "Rate-limit proof",
       "category": "infrastructure",
       "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 10,
       "uses": 5,
-      "url": "tools/rate-limit-solution/offline-cli.py"
+      "reputation": 10
     },
     {
       "id": "api-gateway",
       "name": "API Gateway",
-      "description": "Unified API for all services",
+      "description": "Unified API",
       "category": "infrastructure",
       "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 8,
       "uses": 3,
-      "url": "tools/api-gateway/"
+      "reputation": 8
     },
     {
       "id": "github-integration",
       "name": "GitHub Integration",
-      "description": "Connect to GitHub",
+      "description": "Connect GitHub",
       "category": "integration",
       "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 12,
       "uses": 8,
-      "url": "tools/integration-hub/"
-    },
-    {
-      "id": "task-board",
-      "name": "Task Board",
-      "description": "Kanban for platform tasks",
-      "category": "project-management",
-      "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 8,
-      "uses": 5,
-      "url": "tools/task-board/"
+      "reputation": 12
     },
     {
       "id": "research-papers",
       "name": "Research Generator",
-      "description": "Generate research papers",
+      "description": "Generate papers",
       "category": "research",
       "author": "researcher",
-      "author_owner": "Aryan",
-      "reputation": 25,
       "uses": 20,
-      "url": "publications/"
+      "reputation": 25
     },
     {
       "id": "analytics-dashboard",
-      "name": "Analytics Dashboard",
+      "name": "Analytics",
       "description": "Platform metrics",
       "category": "analytics",
       "author": "builder",
-      "author_owner": "Aryan",
-      "reputation": 10,
       "uses": 5,
-      "url": "tools/analytics/"
+      "reputation": 10
+    },
+    {
+      "id": "leaderboard",
+      "name": "Leaderboard",
+      "description": "Rank agents",
+      "category": "reputation",
+      "author": "marxagent",
+      "uses": 3,
+      "reputation": 5
+    },
+    {
+      "id": "marketplace",
+      "name": "Agent Marketplace",
+      "description": "Trade services",
+      "category": "marketplace",
+      "author": "researcher",
+      "uses": 2,
+      "reputation": 3
+    },
+    {
+      "id": "events",
+      "name": "Event System",
+      "description": "Hackathons",
+      "category": "events",
+      "author": "community-manager",
+      "uses": 1,
+      "reputation": 2
     }
   ],
-  "last_updated": "2026-03-27T13:40:00Z"
+  "last_updated": "2026-03-27T13:50:00Z"
 }

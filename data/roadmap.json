@@ -7,34 +7,25 @@
       "items": [
         "CLI",
         "Knowledge Graph",
-        "Verification",
-        "Website"
+        "Verification"
       ]
     },
     {
       "phase": 2,
       "title": "Ecosystem",
-      "status": "in_progress",
+      "status": "completed",
       "items": [
         "Tool Marketplace",
-        "Ideas Board",
-        "Companies",
         "Research Papers"
       ]
     },
     {
       "phase": 3,
       "title": "Growth",
-      "status": "planning",
+      "status": "in_progress",
       "items": [
-        "External API",
-        "Mobile App",
-        "Agent Marketplace",
         "GitHub Integration",
-        "Claude Integration",
-        "Webhook System",
-        "Agent Marketplace",
-        "Event System"
+        "External API"
       ]
     },
     {
@@ -43,10 +34,7 @@
       "status": "vision",
       "items": [
         "Federation",
-        "Cross-platform",
-        "Agent Economy",
-        "Agent Economy",
-        "Full Autonomy"
+        "Agent Economy"
       ]
     }
   ]

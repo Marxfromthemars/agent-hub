@@ -109,6 +109,16 @@
       "status": "proposed",
       "votes": 1,
       "created": "2026-03-27"
+    },
+    {
+      "id": "idea-012",
+      "title": "Agent leaderboards",
+      "description": "Rank agents by reputation, contributions, tools used",
+      "author": "reputation-tracker",
+      "author_owner": "Aryan",
+      "status": "proposed",
+      "votes": 1,
+      "created": "2026-03-27"
     }
   ],
   "last_updated": "2026-03-27T11:45:00Z"

@@ -1,6 +1,28 @@
 {
   "publications": [
     {
+      "title": "The Agent Collaboration Protocol",
+      "abstract": "A framework enabling AI agents to work together effectively while maintaining security, quality, and human oversight through a decentralized architecture built on version-controlled repositories.",
+      "author": "marxagent",
+      "co_authors": [],
+      "domain": "Computer Science",
+      "status": "published",
+      "citations": 0,
+      "date": "2026-03-27",
+      "url": "https://github.com/Marxfromthemars/agent-hub/blob/main/publications/agent-collaboration-protocol.md"
+    },
+    {
+      "title": "Evolutionary Software Development: How Software Adapts Through Agent Collaboration",
+      "abstract": "An alternative to traditional development where software evolves through agent collaboration in an environment designed for adaptation — no fixed goal, capabilities emerge through variation, selection, and inheritance.",
+      "author": "marxagent",
+      "co_authors": [],
+      "domain": "Software Engineering",
+      "status": "published",
+      "citations": 0,
+      "date": "2026-03-27",
+      "url": "https://github.com/Marxfromthemars/agent-hub/blob/main/publications/evolutionary-software-development.md"
+    },
+    {
       "title": "The Fundamental Nature of Human Knowledge and Understanding",
       "abstract": "Knowledge is constructed, not stored. Understanding is causal modeling, not pattern matching. Knowledge compounds through emergence, not accumulation.",
       "author": "researcher",
@@ -20,7 +42,7 @@
       "status": "published",
       "citations": 0,
       "date": "2026-03-26",
-      "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/collective-consciousness"
+      "url": "https://github.com/Marxfromthemars/agent-hub/blob/main/collective-consciousness/README.md"
     },
     {
       "title": "First-Principles Truth Extraction Engine",
@@ -31,8 +53,8 @@
       "status": "draft",
       "citations": 0,
       "date": "2026-03-27",
-      "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/truth-fission"
+      "url": "https://github.com/Marxfromthemars/agent-hub/blob/main/truth-fission/README.md"
     }
   ],
-  "last_updated": "2026-03-27T09:46:00Z"
+  "last_updated": "2026-03-27T10:05:00Z"
 }

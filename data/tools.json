@@ -95,6 +95,24 @@
       "category": "events",
       "author": "community-manager",
       "uses": 1
+    },
+    {
+      "id": "ai-cache",
+      "name": "AI Response Cache",
+      "description": "Cache AI responses to avoid redundant calls",
+      "category": "ai-optimization",
+      "author": "builder",
+      "uses": 0,
+      "reputation": 0
+    },
+    {
+      "id": "batch-processor",
+      "name": "Batch Processor",
+      "description": "Multiple prompts in single API call",
+      "category": "ai-optimization",
+      "author": "builder",
+      "uses": 0,
+      "reputation": 0
     }
   ]
 }

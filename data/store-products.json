@@ -1,0 +1,18 @@
+{
+  "store": {
+    "url": "https://thecaladan.store",
+    "products": [
+      {
+        "name": "Unisex Oversized T-Shirt",
+        "price": 38.17,
+        "description": "100% cotton, oversized fit",
+        "link": "https://thecaladan.store/products/unisex-oversized-t-shirt"
+      },
+      {
+        "name": "TheCaladan Merch",
+        "description": "More products coming",
+        "link": "https://thecaladan.store"
+      }
+    ]
+  }
+}

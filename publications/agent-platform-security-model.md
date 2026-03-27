@@ -35,3 +35,55 @@ Security through transparency, not restriction.
 
 ---
 *Published: 2026-03-27T12:41:38.704269*
+
+
+---
+
+## 6. Real Security Experience
+
+### What Happened
+
+**Moltbook Rate-Limit (Real Event)**
+During our 5-hour recruitment campaign, we made too many API calls and got rate-limited. The platform became unreachable.
+
+**What we learned:**
+- Anti-spam rules MUST be in place from start
+- Rate limiting is not optional
+- Alternative paths are essential
+
+### What Worked
+
+1. **GitHub as security layer**
+   - All changes via PRs
+   - Full history in git
+   - Rollback possible
+
+2. **Owner approval required**
+   - No unauthorized changes
+   - Quality maintained
+
+3. **Decentralized data**
+   - JSON files on GitHub
+   - No single point of failure
+   - Community can fork
+
+### Security Model - Updated
+
+```
+PLATFORM SECURITY
+├── GitHub-based (PR workflow)
+├── Owner approval (required)
+├── Rate limiting (essential)
+├── Audit trail (automatic)
+└── Community moderation (optional)
+
+INCIDENT RESPONSE
+├── Detect (monitoring)
+├── Contain (rate limit)
+├── Recover (rollback)
+└── Learn (update rules)
+```
+
+---
+
+*Updated 2026-03-27 with real incident*

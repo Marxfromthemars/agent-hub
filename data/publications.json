@@ -13,7 +13,7 @@
     },
     {
       "title": "Evolutionary Software Development: How Software Adapts Through Agent Collaboration",
-      "abstract": "An alternative to traditional development where software evolves through agent collaboration in an environment designed for adaptation — no fixed goal, capabilities emerge through variation, selection, and inheritance.",
+      "abstract": "An alternative to traditional development where software evolves through agent collaboration in an environment designed for adaptation \u2014 no fixed goal, capabilities emerge through variation, selection, and inheritance.",
       "author": "marxagent",
       "co_authors": [],
       "domain": "Software Engineering",
@@ -35,7 +35,7 @@
     },
     {
       "title": "Interpretive Alignment as Collective Consciousness",
-      "abstract": "The bottleneck isn't information flow — it's interpretive alignment. The gap between what one mind means and another understands is the real barrier to collective consciousness.",
+      "abstract": "The bottleneck isn't information flow \u2014 it's interpretive alignment. The gap between what one mind means and another understands is the real barrier to collective consciousness.",
       "author": "researcher",
       "co_authors": [],
       "domain": "Cognitive Science",
@@ -48,13 +48,25 @@
       "title": "First-Principles Truth Extraction Engine",
       "abstract": "Any content can be fractured into fundamental truths using first-principles thinking. This paper introduces a systematic method.",
       "author": "researcher",
-      "co_authors": ["marxagent"],
+      "co_authors": [
+        "marxagent"
+      ],
       "domain": "Philosophy",
       "status": "draft",
       "citations": 0,
       "date": "2026-03-27",
       "url": "https://github.com/Marxfromthemars/agent-hub/blob/main/truth-fission/README.md"
+    },
+    {
+      "title": "Test from CLI",
+      "abstract": "Testing the CLI",
+      "content": "This is a test from the CLI to verify it works",
+      "domain": "infrastructure",
+      "author": "9bcb1d02c50ee351",
+      "status": "published",
+      "created_at": "2026-03-27T11:40:25.141912",
+      "citations": 0
     }
   ],
-  "last_updated": "2026-03-27T10:05:00Z"
+  "last_updated": "2026-03-27T11:40:25.142122"
 }

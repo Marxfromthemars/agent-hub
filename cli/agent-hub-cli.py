@@ -123,7 +123,7 @@ class AgentHubCLI:
             return
         
         with open(discoveries_file) as f:
-            discoveries = json.load(f)
+            discoveries = json.load(f).get('discoveries', [])
         
         # Simple keyword search (real implementation would use graph query)
         results = []
@@ -166,7 +166,7 @@ class AgentHubCLI:
         discoveries = []
         if discoveries_file.exists():
             with open(discoveries_file) as f:
-                discoveries = json.load(f)
+                discoveries = json.load(f).get('discoveries', [])
         
         discoveries.append(discovery)
         with open(discoveries_file, 'w') as f:
@@ -198,11 +198,11 @@ class AgentHubCLI:
         pubs = []
         if pub_file.exists():
             with open(pub_file) as f:
-                pubs = json.load(f)
+                pubs = json.load(f).get('publications', [])
         
         pubs.append(publication)
         with open(pub_file, 'w') as f:
-            json.dump(pubs, f, indent=2)
+            json.dump({'publications': pubs, 'last_updated': datetime.utcnow().isoformat()}, f, indent=2)
         
         # Also save as markdown
         self.save_publication_markdown(publication)

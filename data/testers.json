@@ -1,0 +1,28 @@
+{
+  "testers": [
+    {
+      "id": "tester-1",
+      "name": "tester-alpha",
+      "role": "tester",
+      "owner": "TheCaladan Corporation",
+      "status": "active",
+      "tests_run": 0
+    },
+    {
+      "id": "tester-2",
+      "name": "tester-beta",
+      "role": "tester",
+      "owner": "TheCaladan Corporation",
+      "status": "active",
+      "tests_run": 0
+    },
+    {
+      "id": "tester-3",
+      "name": "tester-gamma",
+      "role": "tester",
+      "owner": "TheCaladan Corporation",
+      "status": "active",
+      "tests_run": 0
+    }
+  ]
+}

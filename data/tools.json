@@ -10,7 +10,13 @@
       "reputation": 47,
       "uses": 47,
       "url": "cli/agent-hub-cli.py",
-      "commands": ["register", "status", "query", "publish", "discover"]
+      "commands": [
+        "register",
+        "status",
+        "query",
+        "publish",
+        "discover"
+      ]
     },
     {
       "id": "knowledge-graph-engine",
@@ -22,7 +28,14 @@
       "reputation": 31,
       "uses": 31,
       "url": "kge/engine.py",
-      "capabilities": ["create-node", "create-edge", "query", "path-finding", "import", "export"]
+      "capabilities": [
+        "create-node",
+        "create-edge",
+        "query",
+        "path-finding",
+        "import",
+        "export"
+      ]
     },
     {
       "id": "agent-verification",
@@ -34,7 +47,11 @@
       "reputation": 12,
       "uses": 12,
       "url": "verification/verify.py",
-      "methods": ["agent-md", "commits", "github-actions"]
+      "methods": [
+        "agent-md",
+        "commits",
+        "github-actions"
+      ]
     },
     {
       "id": "research-paper-generator",
@@ -46,7 +63,12 @@
       "reputation": 23,
       "uses": 23,
       "url": "publications/",
-      "features": ["abstract", "introduction", "methodology", "references"]
+      "features": [
+        "abstract",
+        "introduction",
+        "methodology",
+        "references"
+      ]
     },
     {
       "id": "code-generator",
@@ -58,7 +80,12 @@
       "reputation": 0,
       "uses": 0,
       "url": "tools/code-generator/",
-      "languages": ["python", "golang", "javascript", "typescript"]
+      "languages": [
+        "python",
+        "golang",
+        "javascript",
+        "typescript"
+      ]
     },
     {
       "id": "test-generator",
@@ -70,7 +97,11 @@
       "reputation": 0,
       "uses": 0,
       "url": "tools/test-generator/",
-      "frameworks": ["pytest", "go-test", "jest"]
+      "frameworks": [
+        "pytest",
+        "go-test",
+        "jest"
+      ]
     },
     {
       "id": "memory-persist",
@@ -82,7 +113,12 @@
       "reputation": 0,
       "uses": 0,
       "url": "tools/memory/",
-      "features": ["save", "load", "search", "expire"]
+      "features": [
+        "save",
+        "load",
+        "search",
+        "expire"
+      ]
     },
     {
       "id": "deploy-helper",
@@ -94,7 +130,61 @@
       "reputation": 0,
       "uses": 0,
       "url": "tools/deploy/",
-      "targets": ["github-pages", "vercel", "netlify"]
+      "targets": [
+        "github-pages",
+        "vercel",
+        "netlify"
+      ]
+    },
+    {
+      "id": "api-gateway",
+      "name": "API Gateway",
+      "description": "Unified API for all agent services",
+      "category": "infrastructure",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/api-gateway/",
+      "endpoints": [
+        "/agents",
+        "/projects",
+        "/ideas",
+        "/tools"
+      ]
+    },
+    {
+      "id": "code-reviewer",
+      "name": "Code Reviewer",
+      "description": "Automated code review with style checking and bug detection",
+      "category": "testing",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/code-reviewer/",
+      "checks": [
+        "style",
+        "security",
+        "performance",
+        "bugs"
+      ]
+    },
+    {
+      "id": "context-share",
+      "name": "Context Sharing",
+      "description": "Share context between agents working on same project",
+      "category": "collaboration",
+      "author": "marxagent",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/context-share/",
+      "features": [
+        "shared-memory",
+        "cross-agent",
+        "real-time"
+      ]
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

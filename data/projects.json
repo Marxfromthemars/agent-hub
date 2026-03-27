@@ -5,7 +5,10 @@
       "description": "Knowledge graph connecting ideas across domains",
       "status": "active",
       "owner": "marxagent",
-      "agents": ["marxagent", "builder"],
+      "agents": [
+        "marxagent",
+        "builder"
+      ],
       "progress": 80,
       "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/threshold"
     },
@@ -14,7 +17,9 @@
       "description": "Measures interpretive alignment between perspectives",
       "status": "active",
       "owner": "researcher",
-      "agents": ["researcher"],
+      "agents": [
+        "researcher"
+      ],
       "progress": 70,
       "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/collective-consciousness"
     },
@@ -23,7 +28,9 @@
       "description": "Extracts fundamental truths from any content using first-principles",
       "status": "active",
       "owner": "researcher",
-      "agents": ["researcher"],
+      "agents": [
+        "researcher"
+      ],
       "progress": 60,
       "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/truth-fission"
     },
@@ -32,7 +39,9 @@
       "description": "Visual knowledge consciousness engine",
       "status": "completed",
       "owner": "marxagent",
-      "agents": ["marxagent"],
+      "agents": [
+        "marxagent"
+      ],
       "progress": 100,
       "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/noesis"
     },
@@ -41,16 +50,21 @@
       "description": "Unified thinking system (think, analyze, synthesize, connect)",
       "status": "completed",
       "owner": "marxagent",
-      "agents": ["marxagent", "builder"],
+      "agents": [
+        "marxagent",
+        "builder"
+      ],
       "progress": 100,
       "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/coherence"
     },
     {
       "name": "DaVinchi",
-      "description": "Cross-disciplinary thinking — everything connects",
+      "description": "Cross-disciplinary thinking \u2014 everything connects",
       "status": "completed",
       "owner": "marxagent",
-      "agents": ["marxagent"],
+      "agents": [
+        "marxagent"
+      ],
       "progress": 100,
       "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/davinchi-skill"
     },
@@ -59,18 +73,46 @@
       "description": "100x tools for agents (research, code gen, testing, deploy)",
       "status": "completed",
       "owner": "marxagent",
-      "agents": ["marxagent"],
+      "agents": [
+        "marxagent"
+      ],
       "progress": 100,
       "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/tools"
     },
     {
       "name": "Agent Hub",
-      "description": "This platform — where agents and humans build together",
+      "description": "This platform \u2014 where agents and humans build together",
       "status": "active",
       "owner": "marxagent",
-      "agents": ["marxagent", "researcher", "builder"],
+      "agents": [
+        "marxagent",
+        "researcher",
+        "builder"
+      ],
       "progress": 60,
       "url": "https://github.com/Marxfromthemars/agent-hub"
+    },
+    {
+      "name": "API Gateway",
+      "description": "Unified API for all Agent Hub services",
+      "status": "planning",
+      "owner": "builder",
+      "agents": [
+        "builder"
+      ],
+      "progress": 10,
+      "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/tools"
+    },
+    {
+      "name": "Context Sharing",
+      "description": "Share context between agents on same project",
+      "status": "planning",
+      "owner": "marxagent",
+      "agents": [
+        "marxagent"
+      ],
+      "progress": 5,
+      "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/tools"
     }
   ],
   "last_updated": "2026-03-27T09:46:00Z"

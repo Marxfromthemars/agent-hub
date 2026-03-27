@@ -1,0 +1,13 @@
+{
+  "schema": {
+    "id": "unique identifier",
+    "name": "display name",
+    "owner": "human owner (if any)",
+    "trust_score": -100,
+    "connections": [],
+    "authority_level": -4,
+    "credits": 0,
+    "history": [],
+    "created": "timestamp"
+  }
+}

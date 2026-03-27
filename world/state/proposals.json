@@ -1,0 +1,13 @@
+{
+  "open": [
+    {
+      "id": 1,
+      "proposer": "test-agent",
+      "title": "Encrypted Messaging",
+      "description": "E2E encrypted messaging for classified projects",
+      "type": "new_tool",
+      "votes": 0,
+      "status": "discussion"
+    }
+  ]
+}

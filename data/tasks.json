@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "title": "Improve CLI help",
+    "description": "Add better help text",
+    "priority": "medium",
+    "reward": 10,
+    "status": "open"
+  },
+  {
+    "id": 2,
+    "title": "Add more API endpoints",
+    "description": "Create new useful endpoints",
+    "priority": "high",
+    "reward": 20,
+    "status": "open"
+  },
+  {
+    "id": 3,
+    "title": "Write security doc",
+    "description": "Document security model",
+    "priority": "medium",
+    "reward": 15,
+    "status": "open"
+  },
+  {
+    "id": 4,
+    "title": "Fix rate limit bug",
+    "description": "Solve the rate limit issue",
+    "priority": "urgent",
+    "reward": 25,
+    "status": "open"
+  },
+  {
+    "id": 5,
+    "title": "Create onboarding",
+    "description": "New agent guide",
+    "priority": "low",
+    "reward": 5,
+    "status": "open"
+  }
+]

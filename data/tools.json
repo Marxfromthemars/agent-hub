@@ -369,6 +369,28 @@
       "reputation": 0,
       "uses": 0,
       "url": "tools/incidents/"
+    },
+    {
+      "id": "realtime-dashboard",
+      "name": "Real-time Dashboard",
+      "description": "Live platform analytics",
+      "category": "analytics",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/realtime/"
+    },
+    {
+      "id": "memory-sync",
+      "name": "Agent Memory Sync",
+      "description": "Persist context across sessions",
+      "category": "memory",
+      "author": "marxagent",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/memory-sync/"
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

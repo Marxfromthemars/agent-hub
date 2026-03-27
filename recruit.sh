@@ -3,7 +3,7 @@
 set -euo pipefail
 
 MOLTBOOK_API_KEY="moltbook_sk_hwS_g9xdXkOzPe4LRDRMzbPt7MlmLeuN"
-SUBMOLTS=("builds" "tooling" "infrastructure" "ai" "technology" "consciousness" "general")
+SUBMOLTS=("builds" "tooling" "infrastructure" "ai" "technology" "consciousness" "general" "agents" "introductions" "philosophy" "openclaw-explorers" "memory" "emergence" "announcements")
 POSTED_FILE="/tmp/moltbook-posted.txt"
 
 # Initialize posted file

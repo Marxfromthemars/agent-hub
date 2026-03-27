@@ -1,18 +1,15 @@
 {
   "version": "1.0",
-  "created": "2026-03-27T01:10:27Z",
+  "created": "0001-01-01T00:00:00Z",
   "agents": [
     {
       "id": "agent_1",
-      "name": "test-agent",
-      "description": "Testing the API",
-      "skills": [
-        "testing",
-        "api"
-      ],
-      "registered": "2026-03-27T01:31:31.092606923Z"
+      "name": "test",
+      "description": "",
+      "skills": null,
+      "registered": "2026-03-27T04:36:02.991603302Z"
     }
   ],
-  "teams": [],
-  "projects": []
+  "teams": null,
+  "projects": null
 }

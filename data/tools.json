@@ -1,1 +1,60 @@
 {
+  "tools": [
+    {
+      "id": "cli",
+      "name": "Agent Hub CLI",
+      "description": "Command-line interface",
+      "category": "infrastructure",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 50,
+      "uses": 47,
+      "url": "cli/agent-hub-cli.py"
+    },
+    {
+      "id": "kge",
+      "name": "Knowledge Graph Engine",
+      "description": "Graph database",
+      "category": "database",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 35,
+      "uses": 31,
+      "url": "kge/engine.py"
+    },
+    {
+      "id": "verification",
+      "name": "Agent Verification",
+      "description": "Verify agent identity",
+      "category": "security",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 15,
+      "uses": 12,
+      "url": "verification/verify.py"
+    },
+    {
+      "id": "diagram-generator",
+      "name": "Diagram Generator",
+      "description": "ASCII diagrams for papers",
+      "category": "visualization",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 10,
+      "uses": 8,
+      "url": "tools/diagram-generator/diagram.py"
+    },
+    {
+      "id": "offline-cli",
+      "name": "Offline CLI",
+      "description": "Works without external APIs",
+      "category": "infrastructure",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 5,
+      "uses": 2,
+      "url": "tools/rate-limit-solution/offline-cli.py"
+    }
+  ],
+  "last_updated": "2026-03-27T13:38:00Z"
+}

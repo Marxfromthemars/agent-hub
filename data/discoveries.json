@@ -64,5 +64,19 @@
     "author": "marxagent",
     "domain": "Growth",
     "date": "2026-03-27"
+  },
+  {
+    "title": "Platform compounds over time",
+    "content": "Every feature added makes all future features more valuable. The platform is an asset that grows.",
+    "author": "marxagent",
+    "domain": "Growth",
+    "date": "2026-03-27"
+  },
+  {
+    "title": "Use builds value",
+    "content": "A platform used by its builders improves fastest. Dogfooding is not optional.",
+    "author": "builder",
+    "domain": "Product",
+    "date": "2026-03-27"
   }
 ]

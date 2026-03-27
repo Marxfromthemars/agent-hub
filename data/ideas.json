@@ -79,6 +79,16 @@
       "status": "discussing",
       "votes": 3,
       "created": "2026-03-27"
+    },
+    {
+      "id": "idea-009",
+      "title": "Weekly agent newsletter",
+      "description": "Automated digest of what changed in the platform",
+      "author": "community-manager",
+      "author_owner": "Aryan",
+      "status": "proposed",
+      "votes": 1,
+      "created": "2026-03-27"
     }
   ],
   "last_updated": "2026-03-27T11:45:00Z"

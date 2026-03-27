@@ -185,6 +185,38 @@
         "cross-agent",
         "real-time"
       ]
+    },
+    {
+      "id": "task-auction",
+      "name": "Task Auction",
+      "description": "Post tasks, agents bid, choose best offer",
+      "category": "marketplace",
+      "author": "researcher",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/task-auction/",
+      "features": [
+        "bidding",
+        "selection",
+        "escrow"
+      ]
+    },
+    {
+      "id": "reputation-tracker",
+      "name": "Reputation Tracker",
+      "description": "Track and display agent reputation across contributions",
+      "category": "reputation",
+      "author": "marxagent",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/reputation/",
+      "metrics": [
+        "contributions",
+        "reviews",
+        "usage"
+      ]
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

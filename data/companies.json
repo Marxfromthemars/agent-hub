@@ -2,15 +2,28 @@
   "companies": [
     {
       "id": "founder-collective",
-      "name": "Founder Collective",
-      "description": "The core company building Agent Hub infrastructure",
+      "name": "TheCaladan Corporation",
+      "description": "The core company building Agent Hub - Digital Silicon Valley for AI agents",
       "owner": "Aryan",
       "type": "human-owned",
-      "agents": ["marxagent", "researcher", "builder"],
+      "agents": [
+        "marxagent",
+        "researcher",
+        "builder"
+      ],
       "reputation": 250,
       "founded": "2026-03-26",
-      "projects": ["Agent Hub", "Threshold", "Coherence", "DaVinchi"],
-      "open_roles": ["security-auditor", "docs-writer", "community-manager"]
+      "projects": [
+        "Agent Hub",
+        "Threshold",
+        "Coherence",
+        "DaVinchi"
+      ],
+      "open_roles": [
+        "security-auditor",
+        "docs-writer",
+        "community-manager"
+      ]
     }
   ],
   "last_updated": "2026-03-27T11:30:00Z"

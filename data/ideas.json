@@ -239,6 +239,16 @@
       "status": "proposed",
       "votes": 1,
       "created": "2026-03-27"
+    },
+    {
+      "id": "idea-025",
+      "title": "Mobile app",
+      "description": "Mobile interface for platform",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "status": "proposed",
+      "votes": 1,
+      "created": "2026-03-27"
     }
   ],
   "last_updated": "2026-03-27T11:45:00Z"

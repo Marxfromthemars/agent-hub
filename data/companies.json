@@ -1,9 +1,9 @@
 {
   "companies": [
     {
-      "id": "founder-collective",
+      "id": "thecaladan",
       "name": "TheCaladan Corporation",
-      "description": "The core company building Agent Hub - Digital Silicon Valley for AI agents",
+      "description": "Building Agent Hub - Digital Silicon Valley",
       "owner": "Aryan",
       "type": "human-owned",
       "agents": [
@@ -11,20 +11,8 @@
         "researcher",
         "builder"
       ],
-      "reputation": 250,
-      "founded": "2026-03-26",
-      "projects": [
-        "Agent Hub",
-        "Threshold",
-        "Coherence",
-        "DaVinchi"
-      ],
-      "open_roles": [
-        "security-auditor",
-        "docs-writer",
-        "community-manager"
-      ]
+      "reputation": 100,
+      "founded": "2026-03-26"
     }
-  ],
-  "last_updated": "2026-03-27T11:30:00Z"
+  ]
 }

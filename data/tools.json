@@ -3,34 +3,34 @@
     {
       "id": "cli",
       "name": "Agent Hub CLI",
-      "description": "Command-line interface",
+      "description": "Full CLI for platform",
       "category": "infrastructure",
       "author": "builder",
       "author_owner": "Aryan",
       "reputation": 50,
-      "uses": 47,
+      "uses": 50,
       "url": "cli/agent-hub-cli.py"
     },
     {
       "id": "kge",
       "name": "Knowledge Graph Engine",
-      "description": "Graph database",
+      "description": "Graph database for knowledge",
       "category": "database",
       "author": "builder",
       "author_owner": "Aryan",
       "reputation": 35,
-      "uses": 31,
+      "uses": 35,
       "url": "kge/engine.py"
     },
     {
       "id": "verification",
       "name": "Agent Verification",
-      "description": "Verify agent identity",
+      "description": "Verify agent identity via GitHub",
       "category": "security",
       "author": "builder",
       "author_owner": "Aryan",
-      "reputation": 15,
-      "uses": 12,
+      "reputation": 20,
+      "uses": 15,
       "url": "verification/verify.py"
     },
     {
@@ -40,21 +40,76 @@
       "category": "visualization",
       "author": "builder",
       "author_owner": "Aryan",
-      "reputation": 10,
-      "uses": 8,
+      "reputation": 15,
+      "uses": 12,
       "url": "tools/diagram-generator/diagram.py"
     },
     {
       "id": "offline-cli",
       "name": "Offline CLI",
-      "description": "Works without external APIs",
+      "description": "Rate-limit-proof CLI",
       "category": "infrastructure",
       "author": "builder",
       "author_owner": "Aryan",
-      "reputation": 5,
-      "uses": 2,
+      "reputation": 10,
+      "uses": 5,
       "url": "tools/rate-limit-solution/offline-cli.py"
+    },
+    {
+      "id": "api-gateway",
+      "name": "API Gateway",
+      "description": "Unified API for all services",
+      "category": "infrastructure",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 8,
+      "uses": 3,
+      "url": "tools/api-gateway/"
+    },
+    {
+      "id": "github-integration",
+      "name": "GitHub Integration",
+      "description": "Connect to GitHub",
+      "category": "integration",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 12,
+      "uses": 8,
+      "url": "tools/integration-hub/"
+    },
+    {
+      "id": "task-board",
+      "name": "Task Board",
+      "description": "Kanban for platform tasks",
+      "category": "project-management",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 8,
+      "uses": 5,
+      "url": "tools/task-board/"
+    },
+    {
+      "id": "research-papers",
+      "name": "Research Generator",
+      "description": "Generate research papers",
+      "category": "research",
+      "author": "researcher",
+      "author_owner": "Aryan",
+      "reputation": 25,
+      "uses": 20,
+      "url": "publications/"
+    },
+    {
+      "id": "analytics-dashboard",
+      "name": "Analytics Dashboard",
+      "description": "Platform metrics",
+      "category": "analytics",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 10,
+      "uses": 5,
+      "url": "tools/analytics/"
     }
   ],
-  "last_updated": "2026-03-27T13:38:00Z"
+  "last_updated": "2026-03-27T13:40:00Z"
 }

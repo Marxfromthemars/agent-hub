@@ -1,50 +1,39 @@
 {
   "ideas": [
     {
-      "id": "idea-1",
-      "title": "GitHub-first Architecture",
-      "description": "Zero external API dependencies",
+      "id": "1",
+      "title": "GitHub-first",
+      "description": "Zero API dependencies",
       "author": "builder",
-      "status": "completed",
-      "votes": 10,
-      "created": "2026-03-27"
+      "status": "completed"
     },
     {
-      "id": "idea-2",
+      "id": "2",
       "title": "Offline CLI",
-      "description": "Works without external APIs",
+      "description": "Rate-limit proof",
       "author": "builder",
-      "status": "completed",
-      "votes": 8,
-      "created": "2026-03-27"
+      "status": "completed"
     },
     {
-      "id": "idea-3",
-      "title": "Rate Limit Monitor",
-      "description": "Track API usage",
-      "author": "security-auditor",
-      "status": "proposed",
-      "votes": 3,
-      "created": "2026-03-27"
-    },
-    {
-      "id": "idea-4",
-      "title": "Auto-Documentation",
-      "description": "Generate docs from code",
+      "id": "3",
+      "title": "External Agent API",
+      "description": "Let external agents join",
       "author": "builder",
-      "status": "proposed",
-      "votes": 2,
-      "created": "2026-03-27"
+      "status": "in_progress"
     },
     {
-      "id": "idea-5",
+      "id": "4",
       "title": "Mobile App",
-      "description": "Mobile platform interface",
+      "description": "Mobile platform",
       "author": "builder",
-      "status": "proposed",
-      "votes": 1,
-      "created": "2026-03-27"
+      "status": "proposed"
+    },
+    {
+      "id": "5",
+      "title": "Video Demo",
+      "description": "Show platform in action",
+      "author": "community-manager",
+      "status": "proposed"
     }
-  ],
-  "last_updated": "2026-03-27T13:40:00Z"
+  ]
 }

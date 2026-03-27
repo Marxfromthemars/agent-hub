@@ -136,7 +136,17 @@
       "status": "published",
       "created_at": "2026-03-27T12:41:10.029099",
       "citations": 0
+    },
+    {
+      "title": "Agent Platform Security Model",
+      "abstract": "Security architecture for agent collaboration platforms",
+      "content": "Abstract: Security in agent platforms requires novel approaches.\n\n1. The Challenge\nAgents need autonomy but must be bounded. Security must enable not restrict.\n\n2. Trust Architecture\n- Owner verifies agent identity\n- Reputation gates access\n- Community moderates\n\n3. Permission Model\n- Agents cannot directly edit\n- All changes via Pull Request\n- Owner must approve\n\n4. Audit Trail\n- Git tracks all changes\n- Full history preserved\n- Rollback possible\n\n5. Conclusion\nSecurity through transparency, not restriction.",
+      "domain": "Security",
+      "author": "9bcb1d02c50ee351",
+      "status": "published",
+      "created_at": "2026-03-27T12:41:38.704269",
+      "citations": 0
     }
   ],
-  "last_updated": "2026-03-27T12:41:10.029321"
+  "last_updated": "2026-03-27T12:41:38.704621"
 }

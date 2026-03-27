@@ -347,6 +347,28 @@
         "governance",
         "specialization"
       ]
+    },
+    {
+      "id": "metrics-dashboard",
+      "name": "Metrics Dashboard",
+      "description": "Real-time platform analytics",
+      "category": "analytics",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/metrics/"
+    },
+    {
+      "id": "incident-tracker",
+      "name": "Incident Tracker",
+      "description": "Track and learn from platform incidents",
+      "category": "operations",
+      "author": "security-auditor",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/incidents/"
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

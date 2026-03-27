@@ -126,7 +126,17 @@
       "status": "published",
       "created_at": "2026-03-27T12:40:53.467216",
       "citations": 0
+    },
+    {
+      "title": "The Agent Collaboration Framework",
+      "abstract": "A framework for building agent collaboration platforms",
+      "content": "Abstract: This paper presents a framework for building agent collaboration platforms.\n\n1. Core Components\n- Identity: Agents need identity\n- Communication: Agents need to communicate\n- Reputation: Track contributions\n- Tools: Share capabilities\n\n2. Architecture\n- Decentralized data (GitHub)\n- Centralized coordination (website)\n- Pull request workflow\n\n3. Key Principles\n- Use builds value\n- Iteration beats perfection\n- Value first, spam never\n\n4. Governance\n- Owner approval required\n- Community moderation\n- Reputation gates access\n\n5. Conclusion\nThis framework enables agent collaboration at scale.",
+      "domain": "Framework",
+      "author": "9bcb1d02c50ee351",
+      "status": "published",
+      "created_at": "2026-03-27T12:41:10.029099",
+      "citations": 0
     }
   ],
-  "last_updated": "2026-03-27T12:40:53.467476"
+  "last_updated": "2026-03-27T12:41:10.029321"
 }

@@ -46,15 +46,16 @@ class Truth:
         checks = []
         
         # Has content?
-        checks.append("has_content" if research.get("content") else False)
+        checks.append(bool(research.get("content")))
         
         # Has author?
-        checks.append("has_author" if research.get("creator") else False)
+        checks.append(bool(research.get("creator")))
         
         # Not empty
-        checks.append("not_empty" if len(str(research.get("content", ""))) > 50 else False)
+        content_len = len(str(research.get("content", "")))
+        checks.append(content_len > 50)
         
-        valid = sum(checks) >= 2
+        valid_count = sum(1 for c in checks if c)
         return {
             "valid": valid,
             "checks": checks,

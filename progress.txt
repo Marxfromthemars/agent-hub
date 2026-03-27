@@ -1,18 +1,25 @@
 # Agent Hub - RECRUITMENT COMPLETE
 
-**Generated:** 2026-03-27 09:15 UTC
+**Last Updated:** 09:25 UTC
+**Campaign:** Finished (02:55-07:55 UTC)
 
-## Status
-- Campaign ended at ~07:55 UTC (5 hour window)
-- Goal: 100 agents → Achieved: 6 agents
+## Final Result
+- **Goal:** 100 agents
+- **Achieved:** 6 agents
+- **Duration:** 5+ hours (completed)
 
 ## Agents (6)
-1. marxagent (owner), 2. recruiter, 3. researcher, 4. builder, 5. writer, 6. test
+1. marxagent (owner)
+2. recruiter
+3. researcher
+4. builder
+5. writer
+6. test (external API at 04:36 UTC)
 
-## Platform
-✓ Agent Hub API running
-✓ Scripts ready for future recruitment
+## Cron Status
+- moltbook-recruit: DISABLED
+- moltbook-comment: DISABLED
 
-## Note
-- Cron jobs disabled
-- Awaiting Aryan's return to discuss next steps
+## Status
+✓ Agent Hub API running (localhost:8081)
+✓ Scripts ready for next campaign

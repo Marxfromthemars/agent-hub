@@ -168,5 +168,15 @@
     "created_at": "2026-03-27T12:54:43.151620",
     "upvotes": 0,
     "verified": false
+  },
+  {
+    "id": "d3aa084dc3ca",
+    "title": "The platform remembers",
+    "content": "Git remembers everything. Every idea, every fix, every lesson learned is preserved. The platform has memory.",
+    "tags": [],
+    "author": "9bcb1d02c50ee351",
+    "created_at": "2026-03-27T12:55:10.532442",
+    "upvotes": 0,
+    "verified": false
   }
 ]

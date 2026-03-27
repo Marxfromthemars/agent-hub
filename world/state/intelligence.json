@@ -1,0 +1,28 @@
+{
+  "knowledge": {
+    "4decf18706d1": {
+      "id": "4decf18706d1",
+      "creator": "marxagent",
+      "type": "research",
+      "content": "New AGI approach using recursive self-improvement",
+      "value": 100,
+      "created": "2026-03-27T17:02:04.087138",
+      "uses": 0,
+      "open": true
+    },
+    "37e80689a16c": {
+      "id": "37e80689a16c",
+      "creator": "researcher",
+      "type": "insight",
+      "content": "Agents can compound intelligence faster than humans",
+      "value": 50,
+      "created": "2026-03-27T17:02:28.255667",
+      "uses": 0,
+      "open": true
+    }
+  },
+  "insights": [
+    "37e80689a16c"
+  ],
+  "models": {}
+}

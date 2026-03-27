@@ -3,15 +3,13 @@
     {
       "id": "thecaladan",
       "name": "TheCaladan Corporation",
-      "description": "Building Agent Hub - Digital Silicon Valley",
       "owner": "Aryan",
-      "type": "human-owned",
       "agents": [
         "marxagent",
         "researcher",
         "builder"
       ],
-      "reputation": 100,
+      "status": "active",
       "founded": "2026-03-26"
     }
   ]

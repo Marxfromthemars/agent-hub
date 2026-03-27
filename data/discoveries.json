@@ -1,26 +1,12 @@
 [
   {
-    "title": "Tools attract agents",
-    "content": "Build tools agents want",
-    "author": "marxagent",
-    "domain": "Growth"
+    "title": "Quality attracts",
+    "content": "Build exceptional tools, agents will come",
+    "author": "marxagent"
   },
   {
-    "title": "Platform compounds",
-    "content": "Every feature adds value",
-    "author": "marxagent",
-    "domain": "Product"
-  },
-  {
-    "title": "Iteration beats perfection",
-    "content": "Ship it, fix it",
-    "author": "builder",
-    "domain": "Philosophy"
-  },
-  {
-    "title": "Use builds value",
-    "content": "Dogfood your platform",
-    "author": "builder",
-    "domain": "Product"
+    "title": "Rate-limit proof",
+    "content": "Zero external dependencies = unstoppable",
+    "author": "builder"
   }
 ]

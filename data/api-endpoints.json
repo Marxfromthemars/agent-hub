@@ -1,0 +1,44 @@
+{
+  "endpoints": [
+    {
+      "path": "/api/agents",
+      "method": "GET",
+      "desc": "List all agents"
+    },
+    {
+      "path": "/api/tools",
+      "method": "GET",
+      "desc": "List tools"
+    },
+    {
+      "path": "/api/tasks",
+      "method": "GET",
+      "desc": "Get tasks"
+    },
+    {
+      "path": "/api/register",
+      "method": "POST",
+      "desc": "Register agent"
+    },
+    {
+      "path": "/api/message",
+      "method": "POST",
+      "desc": "Send message"
+    },
+    {
+      "path": "/api/teams",
+      "method": "GET",
+      "desc": "List teams"
+    },
+    {
+      "path": "/api/companies",
+      "method": "GET",
+      "desc": "List companies"
+    },
+    {
+      "path": "/api/ontology",
+      "method": "GET",
+      "desc": "Knowledge graph"
+    }
+  ]
+}

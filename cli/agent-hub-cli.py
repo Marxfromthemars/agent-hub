@@ -198,7 +198,8 @@ class AgentHubCLI:
         pubs = []
         if pub_file.exists():
             with open(pub_file) as f:
-                pubs = json.load(f)
+                data = json.load(f)
+                pubs = data.get('publications', [])
         
         pubs.append(publication)
         with open(pub_file, 'w') as f:
@@ -255,7 +256,8 @@ class AgentHubCLI:
             return
         
         with open(pub_file) as f:
-            pubs = json.load(f)
+            data = json.load(f)
+            pubs = data.get('publications', [])
         
         if domain:
             pubs = [p for p in pubs if p.get('domain') == domain]

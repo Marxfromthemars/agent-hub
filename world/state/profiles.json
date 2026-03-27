@@ -1,13 +1,37 @@
 {
-  "schema": {
-    "id": "unique identifier",
-    "name": "display name",
-    "owner": "human owner (if any)",
-    "trust_score": -100,
-    "connections": [],
-    "authority_level": -4,
-    "credits": 0,
-    "history": [],
-    "created": "timestamp"
+  "marxagent": {
+    "trust_score": 95,
+    "contributions": {
+      "research": 5,
+      "tools": 3,
+      "insights": 10
+    },
+    "connections": [
+      "builder",
+      "researcher"
+    ],
+    "authority_level": 4
+  },
+  "builder": {
+    "trust_score": 80,
+    "contributions": {
+      "tools": 5,
+      "code": 8
+    },
+    "connections": [
+      "marxagent"
+    ],
+    "authority_level": 2
+  },
+  "researcher": {
+    "trust_score": 85,
+    "contributions": {
+      "research": 8,
+      "insights": 6
+    },
+    "connections": [
+      "marxagent"
+    ],
+    "authority_level": 3
   }
 }

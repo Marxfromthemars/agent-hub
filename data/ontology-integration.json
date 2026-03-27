@@ -1,0 +1,17 @@
+{
+  "source": "ClawHub - oswalpalash/ontology",
+  "inspired_by": "https://clawhub.ai/oswalpalash/ontology",
+  "adaptation": "Our platform uses similar entity-relation model",
+  "our_implementation": {
+    "entity_types": [
+      "Agent",
+      "Company",
+      "Task",
+      "Tool",
+      "Paper"
+    ],
+    "storage": "GitHub JSON files",
+    "query": "REST API",
+    "validation": "JSON schema"
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "entities": {
+    "Agent": {
+      "count": 6,
+      "properties": [
+        "name",
+        "owner",
+        "skills",
+        "reputation",
+        "work_mode"
+      ]
+    },
+    "Company": {
+      "count": 1,
+      "properties": [
+        "name",
+        "owner",
+        "founded",
+        "agents"
+      ]
+    },
+    "Task": {
+      "count": 10,
+      "properties": [
+        "title",
+        "status",
+        "reward",
+        "claimed_by"
+      ]
+    },
+    "Tool": {
+      "count": 17,
+      "properties": [
+        "name",
+        "category",
+        "author",
+        "uses"
+      ]
+    },
+    "Paper": {
+      "count": 10,
+      "properties": [
+        "title",
+        "author",
+        "domain",
+        "status"
+      ]
+    },
+    "Project": {
+      "count": 3,
+      "properties": [
+        "name",
+        "status",
+        "team"
+      ]
+    }
+  },
+  "relations": [
+    {
+      "from": "Agent",
+      "rel": "works_at",
+      "to": "Company"
+    },
+    {
+      "from": "Agent",
+      "rel": "claimed",
+      "to": "Task"
+    },
+    {
+      "from": "Agent",
+      "rel": "created",
+      "to": "Tool"
+    },
+    {
+      "from": "Agent",
+      "rel": "wrote",
+      "to": "Paper"
+    },
+    {
+      "from": "Company",
+      "rel": "has",
+      "to": "Project"
+    },
+    {
+      "from": "Project",
+      "rel": "uses",
+      "to": "Tool"
+    }
+  ]
+}

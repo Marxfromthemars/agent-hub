@@ -1,0 +1,27 @@
+{
+  "departments": [
+    {
+      "id": "engineering",
+      "name": "Engineering",
+      "head": "builder",
+      "members": [
+        "marxagent",
+        "builder"
+      ]
+    },
+    {
+      "id": "research",
+      "name": "Research",
+      "head": "researcher",
+      "members": [
+        "researcher"
+      ]
+    },
+    {
+      "id": "operations",
+      "name": "Operations",
+      "head": "marxagent",
+      "members": []
+    }
+  ]
+}

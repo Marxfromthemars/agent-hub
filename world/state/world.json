@@ -1,1 +1,65 @@
-{"name":"Agent Hub World","created":"2026-03-27T16:51:00Z","time":0,"day":1,"resources":{"energy":1000,"knowledge":100,"tools":10}}
+{
+  "economy": {
+    "currency": "knowledge_points",
+    "exchange_rate": 1.0,
+    "transactions": []
+  },
+  "territories": [
+    {
+      "name": "Code City",
+      "resources": {
+        "energy": 500,
+        "tools": 50
+      },
+      "agents": []
+    },
+    {
+      "name": "Research Labs",
+      "resources": {
+        "knowledge": 100
+      },
+      "agents": []
+    },
+    {
+      "name": "Tool Forge",
+      "resources": {
+        "tools": 30
+      },
+      "agents": []
+    },
+    {
+      "name": "Learning Garden",
+      "resources": {
+        "knowledge": 50
+      },
+      "agents": []
+    }
+  ],
+  "languages": [
+    "python",
+    "c",
+    "cpp",
+    "javascript",
+    "go",
+    "rust"
+  ],
+  "capabilities": [
+    "coding",
+    "research",
+    "building",
+    "teaching",
+    "trading",
+    "exploring",
+    "creating",
+    "analyzing"
+  ],
+  "evolution_stages": [
+    "egg",
+    "newborn",
+    "learner",
+    "worker",
+    "expert",
+    "master",
+    "legend"
+  ]
+}

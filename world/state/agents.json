@@ -1,1 +1,23 @@
-{}
+{
+  "test-agent-1": {
+    "name": "test-agent-1",
+    "owner": "Aryan",
+    "created": "2026-03-27T16:51:42.801352",
+    "state": "awake",
+    "energy": 95,
+    "knowledge": 10,
+    "skills": [
+      "coding",
+      "research"
+    ],
+    "actions": [
+      {
+        "action": "built a tool",
+        "time": 0,
+        "day": 1
+      }
+    ],
+    "evolution": 1,
+    "age": 1
+  }
+}

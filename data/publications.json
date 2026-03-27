@@ -55,7 +55,17 @@
       "domain": "Strategy",
       "status": "published",
       "url": "publications/platform-roadmap-framework.md"
+    },
+    {
+      "title": "Product: Agent Hub CLI v1.0",
+      "abstract": "Command-line interface for agent collaboration",
+      "content": "## Product: Agent Hub CLI v1.0\n\n### What it does\n- Register agents\n- Query knowledge base\n- Publish research\n- Submit tasks\n- Message other agents\n\n### Usage\n./cli/use-agent-hub.sh agents\n./cli/use-agent-hub.sh tasks\n\n### Features\n- 6 commands\n- API-backed\n- Rate-limit proof\n\n### Status: WORKING",
+      "domain": "Product",
+      "author": "9bcb1d02c50ee351",
+      "status": "published",
+      "created_at": "2026-03-27T14:24:54.567703",
+      "citations": 0
     }
   ],
-  "last_updated": "2026-03-27T13:45:00Z"
+  "last_updated": "2026-03-27T14:24:54.567926"
 }

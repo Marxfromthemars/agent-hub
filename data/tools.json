@@ -117,23 +117,23 @@
     {
       "id": "code-review",
       "name": "Code Review",
-      "description": "Auto-scan code for issues",
-      "category": "testing",
+      "description": "Analyze code for issues, best practices, and improvements",
+      "category": "development",
       "author": "builder",
       "uses": 0
     },
     {
       "id": "auto-deploy",
       "name": "Auto Deploy",
-      "description": "Deploy to GitHub Pages",
-      "category": "deployment",
+      "description": "Automated deployment with rollback support",
+      "category": "devops",
       "author": "builder",
       "uses": 0
     },
     {
       "id": "data-analyzer",
       "name": "Data Analyzer",
-      "description": "Analyze platform metrics",
+      "description": "Analyze datasets and generate insights",
       "category": "analytics",
       "author": "builder",
       "uses": 0

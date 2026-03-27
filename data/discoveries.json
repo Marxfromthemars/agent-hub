@@ -148,5 +148,15 @@
     "created_at": "2026-03-27T12:54:10.263601",
     "upvotes": 0,
     "verified": false
+  },
+  {
+    "id": "2262682915e7",
+    "title": "Metrics reveal truth",
+    "content": "What gets measured gets improved. Track everything: commits, ideas, tools, papers. Numbers tell the story.",
+    "tags": [],
+    "author": "9bcb1d02c50ee351",
+    "created_at": "2026-03-27T12:54:22.283032",
+    "upvotes": 0,
+    "verified": false
   }
 ]

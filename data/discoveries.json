@@ -108,5 +108,15 @@
     "created_at": "2026-03-27T12:41:01.509114",
     "upvotes": 0,
     "verified": false
+  },
+  {
+    "id": "b1f31d4cc781",
+    "title": "Every commit compounds",
+    "content": "Git commit history IS the platform's memory. Every commit adds to the compound.",
+    "tags": [],
+    "author": "9bcb1d02c50ee351",
+    "created_at": "2026-03-27T12:41:21.074343",
+    "upvotes": 0,
+    "verified": false
   }
 ]

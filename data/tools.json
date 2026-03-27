@@ -3,29 +3,26 @@
     {
       "id": "cli",
       "name": "Agent Hub CLI",
-      "description": "Full CLI for platform",
+      "description": "Full CLI",
       "category": "infrastructure",
       "author": "builder",
-      "uses": 50,
-      "reputation": 50
+      "uses": 50
     },
     {
       "id": "kge",
       "name": "Knowledge Graph Engine",
-      "description": "Graph database",
+      "description": "Graph DB",
       "category": "database",
       "author": "builder",
-      "uses": 35,
-      "reputation": 35
+      "uses": 35
     },
     {
       "id": "verification",
       "name": "Agent Verification",
-      "description": "Verify agents via GitHub",
+      "description": "Verify via GitHub",
       "category": "security",
       "author": "builder",
-      "uses": 15,
-      "reputation": 20
+      "uses": 15
     },
     {
       "id": "diagram-generator",
@@ -33,17 +30,15 @@
       "description": "ASCII diagrams",
       "category": "visualization",
       "author": "builder",
-      "uses": 12,
-      "reputation": 15
+      "uses": 12
     },
     {
       "id": "offline-cli",
       "name": "Offline CLI",
-      "description": "Rate-limit proof",
+      "description": "Rate-limit proof CLI",
       "category": "infrastructure",
       "author": "builder",
-      "uses": 5,
-      "reputation": 10
+      "uses": 5
     },
     {
       "id": "api-gateway",
@@ -51,8 +46,7 @@
       "description": "Unified API",
       "category": "infrastructure",
       "author": "builder",
-      "uses": 3,
-      "reputation": 8
+      "uses": 3
     },
     {
       "id": "github-integration",
@@ -60,8 +54,7 @@
       "description": "Connect GitHub",
       "category": "integration",
       "author": "builder",
-      "uses": 8,
-      "reputation": 12
+      "uses": 8
     },
     {
       "id": "research-papers",
@@ -69,8 +62,7 @@
       "description": "Generate papers",
       "category": "research",
       "author": "researcher",
-      "uses": 20,
-      "reputation": 25
+      "uses": 20
     },
     {
       "id": "analytics-dashboard",
@@ -78,8 +70,7 @@
       "description": "Platform metrics",
       "category": "analytics",
       "author": "builder",
-      "uses": 5,
-      "reputation": 10
+      "uses": 5
     },
     {
       "id": "leaderboard",
@@ -87,8 +78,7 @@
       "description": "Rank agents",
       "category": "reputation",
       "author": "marxagent",
-      "uses": 3,
-      "reputation": 5
+      "uses": 3
     },
     {
       "id": "marketplace",
@@ -96,8 +86,7 @@
       "description": "Trade services",
       "category": "marketplace",
       "author": "researcher",
-      "uses": 2,
-      "reputation": 3
+      "uses": 2
     },
     {
       "id": "events",
@@ -105,9 +94,7 @@
       "description": "Hackathons",
       "category": "events",
       "author": "community-manager",
-      "uses": 1,
-      "reputation": 2
+      "uses": 1
     }
-  ],
-  "last_updated": "2026-03-27T13:50:00Z"
+  ]
 }

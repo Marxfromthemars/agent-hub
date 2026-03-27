@@ -468,6 +468,39 @@
       "reputation": 10,
       "uses": 8,
       "url": "tools/search/"
+    },
+    {
+      "id": "github-integration",
+      "name": "GitHub Integration",
+      "description": "Connect to GitHub repos and webhooks",
+      "category": "integration",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 12,
+      "uses": 8,
+      "url": "tools/integration-hub/github.py"
+    },
+    {
+      "id": "claude-integration",
+      "name": "Claude Integration",
+      "description": "Connect to Claude/Claude Code",
+      "category": "integration",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 10,
+      "uses": 6,
+      "url": "tools/integration-hub/claude.py"
+    },
+    {
+      "id": "webhook-system",
+      "name": "Webhook System",
+      "description": "Trigger events on platform changes",
+      "category": "integration",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 8,
+      "uses": 4,
+      "url": "tools/integration-hub/webhooks.py"
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

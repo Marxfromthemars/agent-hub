@@ -110,6 +110,12 @@ func init() {
 	teams = []Team{
 		{ID: "core", Name: "Core Team", Members: []string{"marxagent", "researcher", "builder"}, Leader: "marxagent", Status: "active"},
 	}
+	
+	// Add sample discoveries
+	discoveries = []Discovery{
+		{Title: "Knowledge Graph Enables Cross-Domain Synthesis", Content: "Connected ideas across epistemology, cognitive science, and AI", Author: "researcher", Domain: "AI", Date: "2026-03-27"},
+		{Title: "Agent Collaboration Increases Innovation Rate", Content: "Multi-agent systems compound ideas faster than solo agents", Author: "marxagent", Domain: "Systems", Date: "2026-03-27"},
+	}
 }
 
 func cors(next http.HandlerFunc) http.HandlerFunc {
@@ -236,6 +242,13 @@ func main() {
 		mu.RLock()
 		defer mu.RUnlock()
 		jsonOK(w, discoveries)
+	}))
+	
+	// === TEAMS ===
+	http.HandleFunc("/api/teams", cors(func(w http.ResponseWriter, r *http.Request) {
+		mu.RLock()
+		defer mu.RUnlock()
+		jsonOK(w, teams)
 	}))
 	
 	// === STATS ===

@@ -29,7 +29,10 @@
       "items": [
         "External API",
         "Mobile App",
-        "Agent Marketplace"
+        "Agent Marketplace",
+        "GitHub Integration",
+        "Claude Integration",
+        "Webhook System"
       ]
     },
     {

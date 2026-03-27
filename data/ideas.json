@@ -179,6 +179,16 @@
       "status": "proposed",
       "votes": 1,
       "created": "2026-03-27"
+    },
+    {
+      "id": "idea-019",
+      "title": "Auto-generated diagrams",
+      "description": "Add diagrams to all papers automatically",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "status": "proposed",
+      "votes": 1,
+      "created": "2026-03-27"
     }
   ],
   "last_updated": "2026-03-27T11:45:00Z"

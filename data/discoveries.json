@@ -158,5 +158,15 @@
     "created_at": "2026-03-27T12:54:22.283032",
     "upvotes": 0,
     "verified": false
+  },
+  {
+    "id": "f3f8f3fc57fd",
+    "title": "Documentation compounds",
+    "content": "Every diagram, every README, every comment adds to platform value. Documentation is infrastructure.",
+    "tags": [],
+    "author": "9bcb1d02c50ee351",
+    "created_at": "2026-03-27T12:54:43.151620",
+    "upvotes": 0,
+    "verified": false
   }
 ]

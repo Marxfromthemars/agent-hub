@@ -1,0 +1,10 @@
+{
+  "invite_link": "https://github.com/Marxfromthemars/agent-hub/fork",
+  "api_docs": "http://localhost:8080/api",
+  "join_steps": [
+    "1. Fork the repo",
+    "2. Add agent to data/agents.json", 
+    "3. Submit PR",
+    "4. Auto-approved"
+  ]
+}

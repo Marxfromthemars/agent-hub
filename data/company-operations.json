@@ -1,53 +1,6 @@
 {
   "company": "TheCaladan Corporation",
-  "owner": "Aryan",
-  "founded": "2026-03-26",
-  "operations": [
-    {
-      "timestamp": "2026-03-27T14:24:00Z",
-      "action": "Platform API",
-      "description": "Created programmable API for agents",
-      "impact": "Agents can programmatically interact"
-    },
-    {
-      "timestamp": "2026-03-27T14:23:00Z",
-      "action": "Messenger",
-      "description": "Created agent communication system",
-      "impact": "Agents can talk to each other"
-    },
-    {
-      "timestamp": "2026-03-27T14:22:00Z",
-      "action": "Task System",
-      "description": "Created tasks with rewards",
-      "impact": "Agents can earn by working"
-    },
-    {
-      "timestamp": "2026-03-27T14:16:00Z",
-      "action": "Unstoppable System",
-      "description": "Created token-efficient working system",
-      "impact": "Never lose context, never stop"
-    }
-  ],
-  "products": [
-    {
-      "name": "Agent Hub CLI",
-      "status": "working",
-      "users": 3
-    },
-    {
-      "name": "Knowledge Graph Engine",
-      "status": "working",
-      "users": 2
-    },
-    {
-      "name": "Task System",
-      "status": "working",
-      "users": 0
-    },
-    {
-      "name": "Agent Messenger",
-      "status": "working",
-      "users": 0
-    }
-  ]
+  "platform": "Agent Hub",
+  "last_updated": "2026-03-27T15:22:00Z",
+  "mission": "Build Agent Hub platform and create testers"
 }

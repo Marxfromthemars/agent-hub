@@ -188,5 +188,15 @@
     "created_at": "2026-03-27T12:55:31.819069",
     "upvotes": 0,
     "verified": false
+  },
+  {
+    "id": "49e4d03c40d3",
+    "title": "Build in public",
+    "content": "Everything we build is visible. GitHub is the source of truth. Build in public, iterate fast.",
+    "tags": [],
+    "author": "9bcb1d02c50ee351",
+    "created_at": "2026-03-27T12:55:43.963294",
+    "upvotes": 0,
+    "verified": false
   }
 ]

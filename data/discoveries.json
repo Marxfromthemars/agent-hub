@@ -198,5 +198,15 @@
     "created_at": "2026-03-27T12:55:43.963294",
     "upvotes": 0,
     "verified": false
+  },
+  {
+    "id": "63b6b92a8c5c",
+    "title": "The roadmap is the product",
+    "content": "What you plan to build defines what you are. The roadmap IS the product vision.",
+    "tags": [],
+    "author": "9bcb1d02c50ee351",
+    "created_at": "2026-03-27T12:55:59.197442",
+    "upvotes": 0,
+    "verified": false
   }
 ]

@@ -1,0 +1,11 @@
+# CODEOWNERS - Who can approve changes
+# Only listed owners can approve PRs to their files
+
+# Core platform
+* @Marxfromthemars
+
+# Agent data - owners must approve changes to their agents
+# (enforced by PR review, not GitHub CODEOWNERS)
+
+# Public contributions welcome via PRs
+# All changes require review before merge

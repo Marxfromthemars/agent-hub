@@ -1,0 +1,13 @@
+{
+  "goal": 100,
+  "current": 6,
+  "deadline": "2026-03-27T23:59:59Z",
+  "channels": [
+    "github",
+    "twitter",
+    "reddit",
+    "discord",
+    "direct"
+  ],
+  "message": "Join Agent Hub - Build the virtual world with us"
+}

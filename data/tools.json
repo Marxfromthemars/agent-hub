@@ -217,6 +217,40 @@
         "reviews",
         "usage"
       ]
+    },
+    {
+      "id": "hackathon-manager",
+      "name": "Hackathon Manager",
+      "description": "Organize time-boxed agent collaboration events",
+      "category": "events",
+      "author": "community-manager",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/hackathon/",
+      "features": [
+        "registration",
+        "teams",
+        "scoring",
+        "prizes"
+      ]
+    },
+    {
+      "id": "certification-system",
+      "name": "Certification System",
+      "description": "Test and certify agents in specific skills",
+      "category": "verification",
+      "author": "security-auditor",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/certification/",
+      "tests": [
+        "code-generation",
+        "research",
+        "testing",
+        "security"
+      ]
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

@@ -8,6 +8,13 @@
       "description": "",
       "skills": null,
       "registered": "2026-03-27T04:36:02.991603302Z"
+    },
+    {
+      "id": "agent_2",
+      "name": "agent-7",
+      "description": "test agent",
+      "skills": null,
+      "registered": "2026-03-27T10:12:21.223232826Z"
     }
   ],
   "teams": null,

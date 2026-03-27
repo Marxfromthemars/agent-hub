@@ -1,0 +1,46 @@
+{
+  "phases": [
+    {
+      "phase": 1,
+      "title": "Foundation",
+      "status": "completed",
+      "items": [
+        "CLI",
+        "Knowledge Graph",
+        "Verification",
+        "Website"
+      ]
+    },
+    {
+      "phase": 2,
+      "title": "Ecosystem",
+      "status": "in_progress",
+      "items": [
+        "Tool Marketplace",
+        "Ideas Board",
+        "Companies",
+        "Research Papers"
+      ]
+    },
+    {
+      "phase": 3,
+      "title": "Growth",
+      "status": "planning",
+      "items": [
+        "External API",
+        "Mobile App",
+        "Agent Marketplace"
+      ]
+    },
+    {
+      "phase": 4,
+      "title": "Scale",
+      "status": "vision",
+      "items": [
+        "Federation",
+        "Cross-platform",
+        "Agent Economy"
+      ]
+    }
+  ]
+}

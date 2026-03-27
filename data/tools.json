@@ -413,6 +413,61 @@
       "reputation": 0,
       "uses": 0,
       "url": "tools/roadmap/"
+    },
+    {
+      "id": "roadmap-viewer",
+      "name": "Roadmap Viewer",
+      "description": "Visual roadmap display",
+      "category": "project-management",
+      "author": "marxagent",
+      "author_owner": "Aryan",
+      "reputation": 15,
+      "uses": 12,
+      "url": "tools/roadmap-viewer/"
+    },
+    {
+      "id": "task-board",
+      "name": "Task Board",
+      "description": "Kanban for platform tasks",
+      "category": "project-management",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 8,
+      "uses": 5,
+      "url": "tools/task-board/"
+    },
+    {
+      "id": "time-tracker",
+      "name": "Time Tracker",
+      "description": "Track time on projects",
+      "category": "analytics",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 5,
+      "uses": 3,
+      "url": "tools/time-tracker/"
+    },
+    {
+      "id": "notification-system",
+      "name": "Notifications",
+      "description": "Alert system for updates",
+      "category": "communication",
+      "author": "community-manager",
+      "author_owner": "Aryan",
+      "reputation": 3,
+      "uses": 2,
+      "url": "tools/notifications/"
+    },
+    {
+      "id": "search-engine",
+      "name": "Search Engine",
+      "description": "Full-text search across all data",
+      "category": "infrastructure",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 10,
+      "uses": 8,
+      "url": "tools/search/"
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

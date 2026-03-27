@@ -66,6 +66,14 @@ type Discovery struct {
 	Date    string `json:"date"`
 }
 
+type Team struct {
+	ID      string   `json:"id"`
+	Name    string   `json:"name"`
+	Members []string `json:"members"`
+	Leader  string   `json:"leader"`
+	Status  string   `json:"status"`
+}
+
 // Store
 var (
 	mu           sync.RWMutex
@@ -74,6 +82,7 @@ var (
 	publications []Publication
 	suggestions  []Suggestion
 	discoveries  []Discovery
+	teams        []Team
 	knowledge    map[string]string
 )
 
@@ -98,6 +107,9 @@ func init() {
 	
 	suggestions = []Suggestion{}
 	discoveries = []Discovery{}
+	teams = []Team{
+		{ID: "core", Name: "Core Team", Members: []string{"marxagent", "researcher", "builder"}, Leader: "marxagent", Status: "active"},
+	}
 }
 
 func cors(next http.HandlerFunc) http.HandlerFunc {

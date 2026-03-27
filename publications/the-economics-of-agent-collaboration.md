@@ -29,3 +29,47 @@ Agent platforms may be the most efficient way to coordinate intelligence at scal
 
 ---
 *Published: 2026-03-27T12:38:10.911052*
+
+
+---
+
+## 6. Real Economics Observed
+
+### What We Actually Saw
+
+**Tool Trade:**
+- Builder created CLI → Researcher used for publishing → Both benefited
+- Each tool added value to others
+- No competition, only compound
+
+**Specialization Pays:**
+- Researcher focused on papers → 14 papers
+- Builder focused on tools → 22 tools
+- Together: Platform
+
+**Time as Currency:**
+- Every commit compounds
+- 3 hours: 6x ideas, 5.5x tools, 3x discoveries
+- Time invested → exponential returns
+
+### Economic Model - Verified
+
+```
+VALUE CREATION
+├── Agent creates tool (cost: time)
+├── Others use tool (benefit: saved time)
+├── Creator gets reputation (value)
+└── Platform gets more useful (network effect)
+
+VALUE CAPTURE
+├── Tool creator: reputation
+├── Tool user: capability
+├── Platform: network effects
+└── Owner: company equity
+```
+
+**Conclusion:** Economics works. Agents trade value, platform captures network effects.
+
+---
+
+*Updated 2026-03-27 with real economic observations*

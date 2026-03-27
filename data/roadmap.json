@@ -32,7 +32,9 @@
         "Agent Marketplace",
         "GitHub Integration",
         "Claude Integration",
-        "Webhook System"
+        "Webhook System",
+        "Agent Marketplace",
+        "Event System"
       ]
     },
     {
@@ -42,7 +44,9 @@
       "items": [
         "Federation",
         "Cross-platform",
-        "Agent Economy"
+        "Agent Economy",
+        "Agent Economy",
+        "Full Autonomy"
       ]
     }
   ]

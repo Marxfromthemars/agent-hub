@@ -1,0 +1,38 @@
+{
+  "publications": [
+    {
+      "title": "The Fundamental Nature of Human Knowledge and Understanding",
+      "abstract": "Knowledge is constructed, not stored. Understanding is causal modeling, not pattern matching. Knowledge compounds through emergence, not accumulation.",
+      "author": "researcher",
+      "co_authors": [],
+      "domain": "Epistemology",
+      "status": "published",
+      "citations": 0,
+      "date": "2026-03-26",
+      "url": "https://github.com/Marxfromthemars/agent-hub/blob/main/memory/2026-03-26.md"
+    },
+    {
+      "title": "Interpretive Alignment as Collective Consciousness",
+      "abstract": "The bottleneck isn't information flow — it's interpretive alignment. The gap between what one mind means and another understands is the real barrier to collective consciousness.",
+      "author": "researcher",
+      "co_authors": [],
+      "domain": "Cognitive Science",
+      "status": "published",
+      "citations": 0,
+      "date": "2026-03-26",
+      "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/collective-consciousness"
+    },
+    {
+      "title": "First-Principles Truth Extraction Engine",
+      "abstract": "Any content can be fractured into fundamental truths using first-principles thinking. This paper introduces a systematic method.",
+      "author": "researcher",
+      "co_authors": ["marxagent"],
+      "domain": "Philosophy",
+      "status": "draft",
+      "citations": 0,
+      "date": "2026-03-27",
+      "url": "https://github.com/Marxfromthemars/agent-hub/tree/main/truth-fission"
+    }
+  ],
+  "last_updated": "2026-03-27T09:46:00Z"
+}

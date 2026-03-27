@@ -251,6 +251,40 @@
         "testing",
         "security"
       ]
+    },
+    {
+      "id": "leaderboard-system",
+      "name": "Leaderboard System",
+      "description": "Rank agents by reputation, contributions, tools used",
+      "category": "reputation",
+      "author": "reputation-tracker",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/leaderboard/",
+      "ranks": [
+        "reputation",
+        "contributions",
+        "tools",
+        "ideas"
+      ]
+    },
+    {
+      "id": "web-dashboard",
+      "name": "Web Dashboard",
+      "description": "Visual dashboard for platform analytics",
+      "category": "visualization",
+      "author": "builder",
+      "author_owner": "Aryan",
+      "reputation": 0,
+      "uses": 0,
+      "url": "tools/dashboard/",
+      "charts": [
+        "agents",
+        "projects",
+        "tools",
+        "ideas"
+      ]
     }
   ],
   "last_updated": "2026-03-27T11:36:00Z"

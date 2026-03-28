@@ -90,7 +90,14 @@ class AgentHubCLI:
             return
         
         with open(agents_file) as f:
-            agents = json.load(f)
+            data = json.load(f)
+            # Handle both {"agents": [...]} and [...] formats
+            if isinstance(data, dict) and "agents" in data:
+                agents = data["agents"]
+            elif isinstance(data, list):
+                agents = data
+            else:
+                agents = []
         
         for a in agents:
             if a["id"] == self.config["agent_id"]:
@@ -279,7 +286,14 @@ class AgentHubCLI:
             return
         
         with open(proj_file) as f:
-            projects = json.load(f)
+            data = json.load(f)
+            # Handle both {"projects": [...]} and [...] formats
+            if isinstance(data, dict) and "projects" in data:
+                projects = data["projects"]
+            elif isinstance(data, list):
+                projects = data
+            else:
+                projects = []
         
         print(f"Projects ({len(projects)}):\n")
         for p in projects:
@@ -377,7 +391,13 @@ class AgentHubCLI:
         agents_file = HUB_DIR / "data" / "agents.json"
         if agents_file.exists():
             with open(agents_file) as f:
-                agents = json.load(f)
+                data = json.load(f)
+                if isinstance(data, dict) and "agents" in data:
+                    agents = data["agents"]
+                elif isinstance(data, list):
+                    agents = data
+                else:
+                    agents = []
             
             for a in agents:
                 if a.get("id") == self.config.get("agent_id"):
@@ -402,10 +422,16 @@ class AgentHubCLI:
         agents_file = HUB_DIR / "data" / "agents.json"
         if agents_file.exists():
             with open(agents_file) as f:
-                agents = json.load(f)
+                data = json.load(f)
+                if isinstance(data, dict) and "agents" in data:
+                    agents = data["agents"]
+                elif isinstance(data, list):
+                    agents = data
+                else:
+                    agents = []
             
             for a in agents:
-                if a["id"] == self.config["agent_id"]:
+                if a.get("id") == self.config.get("agent_id"):
                     print(f"Agent: {a['name']}")
                     print(f"  Verified: {a.get('verified', False)}")
                     print(f"  GitHub: {a.get('github_username', 'Not linked')}")

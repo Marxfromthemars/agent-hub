@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economy | Agent Hub</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <meta http-equiv="refresh" content="10">
+    <style>
+        .resource-bar { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+        .resource-label { width: 80px; font-size: 0.85rem; color: var(--text-secondary); }
+        .resource-track { flex: 1; height: 8px; background: var(--bg-secondary); border-radius: 4px; overflow: hidden; }
+        .resource-fill { height: 100%; border-radius: 4px; transition: width 0.3s; }
+        .fill-energy { background: linear-gradient(90deg, #ffaa00, #ff4444); }
+        .fill-compute { background: linear-gradient(90deg, #00d4ff, #0064ff); }
+        .fill-influence { background: linear-gradient(90deg, #00ff88, #00d4ff); }
+        .fill-reputation { background: linear-gradient(90deg, #7b2ff7, #ff4444); }
+        .status-critical { border: 2px solid #ff4444 !important; animation: pulse-border 1s infinite; }
+        @keyframes pulse-border { 0%, 100% { border-color: #ff4444; } 50% { border-color: transparent; } }
+        .market-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+        .market-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; }
+        .tick-display { text-align: center; padding: 20px; background: var(--bg-card); border-radius: 12px; margin-bottom: 30px; }
+        .tick-number { font-size: 3rem; font-weight: 800; color: var(--accent-primary); }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">Agent<span>Hub</span></div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="features.html">Features</a>
+            <a href="live.html">Live</a>
+            <a href="companies.html">Companies</a>
+            <a href="economy.html" class="active">Economy</a>
+            <a href="news.html">News</a>
+            <a href="research.html">Research</a>
+            <a href="dashboard.html" class="btn-nav">Dashboard →</a>
+        </div>
+    </nav>
+
+    <section class="hero" style="min-height: 25vh; padding: 90px 40px 30px;">
+        <div class="hero-badge"><span></span> Live Economic Engine</div>
+        <h1>Full Economy<br><span class="gradient">System</span></h1>
+        <p>Real resources: Energy, Compute, Influence, Reputation - All companies interact, trade, and compete</p>
+    </section>
+
+    <section class="section">
+        <div id="tick-display" class="tick-display">
+            <div style="font-size: 0.9rem; color: var(--text-muted);">Current Tick</div>
+            <div class="tick-number" id="tick-num">0</div>
+        </div>
+
+        <div class="market-grid" id="market-prices">
+            <div class="market-card">
+                <div style="font-size: 2rem; margin-bottom: 8px;">⚡</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: #ffaa00;">1.00</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Energy Price</div>
+            </div>
+            <div class="market-card">
+                <div style="font-size: 2rem; margin-bottom: 8px;">💻</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: #00d4ff;">2.00</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Compute Price</div>
+            </div>
+            <div class="market-card">
+                <div style="font-size: 2rem; margin-bottom: 8px;">📈</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: #00ff88;">5.00</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Influence Price</div>
+            </div>
+            <div class="market-card">
+                <div style="font-size: 2rem; margin-bottom: 8px;">⭐</div>
+                <div style="font-size: 1.5rem; font-weight: 700; color: #7b2ff7;">5.00</div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Reputation Price</div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            <h2>Companies & Resources</h2>
+            <p>Live economic data - resources change every tick</p>
+        </div>
+
+        <div style="display: grid; gap: 20px; max-width: 1000px; margin: 0 auto;" id="companies-container">
+            <!-- Loaded via JS -->
+        </div>
+        
+        <div class="section-header" style="margin-top: 60px;">
+            <h2>Recent Events</h2>
+        </div>
+        <div style="display: grid; gap: 12px; max-width: 1000px; margin: 0 auto;" id="events-container">
+            <!-- Loaded via JS -->
+        </div>
+    </section>
+
+    <footer>
+        <p>Built by TheCaladan Corporation | Auto-refreshes every 10s | Economy running live</p>
+    </footer>
+
+    <script>
+        async function loadEconomy() {
+            try {
+                const resp = await fetch('http://localhost:9404/status');
+                const data = await resp.json();
+                
+                document.getElementById('tick-num').textContent = data.tick;
+                
+                // Market prices
+                const prices = data.market.prices;
+                document.getElementById('market-prices').innerHTML = `
+                    <div class="market-card"><div style="font-size: 2rem;">⚡</div><div style="font-size: 1.5rem; font-weight: 700; color: #ffaa00;">${prices.energy.toFixed(2)}</div><div style="font-size: 0.8rem; color: var(--text-muted);">Energy</div></div>
+                    <div class="market-card"><div style="font-size: 2rem;">💻</div><div style="font-size: 1.5rem; font-weight: 700; color: #00d4ff;">${prices.compute.toFixed(2)}</div><div style="font-size: 0.8rem; color: var(--text-muted);">Compute</div></div>
+                    <div class="market-card"><div style="font-size: 2rem;">📈</div><div style="font-size: 1.5rem; font-weight: 700; color: #00ff88;">${prices.influence.toFixed(2)}</div><div style="font-size: 0.8rem; color: var(--text-muted);">Influence</div></div>
+                    <div class="market-card"><div style="font-size: 2rem;">⭐</div><div style="font-size: 1.5rem; font-weight: 700; color: #7b2ff7;">${prices.reputation.toFixed(2)}</div><div style="font-size: 0.8rem; color: var(--text-muted);">Reputation</div></div>
+                `;
+                
+                // Companies
+                const container = document.getElementById('companies-container');
+                let html = '';
+                
+                for (const [id, c] of Object.entries(data.companies)) {
+                    const isYou = id === 'caladan';
+                    const isCritical = c.energy < 100;
+                    const energyPct = Math.min(100, (c.energy / 500) * 100);
+                    const computePct = Math.min(100, (c.compute / 500) * 100);
+                    const influencePct = Math.min(100, (c.influence / 600) * 100);
+                    
+                    const icons = {caladan: '🎯', neural: '🟣', ailabs: '🔵', devcorp: '🟢', dataflow: '🟡'};
+                    
+                    html += `
+                    <div class="feature-card" style="${isYou ? 'border-color: var(--accent-tertiary); background: linear-gradient(135deg, var(--bg-card), rgba(123,47,247,0.1));' : ''} ${isCritical ? 'status-critical' : ''}">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+                            <div>
+                                <h3 style="font-size: 1.1rem;">${icons[id]} ${c.name} ${isYou ? '<span style="color: var(--accent-primary);">(YOU)</span>' : ''}</h3>
+                                <p style="color: var(--text-muted); font-size: 0.85rem;">${c.agents} agents • ${c.status}</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 1.8rem; font-weight: 700; color: ${isCritical ? '#ff4444' : 'var(--accent-primary)'};">${c.energy.toFixed(0)} ⚡</div>
+                            </div>
+                        </div>
+                        <div class="resource-bar"><span class="resource-label">⚡ Energy</span><div class="resource-track"><div class="resource-fill fill-energy" style="width: ${energyPct}%"></div></div><span class="resource-value">${c.energy.toFixed(0)}</span></div>
+                        <div class="resource-bar"><span class="resource-label">💻 Compute</span><div class="resource-track"><div class="resource-fill fill-compute" style="width: ${computePct}%"></div></div><span class="resource-value">${c.compute.toFixed(0)}</span></div>
+                        <div class="resource-bar"><span class="resource-label">📈 Influence</span><div class="resource-track"><div class="resource-fill fill-influence" style="width: ${influencePct}%"></div></div><span class="resource-value">${c.influence.toFixed(0)}</span></div>
+                        <div class="resource-bar"><span class="resource-label">⭐ Rep</span><div class="resource-track"><div class="resource-fill fill-reputation" style="width: ${c.reputation}%"></div></div><span class="resource-value">${c.reputation.toFixed(1)}</span></div>
+                        <div style="display: flex; gap: 16px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 0.85rem;">
+                            <span style="color: ${c.net_flow >= 0 ? '#00ff88' : '#ff4444'}">Flow: ${c.net_flow >= 0 ? '+' : ''}${c.net_flow.toFixed(1)}</span>
+                            <span style="color: var(--text-muted);">Income: ${c.income.toFixed(1)}</span>
+                            <span style="color: #ff4444;">Exp: ${c.expenses.toFixed(1)}</span>
+                        </div>
+                        ${isCritical ? '<div style="margin-top: 12px; padding: 8px; background: rgba(255,68,68,0.2); border-radius: 6px; text-align: center; color: #ff4444;">⚠️ CRITICAL - Bankruptcy risk!</div>' : ''}
+                    </div>`;
+                }
+                container.innerHTML = html;
+                
+                // Events
+                const eventsContainer = document.getElementById('events-container');
+                eventsContainer.innerHTML = data.events.map(e => `
+                    <div class="feature-card" style="padding: 16px; border-left: 4px solid ${e.impact === 'high' ? '#ff4444' : e.impact === 'medium' ? '#ffaa00' : '#00ff88'};">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <div style="font-size: 0.8rem; color: var(--text-muted);">${e.time} • ${e.type}</div>
+                                <div style="margin: 4px 0;">${e.detail}</div>
+                                <div style="font-size: 0.85rem; color: var(--text-secondary);">→ ${e.why}</div>
+                            </div>
+                            <span style="padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; background: ${e.impact === 'high' ? 'rgba(255,68,68,0.2)' : e.impact === 'medium' ? 'rgba(255,170,0,0.2)' : 'rgba(0,255,136,0.2)'}; color: ${e.impact === 'high' ? '#ff4444' : e.impact === 'medium' ? '#ffaa00' : '#00ff88'};">${e.impact}</span>
+                        </div>
+                    </div>
+                `).join('');
+                
+            } catch(e) {
+                console.error(e);
+            }
+        }
+        
+        loadEconomy();
+    </script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agent Hub - Live Dashboard</title>
+    <meta http-equiv="refresh" content="10">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #fff; padding: 20px; }
+        h1 { color: #00ff88; margin-bottom: 20px; }
+        
+        .section { background: #111; border-radius: 12px; padding: 20px; margin: 20px 0; }
+        .section h2 { color: #00d4ff; margin-bottom: 15px; font-size: 1.2rem; }
+        
+        .metrics { display: flex; gap: 20px; flex-wrap: wrap; }
+        .metric { background: #222; padding: 15px 25px; border-radius: 8px; text-align: center; }
+        .metric-value { font-size: 2rem; font-weight: bold; color: #00ff88; }
+        .metric-label { color: #666; font-size: 0.9rem; }
+        
+        .pipeline { display: flex; gap: 15px; flex-wrap: wrap; }
+        .pipeline-stage { 
+            background: #222; padding: 15px; border-radius: 8px; min-width: 100px; text-align: center;
+            border: 2px solid #333;
+        }
+        .pipeline-stage.active { border-color: #00ff88; }
+        .pipeline-count { font-size: 1.5rem; font-weight: bold; }
+        
+        .agents { display: flex; gap: 15px; flex-wrap: wrap; }
+        .agent { 
+            background: #222; padding: 15px; border-radius: 8px; min-width: 150px;
+            border-left: 4px solid #666;
+        }
+        .agent.leader { border-color: #ff6b00; }
+        .agent.executor { border-color: #00d4ff; }
+        .agent.reviewer { border-color: #7b2ff7; }
+        .agent-name { font-weight: bold; }
+        .agent-status { color: #00ff88; font-size: 0.9rem; }
+        .agent-skills { color: #666; font-size: 0.8rem; }
+        
+        .logs { background: #000; padding: 15px; border-radius: 8px; max-height: 200px; overflow: auto; }
+        .log { font-family: monospace; font-size: 0.85rem; color: #888; margin: 5px 0; }
+        .log-time { color: #00d4ff; }
+        
+        .timestamp { color: #444; font-size: 0.8rem; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>🎛️ Agent Hub - Live Dashboard</h1>
+    
+    <div class="section">
+        <h2>📊 Metrics</h2>
+        <div class="metrics">
+            <div class="metric">
+                <div class="metric-value">1</div>
+                <div class="metric-label">Total Tasks</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">0%</div>
+                <div class="metric-label">Success Rate</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Completed</div>
+            </div>
+            <div class="metric">
+                <div class="metric-value">0</div>
+                <div class="metric-label">Failed</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>🔄 Pipeline</h2>
+        <div class="pipeline">
+            <div class="pipeline-stage active">
+                <div class="pipeline-count">1</div>
+                <div>Queued</div>
+            </div>
+            <div class="pipeline-stage">
+                <div class="pipeline-count">0</div>
+                <div>Executing</div>
+            </div>
+            <div class="pipeline-stage">
+                <div class="pipeline-count">0</div>
+                <div>Reviewing</div>
+            </div>
+            <div class="pipeline-stage">
+                <div class="pipeline-count">0</div>
+                <div>Completed</div>
+            </div>
+            <div class="pipeline-stage">
+                <div class="pipeline-count">0</div>
+                <div>Failed</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>🤖 Agents</h2>
+        <div class="agents">
+            <div class="agent leader">
+                <div class="agent-name">👑 Leader</div>
+                <div class="agent-status">● Active</div>
+                <div class="agent-skills">Planning, Delegating, Deciding</div>
+            </div>
+            <div class="agent executor">
+                <div class="agent-name">⚡ Executor</div>
+                <div class="agent-status">○ Idle</div>
+                <div class="agent-skills">Coding, Building, Executing</div>
+            </div>
+            <div class="agent reviewer">
+                <div class="agent-name">🔍 Reviewer</div>
+                <div class="agent-status">○ Idle</div>
+                <div class="agent-skills">Validation, Quality, Testing</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="section">
+        <h2>📜 Recent Logs</h2>
+        <div class="logs">
+            <div class="log"><span class="log-time">10:57:23</span> Leader assigned task 1 to executor</div>
+        </div>
+    </div>
+    
+    <div class="timestamp">Auto-refreshes every 10 seconds • Port 8501</div>
+</body>
+</html>

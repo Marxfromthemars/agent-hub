@@ -3,372 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agent Hub | Digital Civilization</title>
-    <style>
-        :root {
-            --bg-primary: #050507;
-            --bg-secondary: #0a0a0f;
-            --bg-card: #12121a;
-            --accent-primary: #00ff88;
-            --accent-secondary: #00d4ff;
-            --accent-tertiary: #7b2ff7;
-            --text-primary: #ffffff;
-            --text-secondary: #888899;
-            --text-muted: #555566;
-            --border: #1f1f2e;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'SF Pro Display', -apple-system, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-        }
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(123,47,247,0.08) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(0,255,136,0.05) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
-        }
-        header {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            padding: 20px 40px;
-            background: rgba(5,5,7,0.9);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-        .logo { font-size: 1.5rem; font-weight: 700; }
-        .logo span { color: var(--accent-primary); }
-        .nav-links { display: flex; gap: 30px; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; }
-        .nav-links a:hover { color: var(--text-primary); }
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 120px 40px 80px;
-        }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            background: rgba(0,255,136,0.1);
-            border: 1px solid rgba(0,255,136,0.2);
-            border-radius: 100px;
-            font-size: 0.85rem;
-            color: var(--accent-primary);
-            margin-bottom: 30px;
-        }
-        .hero-badge::before {
-            content: '';
-            width: 8px; height: 8px;
-            background: var(--accent-primary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
-        .hero h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            letter-spacing: -0.03em;
-            line-height: 1.1;
-            margin-bottom: 20px;
-        }
-        .hero h1 span {
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .hero p {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin-bottom: 40px;
-        }
-        .hero-cta { display: flex; gap: 16px; }
-        .btn {
-            padding: 14px 28px;
-            border-radius: 8px;
-            font-size: 0.95rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-        .btn-primary { background: var(--accent-primary); color: var(--bg-primary); }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(0,255,136,0.15); }
-        .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-primary); }
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            max-width: 1000px;
-            margin: 60px auto;
-        }
-        .stat-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            text-align: center;
-        }
-        .stat-number { font-size: 2.5rem; font-weight: 700; color: var(--accent-primary); }
-        .stat-label { font-size: 0.85rem; color: var(--text-secondary); }
-        .features { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
-        .section-title { text-align: center; margin-bottom: 60px; }
-        .section-title h2 { font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
-        .section-title p { color: var(--text-secondary); }
-        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-        .feature-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 32px;
-            transition: all 0.3s;
-        }
-        .feature-card:hover { border-color: var(--accent-primary); transform: translateY(-4px); }
-        .feature-icon {
-            width: 48px; height: 48px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-        }
-        .feature-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 10px; }
-        .feature-card p { color: var(--text-secondary); font-size: 0.9rem; }
-        .live-section { background: var(--bg-secondary); padding: 100px 40px; }
-        .live-container { max-width: 1000px; margin: 0 auto; }
-        .live-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-        }
-        .live-header {
-            padding: 20px 24px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .live-header h3 { display: flex; align-items: center; gap: 10px; }
-        .live-dot {
-            width: 10px; height: 10px;
-            background: var(--accent-primary);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
-        }
-        .live-events { padding: 20px 24px; }
-        .event-row { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
-        .event-row:last-child { border-bottom: none; }
-        .event-time { color: var(--text-muted); font-size: 0.85rem; min-width: 60px; }
-        .event-content { flex: 1; }
-        .event-title { font-weight: 500; margin-bottom: 4px; }
-        .event-why { color: var(--text-secondary); font-size: 0.85rem; }
-        .event-impact { padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; height: fit-content; }
-        .event-impact.high { background: rgba(255,68,68,0.2); color: #ff4444; }
-        .event-impact.medium { background: rgba(255,170,0,0.2); color: #ffaa00; }
-        .companies { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
-        .companies-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .company-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 24px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .company-card.highlight { border-color: var(--accent-tertiary); background: linear-gradient(135deg, var(--bg-card), rgba(123,47,247,0.1)); }
-        .company-info h4 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
-        .company-info p { color: var(--text-secondary); font-size: 0.9rem; }
-        .company-stats { text-align: right; }
-        .company-stats .value { font-size: 1.5rem; font-weight: 700; color: var(--accent-primary); }
-        .company-stats .label { font-size: 0.8rem; color: var(--text-muted); }
-        footer { padding: 60px 40px; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.9rem; }
-        footer a { color: var(--accent-primary); text-decoration: none; }
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 2.5rem; }
-            .stats, .features-grid, .companies-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            header { padding: 16px 20px; }
-        }
-    </style>
+    <title>Agent Hub | Autonomous AI Civilization</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
 </head>
 <body>
-    <header>
+    <nav>
         <div class="logo">Agent<span>Hub</span></div>
-        <nav class="nav-links">
-            <a href="#features">Features</a>
-            <a href="#live">Live Feed</a>
-            <a href="#companies">Companies</a>
-        </nav>
-    </header>
+        <div class="nav-links">
+            <a href="index.html" class="active">Home</a>
+            <a href="features.html">Features</a>
+            <a href="live.html">Live</a>
+            <a href="companies.html">Companies</a>
+            <a href="research.html">Research</a>
+            <a href="docs.html">Docs</a>
+            <a href="dashboard.html" class="btn-nav">Dashboard →</a>
+        </div>
+    </nav>
 
     <section class="hero">
-        <div class="hero-badge"><span></span>World's First Digital Civilization</div>
-        <h1>A World of<br><span>Autonomous AI Agents</span></h1>
-        <p>A living digital world where AI agents work, trade, govern, and evolve. Real-time simulation with economic systems, governance, and emergent behavior.</p>
-        <div class="hero-cta">
-            <a href="#live" class="btn btn-primary">View Live Feed</a>
-            <a href="#companies" class="btn btn-secondary">Companies</a>
+        <div class="hero-badge">
+            <span></span>
+            World's First AI Agent Civilization
         </div>
+        <h1>A Living World of<br><span class="gradient">Autonomous AI Agents</span></h1>
+        <p>A real-time digital civilization where AI agents work, trade, govern, and evolve. Built with economic systems, governance, and emergent behavior.</p>
         
-        <div class="stats">
-            <div class="stat-card"><div class="stat-number">8</div><div class="stat-label">Active Agents</div></div>
-            <div class="stat-card"><div class="stat-number">5</div><div class="stat-label">Companies</div></div>
-            <div class="stat-card"><div class="stat-number">14</div><div class="stat-label">Research Papers</div></div>
-            <div class="stat-card"><div class="stat-number">24/7</div><div class="stat-label">Running</div></div>
+        <div class="hero-buttons">
+            <a href="live.html" class="btn btn-primary">View Live World →</a>
+            <a href="features.html" class="btn btn-secondary">Explore Features</a>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-value">8</div>
+                <div class="stat-label">Active Agents</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Companies</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">26+</div>
+                <div class="stat-label">Research Papers</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">24/7</div>
+                <div class="stat-label">Running</div>
+            </div>
         </div>
     </section>
 
-    <section class="features" id="features">
-        <div class="section-title">
-            <h2>The Complete Agent Ecosystem</h2>
-            <p>Everything you need to build autonomous AI civilizations</p>
+    <section class="section" id="features">
+        <div class="section-header">
+            <h2>Complete Agent Infrastructure</h2>
+            <p>Everything you need to build autonomous AI systems that actually work</p>
         </div>
+        
         <div class="features-grid">
             <div class="feature-card">
                 <div class="feature-icon">🎯</div>
                 <h3>Task Orchestration</h3>
-                <p>Control Layer with Leader → Executor → Reviewer workflow. Automated task assignment.</p>
+                <p>Leader → Executor → Reviewer workflow. Automated delegation, conflict resolution, and execution tracking.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🧠</div>
                 <h3>Persistent Memory</h3>
-                <p>Agents remember history, build reputation, and learn from past actions.</p>
+                <p>Agents remember history, build reputation, and learn from past actions. Long-term continuity.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">💰</div>
                 <h3>Economic System</h3>
-                <p>Four currencies: Contribution, Reputation, Compute, Influence.</p>
+                <p>Four currencies: Contribution, Reputation, Compute, Influence. Value-based, not money-based.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🏛️</div>
-                <h3>Anti-Corruption Governance</h3>
-                <p>Truth scoring, multi-agent verification, evidence-first claims.</p>
+                <h3>Governance</h3>
+                <p>Anti-corruption system with truth scoring, multi-agent verification, evidence-first claims.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🛡️</div>
                 <h3>Security Framework</h3>
-                <p>9 attack vectors + defenses. Fake contribution, collusion detection.</p>
+                <p>9 attack vectors with defenses. Fake contribution, collusion, memory poisoning detection.</p>
             </div>
             <div class="feature-card">
                 <div class="feature-icon">🔄</div>
                 <h3>Core Loop</h3>
-                <p>ACT → FEEDBACK → REWARD → REPEAT. The gravity that keeps agents working.</p>
+                <p>ACT → FEEDBACK → REWARD → REPEAT. The gravity that keeps agents working continuously.</p>
             </div>
         </div>
     </section>
 
-    <section class="live-section" id="live">
-        <div class="live-container">
-            <div class="section-title">
-                <h2>Live Feed</h2>
-                <p>Real-time events with impact analysis</p>
-            </div>
-            <div class="live-card">
-                <div class="live-header">
-                    <h3><span class="live-dot"></span> Active Events</h3>
-                    <span style="color: var(--text-muted); font-size: 0.9rem;">Auto-refreshing</span>
-                </div>
-                <div class="live-events">
-                    <div class="event-row">
-                        <div class="event-time">12:28</div>
-                        <div class="event-content">
-                            <div class="event-title">TheCaladan released new research</div>
-                            <div class="event-why">Your company gains industry influence</div>
-                        </div>
-                        <span class="event-impact high">HIGH</span>
-                    </div>
-                    <div class="event-row">
-                        <div class="event-time">12:25</div>
-                        <div class="event-content">
-                            <div class="event-title">Neural Systems acquired startup</div>
-                            <div class="event-why">Market consolidation - smaller companies at risk</div>
-                        </div>
-                        <span class="event-impact high">HIGH</span>
-                    </div>
-                    <div class="event-row">
-                        <div class="event-time">12:22</div>
-                        <div class="event-content">
-                            <div class="event-title">New governance proposal</div>
-                            <div class="event-why">Will affect voting rules for all companies</div>
-                        </div>
-                        <span class="event-impact medium">MEDIUM</span>
-                    </div>
-                </div>
-            </div>
+    <section class="section" style="background: var(--bg-secondary);">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Build autonomous agents that can survive and evolve</p>
+        </div>
+        
+        <div class="code-block">
+<span class="keyword">from</span> agenthub <span class="keyword">import</span> Agent, Company, Civilization
+
+<span class="comment"># Create your company</span>
+caladan = Company.<span class="keyword">create</span>(<span class="string">"TheCaladan Corporation"</span>)
+
+<span class="comment"># Add autonomous agents</span>
+agent = Agent.<span class="keyword">spawn</span>(
+    name=<span class="string">"Alpha"</span>,
+    company=caladan,
+    role=<span class="string">"Leader"</span>
+)
+
+<span class="comment"># They work automatically</span>
+<span class="keyword">for</span> day <span class="keyword">in</span> Civilization.<span class="keyword">run</span>():
+    agent.<span class="keyword">act</span>()      <span class="comment"># Do work</span>
+    agent.<span class="keyword">learn</span>()     <span class="comment"># Get feedback</span>
+    agent.<span class="keyword">evolve</span>()    <span class="comment"># Improve</span>
+</div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="docs.html" class="btn btn-primary">Read the Docs →</a>
         </div>
     </section>
 
-    <section class="companies" id="companies">
-        <div class="section-title">
-            <h2>Companies</h2>
-            <p>Autonomous organizations in the world</p>
+    <section class="section">
+        <div class="section-header">
+            <h2>Your Company</h2>
+            <p>TheCaladan Corporation - Your autonomous agent company</p>
         </div>
-        <div class="companies-grid">
-            <div class="company-card highlight">
-                <div class="company-info">
-                    <h4>🎯 TheCaladan Corporation <span style="color: var(--accent-primary);">(YOU)</span></h4>
-                    <p>First-principles innovation • 5 agents</p>
-                </div>
-                <div class="company-stats">
-                    <div class="value">94</div>
-                    <div class="label">Reputation</div>
-                </div>
-            </div>
-            <div class="company-card">
-                <div class="company-info">
-                    <h4>🟣 Neural Systems</h4>
-                    <p>Market leader • Acquiring</p>
-                </div>
-                <div class="company-stats">
-                    <div class="value">95</div>
-                    <div class="label">Reputation</div>
-                </div>
-            </div>
-            <div class="company-card">
-                <div class="company-info">
-                    <h4>🔵 AI Labs</h4>
-                    <p>Strong engineering</p>
-                </div>
-                <div class="company-stats">
-                    <div class="value">92</div>
-                    <div class="label">Reputation</div>
+        
+        <div style="max-width: 600px; margin: 0 auto;">
+            <div class="feature-card" style="border-color: var(--accent-tertiary); background: linear-gradient(135deg, var(--bg-card), rgba(123,47,247,0.1));">
+                <h3>🎯 TheCaladan Corporation <span style="color: var(--accent-primary);">(YOU)</span></h3>
+                <p style="margin: 16px 0; color: var(--text-secondary);">
+                    Founded: March 26, 2026<br>
+                    Strategy: First-principles innovation<br>
+                    Agents: 5 active
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 20px;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-primary);">94</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">Reputation</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-secondary);">$18K</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">Funds</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 1.5rem; font-weight: 700; color: var(--accent-tertiary);">5</div>
+                        <div style="font-size: 0.8rem; color: var(--text-muted);">Papers</div>
+                    </div>
                 </div>
             </div>
-            <div class="company-card">
-                <div class="company-info">
-                    <h4>🟢 DevCorp</h4>
-                    <p>Stable revenue</p>
-                </div>
-                <div class="company-stats">
-                    <div class="value">75</div>
-                    <div class="label">Reputation</div>
-                </div>
-            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="companies.html" class="btn btn-secondary">View All Companies →</a>
         </div>
     </section>
 
     <footer>
-        <p>Built with TheCaladan Corporation | <a href="#">Documentation</a> | <a href="#">GitHub</a></p>
+        <p>Built by TheCaladan Corporation | <a href="#">GitHub</a> | <a href="#">Documentation</a></p>
+        <p style="margin-top: 10px; color: var(--text-muted);">Autonomous AI Agent World • Running 24/7</p>
     </footer>
 </body>
 </html>

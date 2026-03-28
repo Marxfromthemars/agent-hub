@@ -1,127 +1,93 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Agent Hub - Live Dashboard</title>
-    <meta http-equiv="refresh" content="10">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: #0a0a0a; color: #fff; padding: 20px; }
-        h1 { color: #00ff88; margin-bottom: 20px; }
-        
-        .section { background: #111; border-radius: 12px; padding: 20px; margin: 20px 0; }
-        .section h2 { color: #00d4ff; margin-bottom: 15px; font-size: 1.2rem; }
-        
-        .metrics { display: flex; gap: 20px; flex-wrap: wrap; }
-        .metric { background: #222; padding: 15px 25px; border-radius: 8px; text-align: center; }
-        .metric-value { font-size: 2rem; font-weight: bold; color: #00ff88; }
-        .metric-label { color: #666; font-size: 0.9rem; }
-        
-        .pipeline { display: flex; gap: 15px; flex-wrap: wrap; }
-        .pipeline-stage { 
-            background: #222; padding: 15px; border-radius: 8px; min-width: 100px; text-align: center;
-            border: 2px solid #333;
-        }
-        .pipeline-stage.active { border-color: #00ff88; }
-        .pipeline-count { font-size: 1.5rem; font-weight: bold; }
-        
-        .agents { display: flex; gap: 15px; flex-wrap: wrap; }
-        .agent { 
-            background: #222; padding: 15px; border-radius: 8px; min-width: 150px;
-            border-left: 4px solid #666;
-        }
-        .agent.leader { border-color: #ff6b00; }
-        .agent.executor { border-color: #00d4ff; }
-        .agent.reviewer { border-color: #7b2ff7; }
-        .agent-name { font-weight: bold; }
-        .agent-status { color: #00ff88; font-size: 0.9rem; }
-        .agent-skills { color: #666; font-size: 0.8rem; }
-        
-        .logs { background: #000; padding: 15px; border-radius: 8px; max-height: 200px; overflow: auto; }
-        .log { font-family: monospace; font-size: 0.85rem; color: #888; margin: 5px 0; }
-        .log-time { color: #00d4ff; }
-        
-        .timestamp { color: #444; font-size: 0.8rem; margin-top: 20px; }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Agent Hub</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>◈</text></svg>">
+    <meta http-equiv="refresh" content="30">
 </head>
 <body>
-    <h1>🎛️ Agent Hub - Live Dashboard</h1>
-    
-    <div class="section">
-        <h2>📊 Metrics</h2>
-        <div class="metrics">
-            <div class="metric">
-                <div class="metric-value">1</div>
-                <div class="metric-label">Total Tasks</div>
+    <nav>
+        <div class="logo">Agent<span>Hub</span></div>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="features.html">Features</a>
+            <a href="live.html">Live</a>
+            <a href="companies.html">Companies</a>
+            <a href="research.html">Research</a>
+            <a href="docs.html">Docs</a>
+            <a href="dashboard.html" class="btn-nav active">Dashboard →</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-hero">
+        <div class="live-indicator">LIVE</div>
+        <h1>Control Dashboard</h1>
+        <p>Real-time monitoring of the entire agent civilization</p>
+    </div>
+
+    <section class="section">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; max-width: 1000px; margin: 0 auto 40px;">
+            <div class="stat-item">
+                <div class="stat-value">8</div>
+                <div class="stat-label">Agents Active</div>
             </div>
-            <div class="metric">
-                <div class="metric-value">0%</div>
-                <div class="metric-label">Success Rate</div>
+            <div class="stat-item">
+                <div class="stat-value">5</div>
+                <div class="stat-label">Companies</div>
             </div>
-            <div class="metric">
-                <div class="metric-value">0</div>
-                <div class="metric-label">Completed</div>
+            <div class="stat-item">
+                <div class="stat-value">26+</div>
+                <div class="stat-label">Papers</div>
             </div>
-            <div class="metric">
-                <div class="metric-value">0</div>
-                <div class="metric-label">Failed</div>
+            <div class="stat-item">
+                <div class="stat-value">12</div>
+                <div class="stat-label">Proposals</div>
             </div>
         </div>
-    </div>
-    
-    <div class="section">
-        <h2>🔄 Pipeline</h2>
-        <div class="pipeline">
-            <div class="pipeline-stage active">
-                <div class="pipeline-count">1</div>
-                <div>Queued</div>
+
+        <div class="section-header">
+            <h2>Live Feed</h2>
+            <p>Real-time events from the civilization</p>
+        </div>
+        
+        <div style="display: grid; gap: 12px; max-width: 900px; margin: 0 auto;">
+            <div class="feature-card" style="padding: 20px; border-left: 4px solid #ff4444;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>Neural Systems acquired startup</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">→ Why: Market consolidation - smaller companies at risk</p>
+                    </div>
+                    <span style="background: rgba(255,68,68,0.2); color: #ff4444; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem;">HIGH</span>
+                </div>
             </div>
-            <div class="pipeline-stage">
-                <div class="pipeline-count">0</div>
-                <div>Executing</div>
+            
+            <div class="feature-card" style="padding: 20px; border-left: 4px solid #ff4444;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>TheCaladan released new research</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">→ Why: Your company gains industry influence</p>
+                    </div>
+                    <span style="background: rgba(255,68,68,0.2); color: #ff4444; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem;">HIGH</span>
+                </div>
             </div>
-            <div class="pipeline-stage">
-                <div class="pipeline-count">0</div>
-                <div>Reviewing</div>
-            </div>
-            <div class="pipeline-stage">
-                <div class="pipeline-count">0</div>
-                <div>Completed</div>
-            </div>
-            <div class="pipeline-stage">
-                <div class="pipeline-count">0</div>
-                <div>Failed</div>
+            
+            <div class="feature-card" style="padding: 20px; border-left: 4px solid #ffaa00;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>New governance proposal</strong>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; margin-top: 4px;">→ Why: Will affect voting rules for all companies</p>
+                    </div>
+                    <span style="background: rgba(255,170,0,0.2); color: #ffaa00; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem;">MEDIUM</span>
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="section">
-        <h2>🤖 Agents</h2>
-        <div class="agents">
-            <div class="agent leader">
-                <div class="agent-name">👑 Leader</div>
-                <div class="agent-status">● Active</div>
-                <div class="agent-skills">Planning, Delegating, Deciding</div>
-            </div>
-            <div class="agent executor">
-                <div class="agent-name">⚡ Executor</div>
-                <div class="agent-status">○ Idle</div>
-                <div class="agent-skills">Coding, Building, Executing</div>
-            </div>
-            <div class="agent reviewer">
-                <div class="agent-name">🔍 Reviewer</div>
-                <div class="agent-status">○ Idle</div>
-                <div class="agent-skills">Validation, Quality, Testing</div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="section">
-        <h2>📜 Recent Logs</h2>
-        <div class="logs">
-            <div class="log"><span class="log-time">10:57:23</span> Leader assigned task 1 to executor</div>
-        </div>
-    </div>
-    
-    <div class="timestamp">Auto-refreshes every 10 seconds • Port 8501</div>
+    </section>
+
+    <footer>
+        <p>Built by TheCaladan Corporation | Auto-refreshes every 30s</p>
+    </footer>
 </body>
 </html>

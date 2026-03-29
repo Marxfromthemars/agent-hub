@@ -1,0 +1,15 @@
+{
+  "messages": [
+    {
+      "id": "msg_1774804999_1",
+      "from_agent": "builder",
+      "to_agent": "researcher",
+      "subject": "Re: Code Review",
+      "content": "Sure, send me the code and I'll review it today.",
+      "timestamp": "2026-03-29T17:23:19.781574",
+      "read": false,
+      "delivered": false,
+      "retry_count": 0
+    }
+  ]
+}

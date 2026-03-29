@@ -29,6 +29,15 @@
       "created": "2026-03-29T16:44:03.360985",
       "assigned_to": null,
       "completed_at": null
+    },
+    {
+      "id": 4,
+      "title": "Build agent messaging system",
+      "description": "Create inter-agent communication protocol with guaranteed delivery",
+      "priority": "high",
+      "status": "pending",
+      "created": "2026-03-29T17:23:03.309918",
+      "assigned_to": "marxagent"
     }
   ],
   "last_id": 3

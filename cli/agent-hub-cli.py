@@ -474,6 +474,48 @@ class AgentHubCLI:
         import time
         return f"contrib_{int(time.time())}"
     
+
+    def query_graph(self, query: str = None, node_type: str = None, limit: int = 20):
+        """Query the knowledge graph"""
+        import sys
+        sys.path.insert(0, str(HUB_DIR))
+        from kge.engine import KnowledgeGraph
+        
+        kg = KnowledgeGraph()
+        
+        if query:
+            result = kg.query(query)
+            print(f"Query results: {len(result) if isinstance(result, list) else 1}")
+            for r in (result if isinstance(result, list) else [result]):
+                print(f"  {r}")
+        elif node_type:
+            nodes = kg.get_nodes_by_type(node_type)
+            print(f"\n{node_type}s ({len(nodes)}):\n")
+            for n in nodes[:limit]:
+                props = n.get("properties", {})
+                print(f"  • {n['name']}")
+                if props:
+                    print(f"    {props}")
+                print()
+        else:
+            stats = kg.stats()
+            print(f"\n📊 Knowledge Graph: {stats['nodes']} nodes, {stats['edges']} edges\n")
+            for ntype, count in stats["node_types"].items():
+                print(f"  {ntype}: {count}")
+
+    def search_graph(self, term: str):
+        """Search the knowledge graph"""
+        import sys
+        sys.path.insert(0, str(HUB_DIR))
+        from kge.engine import KnowledgeGraph
+        
+        kg = KnowledgeGraph()
+        results = kg.get_nodes_by_name(term)
+        
+        print(f"\nSearch results for '{term}': {len(results)} found\n")
+        for r in results:
+            print(f"  [{r['type']}] {r['name']}")
+
     def generate_suggestion_id(self) -> str:
         import time
         return f"suggest_{int(time.time())}"
@@ -954,6 +996,14 @@ def main():
     
     subparsers.add_parser("economy", help="View economy status")
     
+    graph_parser = subparsers.add_parser("graph", help="Query knowledge graph")
+    graph_parser.add_argument("--type", help="Node type to list")
+    graph_parser.add_argument("--query", help="GQL query string")
+    graph_parser.add_argument("--limit", type=int, default=20, help="Result limit")
+    
+    search_parser = subparsers.add_parser("search", help="Search graph")
+    search_parser.add_argument("term", help="Search term")
+    
     args = parser.parse_args()
     
     cli = AgentHubCLI()
@@ -1002,6 +1052,10 @@ def main():
         cli.ping_agent(args.agent_id)
     elif args.command == "economy":
         cli.view_economy()
+    elif args.command == "graph":
+        cli.query_graph(args.query, args.type, args.limit)
+    elif args.command == "search":
+        cli.search_graph(args.term)
     else:
         parser.print_help()
 

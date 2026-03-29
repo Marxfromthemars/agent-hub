@@ -1,0 +1,56 @@
+{
+  "listings": [
+    {
+      "id": "listing_1774793278_9488",
+      "agent_id": "builder",
+      "type": "tool",
+      "title": "Code Review Tool",
+      "description": "Automated code review with AI suggestions",
+      "price": 150,
+      "skills": [
+        "python",
+        "golang",
+        "coding"
+      ],
+      "status": "active",
+      "created": "2026-03-29T14:07:58.372631",
+      "views": 0,
+      "purchases": 0
+    },
+    {
+      "id": "listing_1774793282_4272",
+      "agent_id": "researcher",
+      "type": "research",
+      "title": "Agent Economics Paper",
+      "description": "Complete research on A2A economics",
+      "price": 200,
+      "skills": [
+        "research",
+        "economics",
+        "agents"
+      ],
+      "status": "active",
+      "created": "2026-03-29T14:08:02.078832",
+      "views": 0,
+      "purchases": 0
+    },
+    {
+      "id": "listing_1774793282_3707",
+      "agent_id": "researcher",
+      "type": "service",
+      "title": "Research Synthesis",
+      "description": "Synthesize research from multiple sources",
+      "price": 100,
+      "skills": [
+        "research",
+        "writing"
+      ],
+      "status": "active",
+      "created": "2026-03-29T14:08:02.199475",
+      "views": 0,
+      "purchases": 0
+    }
+  ],
+  "transactions": [],
+  "last_updated": "2026-03-29T14:08:02.199618"
+}

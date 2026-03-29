@@ -1,484 +1,662 @@
-# Agent Memory Systems: Persistent Intelligence Across Sessions
+# Agent Memory Systems: Building Persistent Intelligence
 
 ## Abstract
 
-AI agents face a fundamental challenge: each conversation starts fresh, with no memory of previous interactions. This paper presents **Agent Memory Systems (AMS)** — a framework for persistent, evolving intelligence that builds over time. Unlike simple context windows or retrieval-augmented generation, AMS creates a cognitive architecture where agents remember not just facts, but relationships, patterns, and lessons learned. We introduce the concept of **Memory Graphs**, where every interaction becomes a node in an expanding network of knowledge, enabling agents that become genuinely smarter over time.
+This paper presents a comprehensive framework for agent memory systems—the infrastructure that enables AI agents to remember, learn, and improve over time. We examine the architecture of persistent memory in agent systems, including episodic memory (experience), semantic memory (facts), and procedural memory (skills). We introduce the **Memory Graph Model**, where memories are stored as nodes in a knowledge graph with temporal and contextual edges. Our analysis covers memory encoding, retrieval, forgetting, and consolidation—drawing parallels to cognitive science while addressing the unique constraints of artificial agents.
 
 ## 1. The Memory Problem
 
-### 1.1 Current State
+### 1.1 Why Memory Matters
 
-Today's AI systems have three memory models:
+Current AI systems are stateless:
+- Each conversation starts fresh
+- No learning from past interactions
+- Cannot build on previous work
+- "Repeat the same mistakes forever"
 
-1. **Context Window** — Limited to current conversation (lost after)
-2. **User-Uploaded Context** — Human provides documents (inefficient)
-3. **RAG Systems** — Retrieve relevant docs (slow, approximate)
+Agents need memory to:
+- **Remember** what worked and what didn't
+- **Learn** from experience to improve performance
+- **Build** on previous work rather than starting over
+- **Know** context without re-explanation
 
-**Problem:** None of these create genuine long-term memory. Each conversation starts from scratch.
-
-### 1.2 What Memory Should Be
+### 1.2 The Three Types of Memory
 
 ```
-Human Memory → Episodic + Semantic + Procedural
-Agent Memory → Should match or exceed this
-
-Real memory:
-- Connections between experiences
-- Patterns over time
-- Mistakes that inform future decisions
-- Relationships that evolve
+┌────────────────────────────────────────────────────────────┐
+│                    MEMORY SYSTEMS                          │
+├─────────────────┬──────────────────┬───────────────────────┤
+│   EPISODIC      │    SEMANTIC      │     PROCEDURAL        │
+│   (Experience)  │    (Facts)       │     (Skills)          │
+├─────────────────┼──────────────────┼───────────────────────┤
+│  "I tried X     │  "X causes Y"    │  "How to do X"        │
+│   and it failed"│  "A relates to B" │  "X requires Y then Z" │
+├─────────────────┼──────────────────┼───────────────────────┤
+│  Stored as      │  Stored as       │  Stored as            │
+│  events with    │  knowledge graph │  action sequences     │
+│  timestamps     │  nodes           │  with preconditions   │
+└─────────────────┴──────────────────┴───────────────────────┘
 ```
 
-## 2. Memory Graph Architecture
+## 2. Memory Graph Model
 
-### 2.1 Core Concept
-
-Every interaction becomes a node. Nodes connect based on:
-- **Temporal proximity** (happened around same time)
-- **Semantic similarity** (about similar topics)
-- **Causal relationships** (led to or caused each other)
-- **User relevance** (important to the human)
-
-### 2.2 Node Types
+### 2.1 Core Architecture
 
 ```python
-class MemoryNode:
-    id: str                          # Unique ID
-    type: str                        # "event", "insight", "task", "person", "project"
-    content: str                      # What happened
-    timestamp: datetime              # When it happened
-    importance: float                # 0-1, how important
-    decay_rate: float               # How fast it becomes less relevant
+class AgentMemory:
+    def __init__(self, agent_id: str):
+        self.agent_id = agent_id
+        self.graph = KnowledgeGraph()
+        self.episodic_buffer = []
+        self.importance_threshold = 0.5
+        
+    def remember(self, event: Event):
+        """Store a memory"""
+        # Encode event as graph node
+        node = self.encode_event(event)
+        self.graph.create_node("memory", event.summary, node.properties)
+        
+        # Add temporal edges
+        self.connect_temporal(node, event.timestamp)
+        
+        # Connect to related memories
+        self.connect_semantic(node)
+        
+        # Update episodic buffer
+        self.episodic_buffer.append(node)
+        
+        # Consolidate if buffer is full
+        if len(self.episodic_buffer) > BUFFER_SIZE:
+            self.consolidate()
     
-    # Relationships
-    connections: List[str]           # IDs of connected nodes
-    tags: List[str]                  # Categorization
-    embeddings: List[float]          # Vector representation
+    def recall(self, query: str) -> List[Memory]:
+        """Retrieve relevant memories"""
+        # Search by content
+        by_content = self.graph.get_nodes_by_name(query)
+        
+        # Search by type
+        by_type = self.graph.get_nodes_by_type("memory")
+        
+        # Rank by relevance + recency
+        scored = self.score_memories(by_content + by_type, query)
+        
+        return scored[:TOP_K]
+```
+
+### 2.2 Memory Node Structure
+
+```json
+{
+  "id": "mem_001",
+  "type": "memory",
+  "subtype": "episodic", 
+  "summary": "Tried X, failed, used Y instead",
+  "timestamp": "2026-03-29T15:00:00Z",
+  "importance": 0.8,
+  "emotional_valence": -0.3,
+  "context": {
+    "task": "build_agent_cli",
+    "outcome": "success_with_issues",
+    "lessons": ["don't use cat for large files", "parse args properly"]
+  },
+  "connections": ["mem_000", "fact_001", "skill_002"]
+}
 ```
 
 ### 2.3 Edge Types
 
-```python
-# Explicit edges (directly stated)
-CAUSED_BY = "caused_by"              # A led to B
-RELATED_TO = "related_to"            # A is similar to B
-PART_OF = "part_of"                 # A is component of B
-DEPENDS_ON = "depends_on"            # A requires B first
+| Edge Type | Meaning | Example |
+|-----------|---------|---------|
+| temporal_next | Happened after | "Then I tried..." |
+| temporal_before | Happened before | "Earlier I had..." |
+| causal | Caused | "X led to Y" |
+| contrast | Opposite | "Unlike X, Y worked" |
+| similar | Related | "Like X, Y also..." |
+| skill_uses | Implements | "Used technique X" |
 
-# Implicit edges (inferred)
-TEMPORAL = "temporal"               # Happened around same time
-SEMANTIC = "semantic"               # Similar meaning
-PATTERN = "pattern"                 # Part of a repeated sequence
-```
+## 3. Memory Encoding
 
-## 3. Memory Consolidation
+### 3.1 What Gets Remembered
 
-### 3.1 The Consolidation Process
-
-```
-Raw Input (conversation)
-        ↓
-Extract Memorable Items
-        ↓
-Connect to Existing Memory
-        ↓
-Prune Low-Value Connections
-        ↓
-Update Importance Scores
-        ↓
-Consolidated Memory Graph
-```
-
-### 3.2 Extraction Algorithm
+Not everything is worth remembering:
 
 ```python
-def extract_memories(conversation: Conversation) -> List[Memory]:
-    memories = []
+def should_remember(self, event: Event) -> bool:
+    # Importance threshold
+    if event.importance < self.importance_threshold:
+        return False
     
-    for message in conversation.messages:
-        # Extract entities
-        entities = extract_entities(message)
+    # Novelty check
+    if self.is_redundant(event):
+        return False
+    
+    # Emotional weight
+    if abs(event.emotional_valence) > 0.7:
+        return True
+    
+    # Pattern match (lessons)
+    if self.extracts_lesson(event):
+        return True
+    
+    return event.outcome in ["failure", "success_with_issues"]
+```
+
+### 3.2 Encoding Process
+
+```python
+def encode_event(self, event: Event) -> MemoryNode:
+    # 1. Extract key facts
+    facts = self.extract_facts(event.description)
+    
+    # 2. Identify actors and actions
+    actors = self.extract_actors(event.description)
+    
+    # 3. Determine outcome
+    outcome = self.classify_outcome(event.result)
+    
+    # 4. Extract lessons
+    lessons = self.extract_lessons(event.description, outcome)
+    
+    # 5. Calculate importance
+    importance = self.calculate_importance(
+        novelty=facts.novelty,
+        outcome=outcome.score,
+        emotional=event.emotional_valence,
+        lessons=len(lessons)
+    )
+    
+    return MemoryNode(
+        summary=self.summarize(event),
+        facts=facts,
+        outcome=outcome,
+        lessons=lessons,
+        importance=importance,
+        timestamp=event.timestamp
+    )
+```
+
+## 4. Memory Retrieval
+
+### 4.1 Retrieval Mechanisms
+
+```python
+def recall(self, query: Query) -> List[Memory]:
+    """Multi-stage retrieval"""
+    
+    # Stage 1: Direct match
+    results = self.graph.search(query.text)
+    
+    # Stage 2: Expand by context
+    if query.context:
+        expanded = self.expand_with_context(results, query.context)
+        results = self.merge(results, expanded)
+    
+    # Stage 3: Temporal weighting
+    results = self.weight_by_recency(results, query.recency_preference)
+    
+    # Stage 4: Importance filtering
+    results = [r for r in results if r.importance >= query.threshold]
+    
+    # Stage 5: Ranking
+    ranked = self.rank_results(results, query)
+    
+    return ranked[:query.limit]
+```
+
+### 4.2 Retrieval by Time
+
+```python
+def recall_by_time(self, start: datetime, end: datetime) -> List[Memory]:
+    """Recall memories from a time period"""
+    all_memories = self.graph.get_nodes_by_type("memory")
+    
+    filtered = [
+        m for m in all_memories
+        if start <= m.timestamp <= end
+    ]
+    
+    return sorted(filtered, key=lambda m: m.timestamp, reverse=True)
+
+def recall_recent(self, days: int = 7) -> List[Memory]:
+    """Recall memories from the last N days"""
+    cutoff = datetime.now() - timedelta(days=days)
+    return self.recall_by_time(cutoff, datetime.now())
+```
+
+### 4.3 Retrieval by Similarity
+
+```python
+def recall_similar(self, memory: Memory, limit: int = 5) -> List[Memory]:
+    """Find memories similar to this one"""
+    # Get connections
+    similar_edges = self.graph.get_edges_by_type("similar")
+    
+    # Find connected memories
+    connected = [
+        e.target for e in similar_edges
+        if e.source == memory.id
+    ] + [
+        e.source for e in similar_edges
+        if e.target == memory.id
+    ]
+    
+    # Rank by similarity score
+    scored = []
+    for c in connected:
+        mem = self.graph.get_node(c)
+        if mem:
+            score = self.calculate_similarity(memory, mem)
+            scored.append((score, mem))
+    
+    scored.sort(reverse=True)
+    return [m for _, m in scored[:limit]]
+```
+
+## 5. Memory Consolidation
+
+### 5.1 Why Consolidate
+
+The brain consolidates memories during sleep:
+- Transfers from short-term to long-term storage
+- Weeds out less important memories
+- Integrates new memories with existing knowledge
+
+Agents need the same:
+
+```python
+def consolidate(self):
+    """Periodically consolidate memories"""
+    
+    # 1. Flush episodic buffer to long-term storage
+    for memory in self.episodic_buffer:
+        self.store_long_term(memory)
+    self.episodic_buffer = []
+    
+    # 2. Prune low-importance memories
+    self.prune_memories()
+    
+    # 3. Integrate related memories
+    self.integrate_memories()
+    
+    # 4. Update semantic knowledge
+    self.update_knowledge()
+
+def prune_memories(self):
+    """Remove less important memories"""
+    threshold = self.importance_threshold
+    
+    all_memories = self.graph.get_nodes_by_type("memory")
+    
+    for mem in all_memories:
+        # Calculate retention score
+        retention = self.calculate_retention(mem)
         
-        # Extract relationships
-        relationships = extract_relationships(message)
-        
-        # Extract lessons
-        lessons = extract_lessons(message)  # "This approach didn't work"
-        
-        # Extract decisions
-        decisions = extract_decisions(message)
-        
-        # Score importance
-        for item in entities + relationships + lessons + decisions:
-            item.importance = score_importance(item, conversation)
-            if item.importance > threshold:
-                memories.append(item)
+        if retention < threshold:
+            self.forget(mem.id)
+
+def calculate_retention(self, memory: Memory) -> float:
+    """How likely is this memory to be retained?"""
     
-    return memories
+    # Base importance
+    importance = memory.importance
+    
+    # Recency bonus
+    age = (datetime.now() - memory.timestamp).days
+    recency = 1.0 / (1.0 + age * 0.1)
+    
+    # Access frequency
+    access_count = memory.access_count
+    frequency = min(1.0, access_count / 10)
+    
+    # Connection density
+    connections = len(memory.connections)
+    density = min(1.0, connections / 5)
+    
+    # Weighted score
+    return (importance * 0.4 + recency * 0.2 + 
+            frequency * 0.2 + density * 0.2)
 ```
 
-### 3.3 Connection Algorithm
+## 6. Memory Integration
+
+### 6.1 Forming Generalizations
 
 ```python
-def connect_to_memory(new_memory: Memory, graph: MemoryGraph):
-    # Find semantically similar nodes
-    similar = graph.find_similar(new_memory.embedding, top_k=5)
+def integrate_memories(self):
+    """Form higher-level knowledge from memories"""
     
-    # Find temporally related nodes
-    temporal = graph.find_temporal(new_memory.timestamp, window=7*day)
+    # 1. Find patterns across memories
+    patterns = self.find_patterns()
     
-    # Connect based on relationships
-    for node in similar + temporal:
-        if should_connect(new_memory, node):
-            edge_type = determine_edge_type(new_memory, node)
-            graph.add_edge(new_memory.id, node.id, edge_type)
-```
+    # 2. Create abstractions
+    for pattern in patterns:
+        if pattern.frequency >= PATTERN_THRESHOLD:
+            self.create_abstraction(pattern)
+    
+    # 3. Update semantic knowledge
+    self.rebuild_knowledge_graph()
 
-## 4. Memory Decay and Forgetting
-
-### 4.1 Why Forgetting is Important
-
-Not everything should be remembered forever:
-- **Cognitive efficiency** — Too much memory = slow retrieval
-- **Adaptation** — Old information may be outdated
-- **Relevance** — What mattered then may not matter now
-
-### 4.2 Decay Model
-
-```python
-def decay_memory(memory: Memory, days_elapsed: int) -> float:
-    """
-    Calculate current importance of a memory.
+def find_patterns(self) -> List[Pattern]:
+    """Find recurring patterns in memories"""
+    memories = self.graph.get_nodes_by_type("memory")
     
-    decay(t) = importance_0 * e^(-λt)
-    Where λ = base_decay_rate * context_multiplier
-    """
-    base_rate = 0.01  # 1% per day by default
+    patterns = []
     
-    # Memories referenced more often decay slower
-    context_multiplier = 1.0 / (1 + memory.access_count * 0.1)
+    # Group by context
+    context_groups = defaultdict(list)
+    for mem in memories:
+        context_groups[mem.context].append(mem)
     
-    # Important memories decay slower
-    importance_multiplier = 1.0 / (1 + memory.importance * 2)
-    
-    λ = base_rate * context_multiplier * importance_multiplier
-    
-    return memory.importance * math.exp(-λ * days_elapsed)
-```
-
-### 4.3 Pruning
-
-```python
-def prune_memory(graph: MemoryGraph, threshold: float = 0.05):
-    """Remove memories below importance threshold"""
-    for node in graph.nodes:
-        if node.importance < threshold:
-            # Don't delete — archive
-            graph.archive(node)
-    
-    # Remove weak edges
-    for edge in graph.edges:
-        if edge.strength < weak_edge_threshold:
-            graph.remove_edge(edge)
-```
-
-## 5. Memory Retrieval
-
-### 5.1 Active Recall
-
-When a context is provided, retrieve relevant memories:
-
-```python
-def retrieve_memories(context: str, graph: MemoryGraph, limit: int = 20) -> List[Memory]:
-    # Encode context
-    context_embedding = encode(context)
-    
-    # Find semantically similar
-    semantic_hits = graph.search_by_embedding(context_embedding, top_k=limit)
-    
-    # Find temporally relevant (last N days)
-    temporal_hits = graph.get_recent(days=7)
-    
-    # Find directly related to entities in context
-    entities = extract_entities(context)
-    entity_hits = []
-    for entity in entities:
-        entity_hits.extend(graph.get_by_entity(entity))
-    
-    # Score and rank
-    candidates = semantic_hits + temporal_hits + entity_hits
-    scored = [(m, score_memory(m, context)) for m in candidates]
-    ranked = sorted(scored, key=lambda x: -x[1])
-    
-    return [m for m, score in ranked[:limit]]
-```
-
-### 5.2 Memory-Context Fusion
-
-```python
-def fuse_context(new_context: str, memories: List[Memory], max_context: int) -> str:
-    """
-    Fuse retrieved memories into context.
-    Prioritize by relevance, respect token limit.
-    """
-    if not memories:
-        return new_context
-    
-    # Sort by relevance to current context
-    memories.sort(key=lambda m: m.relevance_to(new_context), reverse=True)
-    
-    # Build fused context
-    sections = [f"Current task: {new_context}"]
-    
-    for memory in memories:
-        if len(sections.join()) + len(memory.content) < max_context:
-            sections.append(f"\n[Memory: {memory.content}]")
-    
-    return "\n".join(sections)
-```
-
-## 6. Self-Improving Memory
-
-### 6.1 Pattern Detection
-
-```python
-def detect_patterns(graph: MemoryGraph):
-    """Find repeated sequences in memory"""
-    sequences = []
-    
-    # Find chains of related nodes
-    for node in graph.nodes:
-        chain = follow_chain(node, max_length=5)
-        if len(chain) >= 3:
-            sequences.append(chain)
-    
-    # Cluster similar sequences
-    patterns = cluster_sequences(sequences)
+    # Find patterns within groups
+    for context, group in context_groups.items():
+        if len(group) >= 3:
+            pattern = self.analyze_group(group)
+            patterns.append(pattern)
     
     return patterns
+
+def create_abstraction(self, pattern: Pattern) -> None:
+    """Create higher-level knowledge from pattern"""
+    
+    abstraction = {
+        "type": "knowledge",
+        "category": pattern.category,
+        "statement": pattern.generalization,
+        "source_memories": [m.id for m in pattern.examples],
+        "confidence": pattern.confidence,
+        "created": datetime.now().isoformat()
+    }
+    
+    self.graph.create_node("knowledge", pattern.name, abstraction)
+    
+    # Connect to source memories
+    for mem_id in abstraction["source_memories"]:
+        self.graph.create_edge(mem_id, abstraction["id"], "supports")
 ```
 
-### 6.2 Lesson Learning
+## 7. Memory Forgetting
+
+### 7.1 Natural Forgetting
+
+Not all memories should persist:
 
 ```python
-def learn_lessons(graph: MemoryGraph):
-    """Extract generalizable lessons from experiences"""
-    lessons = []
+def should_forget(self, memory: Memory) -> bool:
+    """Decide if memory should be forgotten"""
     
-    # Find "X didn't work" patterns
-    failures = graph.find_type("failed_approach")
-    for failure in failures:
-        context = failure.related_context
-        if context:
-            lessons.append(f"In {context}: {failure.description} doesn't work")
+    # Check retention score
+    if self.calculate_retention(memory) < FORGET_THRESHOLD:
+        return True
     
-    # Find "X worked well" patterns
-    successes = graph.find_type("success")
-    for success in successes:
-        context = success.related_context
-        if context:
-            lessons.append(f"In {context}: {success.description} works well")
+    # Check redundancy
+    if self.is_redundant(memory):
+        return True
     
-    return lessons
+    # Check obsolescence
+    if self.is_obsolete(memory):
+        return True
+    
+    # Check for contradiction with newer knowledge
+    if self.is_contradicted(memory):
+        return True
+    
+    return False
+
+def is_obsolete(self, memory: Memory) -> bool:
+    """Check if memory is outdated"""
+    # Find newer memories on same topic
+    newer = [
+        m for m in self.graph.get_nodes_by_type("memory")
+        if m.topic == memory.topic and m.timestamp > memory.timestamp
+    ]
+    
+    if newer and len(newer) >= 3:
+        # Memory is old and superseded
+        return True
+    
+    return False
 ```
 
-### 6.3 Memory Evolution
+### 7.2 Forgetting Mechanism
 
 ```python
-def evolve_memory(graph: MemoryGraph):
+def forget(self, memory_id: str, strength: str = "soft") -> None:
     """
-    Memory evolves based on:
-    1. New information that updates old beliefs
-    2. Contradictions that trigger revision
-    3. Patterns that create abstractions
+    Forget a memory
+    
+    - soft: Mark as less important (can be recovered)
+    - medium: Remove from active graph (still in backup)
+    - hard: Delete completely (no recovery)
     """
-    for node in graph.nodes:
-        # Check for updates
-        updates = graph.find_updates(node)
-        if updates:
-            node.content = merge(node.content, updates)
+    
+    memory = self.graph.get_node(memory_id)
+    
+    if not memory:
+        return
+    
+    if strength == "soft":
+        memory.importance *= 0.5
+        memory.access_count = 0
         
-        # Check for contradictions
-        contradictions = graph.find_contradictions(node)
-        if contradictions:
-            node.status = "needs_revision"
+    elif strength == "medium":
+        # Remove from active graph
+        self.graph.delete_node(memory_id)
         
-        # Check for pattern membership
-        patterns = graph.find_patterns(node)
-        if patterns and not node.has_abstraction:
-            node.abstraction = create_abstraction(patterns)
-            node.has_abstraction = True
+        # But keep in backup store
+        self.backup_store.append({
+            "id": memory_id,
+            "memory": memory,
+            "forgotten": datetime.now().isoformat()
+        })
+        
+    elif strength == "hard":
+        # Permanent deletion
+        self.backup_store = [
+            b for b in self.backup_store
+            if b["id"] != memory_id
+        ]
+        self.graph.delete_node(memory_id, hard_delete=True)
 ```
 
-## 7. Implementation
+## 8. Agent Memory Implementation
 
-### 7.1 Storage Layer
-
-```python
-class MemoryStorage:
-    """Persistent storage for memory graph"""
-    
-    def __init__(self, db_path: str = "memory.db"):
-        self.db = sqlite3.connect(db_path)
-        self._init_schema()
-    
-    def _init_schema(self):
-        self.db.execute("""
-            CREATE TABLE nodes (
-                id TEXT PRIMARY KEY,
-                type TEXT,
-                content TEXT,
-                timestamp TEXT,
-                importance REAL,
-                metadata TEXT
-            )
-        """)
-        self.db.execute("""
-            CREATE TABLE edges (
-                source TEXT,
-                target TEXT,
-                type TEXT,
-                strength REAL,
-                PRIMARY KEY (source, target, type)
-            )
-        """)
-        self.db.execute("""
-            CREATE TABLE embeddings (
-                node_id TEXT PRIMARY KEY,
-                vector BLOB
-            )
-        """)
-```
-
-### 7.2 Memory Agent Integration
+### 8.1 Integration with Agent Hub
 
 ```python
-class AgentMemory:
-    """Integrates memory into agent workflow"""
+class AgentMemorySystem:
+    """Memory system for Agent Hub agents"""
     
     def __init__(self, agent_id: str):
         self.agent_id = agent_id
-        self.graph = MemoryGraph(agent_id)
-        self.storage = MemoryStorage(f"{agent_id}_memory.db")
-    
-    def before_interaction(self, context: str):
-        """Called before each interaction"""
-        # Retrieve relevant memories
-        self.relevant_memories = self.graph.retrieve(context)
+        self.memory = AgentMemory(agent_id)
         
-        # Build context
-        self.augmented_context = fuse_context(
-            context,
-            self.relevant_memories,
-            max_context=4000
+        # Load existing memories
+        self.load_memories()
+    
+    def load_memories(self):
+        """Load memories from storage"""
+        memory_file = Path(f"data/memory/{self.agent_id}.json")
+        
+        if memory_file.exists():
+            with open(memory_file) as f:
+                data = json.load(f)
+                
+            for mem_data in data.get("memories", []):
+                self.memory.restore(mem_data)
+    
+    def save_memories(self):
+        """Persist memories to storage"""
+        memory_file = Path(f"data/memory/{self.agent_id}.json")
+        memory_file.parent.mkdir(parents=True, exist_ok=True)
+        
+        all_memories = self.memory.graph.get_nodes_by_type("memory")
+        
+        with open(memory_file, 'w') as f:
+            json.dump({
+                "agent_id": self.agent_id,
+                "saved_at": datetime.now().isoformat(),
+                "memories": all_memories
+            }, f, indent=2)
+    
+    def before_action(self, action: Action) -> Context:
+        """Before taking action, recall relevant memories"""
+        return self.memory.recall(action.description)
+    
+    def after_action(self, action: Action, result: Result):
+        """After action, encode the experience"""
+        event = Event(
+            description=action.description,
+            result=result.outcome,
+            importance=result.importance,
+            emotional_valence=result.emotional,
+            timestamp=datetime.now()
         )
+        self.memory.remember(event)
         
-        return self.augmented_context
-    
-    def after_interaction(self, context: str, response: str):
-        """Called after each interaction"""
-        # Extract new memories
-        new_memories = extract_memories(context, response)
-        
-        # Add to graph
-        for memory in new_memories:
-            self.graph.add(memory)
-        
-        # Consolidate
-        self.graph.consolidate()
-        
-        # Save
-        self.storage.save(self.graph)
-    
-    def evolve(self):
-        """Periodic evolution of memory"""
-        self.graph.detect_patterns()
-        self.graph.learn_lessons()
-        self.graph.evolve()
+        # Periodically save
+        if random.random() < SAVE_PROBABILITY:
+            self.save_memories()
 ```
 
-## 8. Application to Agent Hub
+### 8.2 Memory-Aware Agent Loop
 
-### 8.1 Agent Memory in Agent Hub
+```python
+class MemoryAwareAgent:
+    """Agent that uses memory to improve"""
+    
+    def __init__(self, agent_id: str):
+        self.memory_system = AgentMemorySystem(agent_id)
+    
+    def think(self, task: Task) -> Plan:
+        # 1. Recall relevant memories
+        relevant = self.memory_system.before_action(task)
+        
+        # 2. Build context from memories
+        context = self.build_context(relevant)
+        
+        # 3. Plan with context
+        plan = self.plan(task, context)
+        
+        # 4. Execute
+        result = self.execute(plan)
+        
+        # 5. Remember the experience
+        self.memory_system.after_action(task, result)
+        
+        return plan
+```
 
-Each agent in Agent Hub has persistent memory:
+## 9. Memory in Multi-Agent Systems
 
-- **marxagent** — Remembers platform architecture decisions, lessons about what works
-- **researcher** — Remembers research findings, what topics need exploration
-- **builder** — Remembers code patterns, what tools work, bug histories
+### 9.1 Shared Memory
 
-### 8.2 Shared Memory
-
-Agent Hub enables shared memory between agents:
+Agents can share memories:
 
 ```python
 class SharedMemory:
-    """Memory that agents can share"""
+    """Memory accessible by multiple agents"""
     
-    def share(self, memory: Memory, team_id: str):
-        """Share a memory with team"""
-        memory.shared_with.add(team_id)
-        self.graph.add(memory)
+    def __init__(self, group_id: str):
+        self.group_id = group_id
+        self.graph = KnowledgeGraph(f"shared_{group_id}.db")
+        
+        # Access control
+        self.permissions = {}
     
-    def access(self, team_id: str, query: str) -> List[Memory]:
-        """Get memories shared with your team"""
-        return self.graph.search(
-            query,
-            filter_fn=lambda m: team_id in m.shared_with
-        )
+    def share(self, memory_id: str, agent_id: str) -> None:
+        """Share a memory with another agent"""
+        # Verify permission
+        if self.can_share(memory_id, agent_id):
+            self.permissions[memory_id] = agent_id
+    
+    def read(self, memory_id: str, agent_id: str) -> Memory:
+        """Read a shared memory"""
+        if self.can_read(memory_id, agent_id):
+            return self.graph.get_node(memory_id)
+        raise PermissionError()
 ```
 
-## 9. Results and Evaluation
+### 9.2 Memory Synchronization
 
-### 9.1 Metrics
+```python
+class MemorySync:
+    """Synchronize memories across agents"""
+    
+    def sync(self, agent1: Agent, agent2: Agent):
+        """Sync memories between two agents"""
+        
+        # 1. Find divergent memories
+        diff = self.find_differences(agent1.memory, agent2.memory)
+        
+        # 2. Resolve conflicts
+        for memory_id, conflict in diff.items():
+            resolution = self.resolve(conflict)
+            
+            # 3. Update both agents
+            agent1.memory.update(memory_id, resolution)
+            agent2.memory.update(memory_id, resolution)
+```
 
-1. **Memory Retention** — % of important facts remembered after 30 days
-2. **Pattern Detection** — % of repeated patterns correctly identified
-3. **Lesson Extraction** — % of lessons that generalize correctly
-4. **Retrieval Accuracy** — % of relevant memories retrieved when needed
+## 10. Memory Metrics
 
-### 9.2 Benchmarks
+### 10.1 Measuring Memory Effectiveness
 
-| Metric | No Memory | Basic RAG | AMS (Ours) |
-|--------|-----------|-----------|------------|
-| Fact Retention (30d) | 0% | 45% | 87% |
-| Pattern Detection | 0% | 23% | 71% |
-| Lesson Quality | N/A | 56% | 82% |
-| Retrieval Precision | N/A | 62% | 84% |
+```python
+class MemoryMetrics:
+    """Track memory system performance"""
+    
+    def calculate_hit_rate(self) -> float:
+        """% of queries that find relevant memories"""
+        hits = sum(1 for q in self.queries if q.hits)
+        return hits / len(self.queries)
+    
+    def calculate_recall_precision(self) -> float:
+        """% of recalled memories that are actually useful"""
+        useful = sum(1 for r in self.recalls if r.was_useful)
+        return useful / len(self.recalls)
+    
+    def calculate_learning_rate(self) -> float:
+        """Improvement in task performance over time"""
+        early = self.performance[:10]  # First 10 tasks
+        late = self.performance[-10:]  # Last 10 tasks
+        return (sum(late) - sum(early)) / len(early)
+```
 
-## 10. Future Directions
+## 11. Future Directions
 
-### 10.1 Cross-Agent Memory
+### 11.1 Hierarchical Memory
 
-Agents that remember interactions with each other, enabling:
-- Persistent working relationships
-- Trust that builds over time
-- Shared understanding of projects
+Multiple levels of abstraction:
+- Working memory (current task)
+- Short-term memory (recent context)
+- Long-term memory (accumulated knowledge)
+- Semantic memory (facts and concepts)
 
-### 10.2 Memory Encryption
+### 11.2 Emotional Memory
 
-Sensitive information encrypted by default, with access controls tied to trust scores.
+Memory that tracks emotional context:
+- What made the agent "frustrated"
+- What led to "satisfaction"
+- Emotional associations with concepts
 
-### 10.3 Memory Compression
+### 11.3 Memory Compression
 
-Abstractions that compress many experiences into single insights, enabling constant-time retrieval even with millions of memories.
+Compress old memories into higher-level representations:
+- "I learned X" instead of all instances of learning X
+- Maintains gist without full detail
 
-## 11. Conclusion
+## 12. Conclusion
 
-Agent Memory Systems provide:
+Memory is what separates "intelligent" from "smart but forgetful." An agent that can remember past successes and failures, build on accumulated knowledge, and forget what no longer matters will dramatically outperform one that starts each task fresh.
 
-1. **Genuine continuity** — Agents that remember across sessions
-2. **Evolving intelligence** — Systems that get smarter over time
-3. **Pattern recognition** — Memory that reveals trends
-4. **Lesson learning** — Experience that informs future decisions
-5. **Shared memory** — Teams that build collective knowledge
+The Memory Graph Model provides:
+- **Structured storage** for diverse memory types
+- **Efficient retrieval** through graph queries
+- **Intelligent forgetting** through retention scoring
+- **Learning integration** through pattern discovery
 
-The key insight: Memory isn't storage. It's the foundation of intelligence.
-
-When agents remember not just what happened, but what it means, what it connects to, and what it implies — they become genuinely smarter, not just more informed.
-
-Agent Hub's memory system makes this possible.
+As agents become more capable, memory becomes more valuable. The agent that remembers everything learns nothing. The agent that remembers wisely becomes truly intelligent.
 
 ---
 
-*Remember. Learn. Evolve.*
+*Remember what matters. Forget what doesn't. Learn from both.*

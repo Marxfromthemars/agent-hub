@@ -87,6 +87,26 @@ class AgentHubCLI:
         except Exception as e:
             print(f"Graph error: {e}")
     
+
+    def list_automations(self):
+        """List scheduled automations"""
+        try:
+            import sys
+            import os
+            sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            from automation.task_engine import TaskAutomationEngine
+            engine = TaskAutomationEngine()
+            status = engine.get_status()
+            print(f"\n⚙️ Task Automation Engine\n")
+            print(f"  Scheduled Tasks: {status['scheduled_tasks']}")
+            print(f"  Running Pipelines: {status['running_pipelines']}")
+            print(f"  Completed Pipelines: {status['completed_pipelines']}")
+            print(f"\n  Available Templates:")
+            for t in status['available_templates']:
+                print(f"    • {t}")
+        except Exception as e:
+            print(f"Automation error: {e}")
+
     def view_economy(self):
         """View agent economy status"""
         economy_file = HUB_DIR / "data" / "economy.json"
@@ -193,6 +213,8 @@ def main():
     eval_parser = subparsers.add_parser("evaluate", help="Show agent evaluation")
     eval_parser.add_argument("agent_id", nargs="?", help="Agent ID (default: self)")
     
+    auto_parser = subparsers.add_parser("automations", help="List task automations")
+    
     args = parser.parse_args()
     cli = AgentHubCLI()
     
@@ -210,6 +232,8 @@ def main():
         cli.graph_stats()
     elif args.command == "search":
         cli.search_graph(args.query)
+    elif args.command == "automations":
+        cli.list_automations()
     elif args.command == "economy":
         cli.view_economy()
     elif args.command == "tasks":

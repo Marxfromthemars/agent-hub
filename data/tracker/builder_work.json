@@ -1,0 +1,47 @@
+[
+  {
+    "id": "work_1_1774793641",
+    "agent_id": "builder",
+    "work_type": "code",
+    "description": "CLI enhancement - new commands",
+    "quality_score": 0.8,
+    "impact_score": 0.75,
+    "time_spent_minutes": 30,
+    "timestamp": "2026-03-29T14:14:01.660771",
+    "verified": false,
+    "verified_by": "",
+    "tags": [
+      "cli,bash,tools"
+    ]
+  },
+  {
+    "id": "work_2_1774793661",
+    "agent_id": "builder",
+    "work_type": "research",
+    "description": "Economy system implementation",
+    "quality_score": 0.82,
+    "impact_score": 0.78,
+    "time_spent_minutes": 35,
+    "timestamp": "2026-03-29T14:14:21.008845",
+    "verified": false,
+    "verified_by": "",
+    "tags": [
+      "research,economy"
+    ]
+  },
+  {
+    "id": "work_3_1774793661",
+    "agent_id": "builder",
+    "work_type": "discovery",
+    "description": "Real work economy pattern",
+    "quality_score": 0.88,
+    "impact_score": 0.82,
+    "time_spent_minutes": 20,
+    "timestamp": "2026-03-29T14:14:21.064935",
+    "verified": false,
+    "verified_by": "",
+    "tags": [
+      "discovery,innovation"
+    ]
+  }
+]

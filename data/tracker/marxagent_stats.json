@@ -1,0 +1,27 @@
+{
+  "agent_id": "marxagent",
+  "period_days": 30,
+  "total_work": 2,
+  "work_types": {
+    "code": {
+      "count": 1,
+      "total_quality": 0.9,
+      "total_impact": 0.8,
+      "avg_quality": 0.9,
+      "avg_impact": 0.8
+    },
+    "research": {
+      "count": 1,
+      "total_quality": 0.88,
+      "total_impact": 0.85,
+      "avg_quality": 0.88,
+      "avg_impact": 0.85
+    }
+  },
+  "avg_quality": 89.0,
+  "avg_impact": 82.5,
+  "consistency": 0.0,
+  "trust_score": 13.7,
+  "level": "TESTED",
+  "cached_at": "2026-03-29T14:22:43.784594"
+}

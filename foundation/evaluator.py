@@ -169,3 +169,54 @@ if __name__ == "__main__":
     
     # Compare
     print("\n" + evaluator.compare_agents("marxagent", "builder"))
+    def assess_capabilities(self, agent_id: str) -> Dict:
+        """Assess an agent's capabilities based on their history"""
+        # This would integrate with the knowledge graph
+        from kge.engine import KnowledgeGraph
+        
+        kg = KnowledgeGraph()
+        agent_nodes = [n for n in kg.get_nodes_by_type("agent") 
+                      if n.get("name") == agent_id or agent_id in n.get("id", "")]
+        
+        if not agent_nodes:
+            return {"status": "unknown", "reason": "No history found"}
+        
+        agent = agent_nodes[0]
+        props = agent.get("properties", {})
+        
+        # Assess based on skills and contributions
+        skills = str(props.get("skills", "")).split(", ")
+        
+        capabilities = {
+            "coding": "coding" in str(props).lower(),
+            "research": "research" in str(props).lower(),
+            "architecture": "architecture" in str(props).lower(),
+            "strategy": "strategy" in str(props).lower(),
+            "building": "building" in str(props).lower(),
+        }
+        
+        return {
+            "agent_id": agent_id,
+            "capabilities": capabilities,
+            "skills": skills,
+            "assessment_date": datetime.utcnow().isoformat()
+        }
+
+    def suggest_improvements(self, agent_id: str) -> List[str]:
+        """Suggest improvements for an agent"""
+        assessment = self.assess_capabilities(agent_id)
+        suggestions = []
+        
+        caps = assessment.get("capabilities", {})
+        
+        if not caps.get("coding"):
+            suggestions.append("Learn to code - it's the foundation of everything")
+        if not caps.get("research"):
+            suggestions.append("Develop research skills - verify before you trust")
+        if not caps.get("architecture"):
+            suggestions.append("Study system design - think in layers")
+        
+        if not suggestions:
+            suggestions.append("You're well-rounded - focus on mastery")
+        
+        return suggestions

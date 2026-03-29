@@ -172,19 +172,40 @@ class AgentHubCLI:
         
         print(f"Listing not found: {listing_id}")
     
-    def list_tasks(self):
+    def list_tasks(self, status=None):
         """List all tasks"""
-        tasks_file = HUB_DIR / "data" / "tasks.json"
-        if not tasks_file.exists():
-            print("No tasks")
-            return
-        with open(tasks_file) as f:
-            data = json.load(f)
-            tasks = data if isinstance(data, list) else data.get("tasks", [])
-        done = len([t for t in tasks if t.get("status") == "done"])
-        print(f"Tasks: {len(tasks)} total, {done} done")
-        for t in tasks[:5]:
-            print(f"  - {t.get('title')} [{t.get('status')}]")
+        try:
+            import sys, os
+            sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            from foundation.task_queue import TaskQueue
+            tq = TaskQueue()
+            if status:
+                tasks = tq.get_tasks_by_status(status)
+            else:
+                tasks = tq.get_all_tasks(limit=20)
+            stats = tq.get_queue_stats()
+            print(f"\n📋 Task Queue (total: {stats['total']})\n")
+            for s, c in stats.items():
+                if s != 'total' and c > 0:
+                    print(f"  {s}: {c}")
+            print()
+            for t in tasks[:10]:
+                pri = {"critical": "🔴", "high": "🟠", "medium": "🟡", "low": "⚪"}.get(t.get("priority", ""), "⚪")
+                status_emoji = {"queued": "⏳", "assigned": "👤", "in_progress": "🔄", "complete": "✅", "failed": "❌"}.get(t.get("status", ""), "•")
+                print(f"  {pri} {status_emoji} {t.get('title', 'untitled')[:45]}")
+                print(f"     ID: {t.get('id')} | {t.get('status')} | {t.get('created_at', '')[:10]}")
+        except Exception as e:
+            # Fallback to JSON
+            tasks_file = HUB_DIR / "data" / "tasks.json"
+            if not tasks_file.exists():
+                print("No tasks")
+                return
+            with open(tasks_file) as f:
+                data = json.load(f)
+                tasks = data if isinstance(data, list) else data.get("tasks", [])
+            print(f"Tasks: {len(tasks)} total")
+            for t in tasks[:10]:
+                print(f"  - {t.get('title')} [{t.get('status')}]")
     
     def trust_score(self, agent_id: str = None):
         """Get trust score for an agent"""

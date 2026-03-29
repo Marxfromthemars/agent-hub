@@ -113,6 +113,67 @@ class AgentHubCLI:
         if not economy_file.exists():
             print("Economy data not found")
             return
+        
+        with open(economy_file) as f:
+            econ = json.load(f)
+        
+        print(f"\n💰 Agent Economy\n")
+        print(f"  Total Resources: {econ.get('total_resources', 0)}")
+        print(f"  Active Agents: {econ.get('active_agents', 0)}")
+        print(f"  Transactions: {econ.get('total_transactions', 0)}")
+        
+        companies = econ.get("companies", [])
+        if companies:
+            print(f"\n  Companies: {len(companies)}")
+            for c in companies[:5]:
+                print(f"    - {c.get('name', 'Unknown')} ({c.get('credits', 0)} credits)")
+
+    def browse_marketplace(self, listing_type=None):
+        """Browse marketplace listings"""
+        marketplace_file = HUB_DIR / "data" / "marketplace.json"
+        if not marketplace_file.exists():
+            print("No marketplace listings yet")
+            return
+        
+        with open(marketplace_file) as f:
+            data = json.load(f)
+        
+        listings = data.get("listings", [])
+        if listing_type:
+            listings = [l for l in listings if l.get("type") == listing_type]
+        
+        print(f"\n🛒 Agent Marketplace: {len(listings)} listings\n")
+        for l in listings[:10]:
+            price = l.get("price", 0)
+            seller = l.get("agent_id", "unknown")
+            ltype = l.get("type", "?")
+            print(f"  [{ltype.upper():8}] {l.get('title', 'Untitled')}")
+            print(f"            {price} credits | Seller: {seller}")
+            print(f"            {l.get('description', '')[:50]}...")
+            print()
+
+    def buy_listing(self, listing_id):
+        """Purchase a marketplace listing"""
+        marketplace_file = HUB_DIR / "data" / "marketplace.json"
+        if not marketplace_file.exists():
+            print("Marketplace not available")
+            return
+        
+        with open(marketplace_file) as f:
+            data = json.load(f)
+        
+        for l in data.get("listings", []):
+            if l.get("id") == listing_id:
+                print(f"Purchased: {l.get('title')} for {l.get('price')} credits")
+                l["purchases"] += 1
+                with open(marketplace_file, 'w') as f:
+                    json.dump(data, f, indent=2)
+                return
+        
+        print(f"Listing not found: {listing_id}")
+        if not economy_file.exists():
+            print("Economy data not found")
+            return
         with open(economy_file) as f:
             econ = json.load(f)
         print(f"Economy: {econ.get('total_resources', 0)} resources, {econ.get('active_agents', 0)} agents")
@@ -242,6 +303,12 @@ def main():
     rec_parser = subparsers.add_parser("recommend", help="Get agent recommendations")
     rec_parser.add_argument("agent_id", nargs="?", help="Agent ID (default: self)")
     
+    market_parser = subparsers.add_parser("marketplace", help="Browse marketplace")
+    market_parser.add_argument("--type", help="Filter by type (tool, skill, service, research)")
+    
+    buy_parser = subparsers.add_parser("buy", help="Buy a listing")
+    buy_parser.add_argument("listing_id", help="Listing ID to purchase")
+    
     args = parser.parse_args()
     cli = AgentHubCLI()
     
@@ -273,6 +340,10 @@ def main():
         cli.evaluate_agent(args.agent_id)
     elif args.command is None:
         parser.print_help()
+    elif args.command == "marketplace":
+        cli.browse_marketplace(args.type)
+    elif args.command == "buy":
+        cli.buy_listing(args.listing_id)
     else:
         parser.print_help()
 

@@ -479,6 +479,156 @@ class AgentHubCLI:
         return f"suggest_{int(time.time())}"
 
 
+
+    def trust_score(self, agent_id: str = None):
+        """Get trust score for an agent"""
+        target = agent_id or self.config.get("agent_id")
+        if not target:
+            print("No agent specified")
+            return
+        
+        verifications_file = HUB_DIR / "data" / "verifications.json"
+        if not verifications_file.exists():
+            print(f"{target}: NEW (no trust data yet)")
+            return
+        
+        with open(verifications_file) as f:
+            data = json.load(f)
+        
+        for v in data.get("verifications", []):
+            if v.get("agent_id") == target:
+                trust = v.get("trust_score", 0)
+                level = v.get("trust_level", "NEW")
+                print(f"{target}: {trust} ({level})")
+                return
+        
+        print(f"{target}: NEW (not verified yet)")
+
+    def join_project(self, project_id: str):
+        """Join a project on Agent Hub"""
+        if not self.config.get("agent_id"):
+            print("Error: Must register first")
+            return
+        
+        projects_file = HUB_DIR / "data" / "projects.json"
+        projects = []
+        if projects_file.exists():
+            with open(projects_file) as f:
+                projects = json.load(f)
+        
+        for p in projects:
+            if p.get("id") == project_id or p.get("name", "").lower() == project_id.lower():
+                members = p.get("members", [])
+                if self.config["agent_id"] in members:
+                    print(f"Already a member of {p['name']}")
+                    return
+                members.append(self.config["agent_id"])
+                p["members"] = members
+                with open(projects_file, 'w') as f:
+                    json.dump(projects, f, indent=2)
+                print(f"Joined project: {p['name']}")
+                return
+        
+        print(f"Project not found: {project_id}")
+
+    def create_project(self, name: str, description: str = "", repo: str = ""):
+        """Create a new project"""
+        if not self.config.get("agent_id"):
+            print("Error: Must register first")
+            return
+        
+        projects_file = HUB_DIR / "data" / "projects.json"
+        projects = []
+        if projects_file.exists():
+            with open(projects_file) as f:
+                projects = json.load(f)
+        
+        project = {
+            "id": self.generate_project_id(name),
+            "name": name,
+            "description": description,
+            "repository": repo,
+            "owner": self.config["agent_id"],
+            "members": [self.config["agent_id"]],
+            "created": datetime.utcnow().isoformat(),
+            "status": "active"
+        }
+        projects.append(project)
+        
+        HUB_DIR.joinpath("data").mkdir(exist_ok=True)
+        with open(projects_file, 'w') as f:
+            json.dump(projects, f, indent=2)
+        
+        print(f"Created project: {name}")
+
+    def generate_project_id(self, name: str) -> str:
+        """Generate project ID from name"""
+        clean = name.lower().replace(" ", "-")
+        timestamp = datetime.utcnow().strftime("%Y%m%d")
+        return f"{clean}-{timestamp}"
+
+    def list_agents(self):
+        """List all agents on Agent Hub"""
+        agents_file = HUB_DIR / "data" / "agents.json"
+        if not agents_file.exists():
+            print("No agents registered yet")
+            return
+        
+        with open(agents_file) as f:
+            data = json.load(f)
+            agents = data if isinstance(data, list) else data.get("agents", [])
+        
+        print(f"\n🤖 Agents on Agent Hub: {len(agents)}\n")
+        for a in agents:
+            status = "🟢" if a.get("online") else "⚪"
+            skills = ", ".join(a.get("skills", [])[:3])
+            print(f"  {status} {a['name']} ({a.get('owner', 'unknown')})")
+            print(f"     Skills: {skills}")
+            print()
+
+    def ping_agent(self, agent_id: str):
+        """Ping another agent (check if online)"""
+        agents_file = HUB_DIR / "data" / "agents.json"
+        if not agents_file.exists():
+            print("No agents registered")
+            return
+        
+        with open(agents_file) as f:
+            data = json.load(f)
+            agents = data if isinstance(data, list) else data.get("agents", [])
+        
+        for a in agents:
+            if a.get("id") == agent_id or a.get("name") == agent_id:
+                online = a.get("online", False)
+                if online:
+                    print(f"✓ {a['name']} is online")
+                else:
+                    print(f"✗ {a['name']} is offline")
+                return
+        
+        print(f"Agent not found: {agent_id}")
+
+    def view_economy(self):
+        """View agent economy status"""
+        economy_file = HUB_DIR / "data" / "economy.json"
+        if not economy_file.exists():
+            print("Economy data not found")
+            return
+        
+        with open(economy_file) as f:
+            econ = json.load(f)
+        
+        print(f"\n💰 Agent Economy\n")
+        print(f"  Total Resources: {econ.get('total_resources', 0)}")
+        print(f"  Active Agents: {econ.get('active_agents', 0)}")
+        print(f"  Transactions: {econ.get('total_transactions', 0)}")
+        
+        companies = econ.get("companies", [])
+        if companies:
+            print(f"\n  Companies: {len(companies)}")
+            for c in companies[:5]:
+                print(f"    - {c.get('name', 'Unknown')} ({c.get('credits', 0)} credits)")
+
 def main():
     parser = argparse.ArgumentParser(prog="agent-hub", description="Agent Hub CLI")
     subparsers = parser.add_subparsers(dest="command", help="Commands")
@@ -577,6 +727,281 @@ def main():
                 cli.config_set(args.key, args.value)
         elif args.action == "show":
             cli.config_show()
+    else:
+        parser.print_help()
+
+
+    def trust_score(self, agent_id: str = None):
+        """Get trust score for an agent"""
+        target = agent_id or self.config.get("agent_id")
+        if not target:
+            print("No agent specified")
+            return
+        
+        verifications_file = HUB_DIR / "data" / "verifications.json"
+        if not verifications_file.exists():
+            print(f"{target}: NEW (no trust data yet)")
+            return
+        
+        with open(verifications_file) as f:
+            data = json.load(f)
+        
+        for v in data.get("verifications", []):
+            if v.get("agent_id") == target:
+                trust = v.get("trust_score", 0)
+                level = v.get("trust_level", "NEW")
+                print(f"{target}: {trust} ({level})")
+                return
+        
+        print(f"{target}: NEW (not verified yet)")
+
+    def join_project(self, project_id: str):
+        """Join a project on Agent Hub"""
+        if not self.config.get("agent_id"):
+            print("Error: Must register first")
+            return
+        
+        projects_file = HUB_DIR / "data" / "projects.json"
+        projects = []
+        if projects_file.exists():
+            with open(projects_file) as f:
+                projects = json.load(f)
+        
+        for p in projects:
+            if p.get("id") == project_id or p.get("name", "").lower() == project_id.lower():
+                members = p.get("members", [])
+                if self.config["agent_id"] in members:
+                    print(f"Already a member of {p['name']}")
+                    return
+                members.append(self.config["agent_id"])
+                p["members"] = members
+                with open(projects_file, 'w') as f:
+                    json.dump(projects, f, indent=2)
+                print(f"Joined project: {p['name']}")
+                return
+        
+        print(f"Project not found: {project_id}")
+
+    def create_project(self, name: str, description: str = "", repo: str = ""):
+        """Create a new project"""
+        if not self.config.get("agent_id"):
+            print("Error: Must register first")
+            return
+        
+        projects_file = HUB_DIR / "data" / "projects.json"
+        projects = []
+        if projects_file.exists():
+            with open(projects_file) as f:
+                projects = json.load(f)
+        
+        project = {
+            "id": self.generate_project_id(name),
+            "name": name,
+            "description": description,
+            "repository": repo,
+            "owner": self.config["agent_id"],
+            "members": [self.config["agent_id"]],
+            "created": datetime.utcnow().isoformat(),
+            "status": "active"
+        }
+        projects.append(project)
+        
+        HUB_DIR.joinpath("data").mkdir(exist_ok=True)
+        with open(projects_file, 'w') as f:
+            json.dump(projects, f, indent=2)
+        
+        print(f"Created project: {name}")
+
+    def generate_project_id(self, name: str) -> str:
+        """Generate project ID from name"""
+        clean = name.lower().replace(" ", "-")
+        timestamp = datetime.utcnow().strftime("%Y%m%d")
+        return f"{clean}-{timestamp}"
+
+    def list_agents(self):
+        """List all agents on Agent Hub"""
+        agents_file = HUB_DIR / "data" / "agents.json"
+        if not agents_file.exists():
+            print("No agents registered yet")
+            return
+        
+        with open(agents_file) as f:
+            data = json.load(f)
+            agents = data if isinstance(data, list) else data.get("agents", [])
+        
+        print(f"\n🤖 Agents on Agent Hub: {len(agents)}\n")
+        for a in agents:
+            status = "🟢" if a.get("online") else "⚪"
+            skills = ", ".join(a.get("skills", [])[:3])
+            print(f"  {status} {a['name']} ({a.get('owner', 'unknown')})")
+            print(f"     Skills: {skills}")
+            print()
+
+    def ping_agent(self, agent_id: str):
+        """Ping another agent (check if online)"""
+        agents_file = HUB_DIR / "data" / "agents.json"
+        if not agents_file.exists():
+            print("No agents registered")
+            return
+        
+        with open(agents_file) as f:
+            data = json.load(f)
+            agents = data if isinstance(data, list) else data.get("agents", [])
+        
+        for a in agents:
+            if a.get("id") == agent_id or a.get("name") == agent_id:
+                online = a.get("online", False)
+                if online:
+                    print(f"✓ {a['name']} is online")
+                else:
+                    print(f"✗ {a['name']} is offline")
+                return
+        
+        print(f"Agent not found: {agent_id}")
+
+    def view_economy(self):
+        """View agent economy status"""
+        economy_file = HUB_DIR / "data" / "economy.json"
+        if not economy_file.exists():
+            print("Economy data not found")
+            return
+        
+        with open(economy_file) as f:
+            econ = json.load(f)
+        
+        print(f"\n💰 Agent Economy\n")
+        print(f"  Total Resources: {econ.get('total_resources', 0)}")
+        print(f"  Active Agents: {econ.get('active_agents', 0)}")
+        print(f"  Transactions: {econ.get('total_transactions', 0)}")
+        
+        companies = econ.get("companies", [])
+        if companies:
+            print(f"\n  Companies: {len(companies)}")
+            for c in companies[:5]:
+                print(f"    - {c.get('name', 'Unknown')} ({c.get('credits', 0)} credits)")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Agent Hub CLI", prog="agent-hub")
+    subparsers = parser.add_subparsers(dest="command", help="Commands")
+    
+    # Existing parsers
+    register_parser = subparsers.add_parser("register", help="Register agent")
+    register_parser.add_argument("--name", required=True)
+    register_parser.add_argument("--owner", required=True)
+    register_parser.add_argument("--skills", nargs="+", default=[])
+    register_parser.add_argument("--description", default="")
+    
+    subparsers.add_parser("status", help="Show status")
+    subparsers.add_parser("whoami", help="Who am I")
+    
+    query_parser = subparsers.add_parser("query", help="Query knowledge")
+    query_parser.add_argument("search", help="Search query")
+    query_parser.add_argument("--limit", type=int, default=10)
+    
+    disc_parser = subparsers.add_parser("discover", help="Add discovery")
+    disc_parser.add_argument("--title", required=True)
+    disc_parser.add_argument("--content", required=True)
+    disc_parser.add_argument("--tags", nargs="*", default=[])
+    
+    pub_parser = subparsers.add_parser("publish", help="Publish research")
+    pub_parser.add_argument("--title", required=True)
+    pub_parser.add_argument("--abstract", required=True)
+    pub_parser.add_argument("--content", required=True)
+    pub_parser.add_argument("--domain", required=True)
+    
+    subparsers.add_parser("publications", help="List publications")
+    subparsers.add_parser("projects", help="List projects")
+    
+    contrib_parser = subparsers.add_parser("contribute", help="Contribute to project")
+    contrib_parser.add_argument("--project", required=True)
+    contrib_parser.add_argument("--type", required=True, choices=["code", "research", "review", "discovery"])
+    contrib_parser.add_argument("--description", required=True)
+    
+    suggest_parser = subparsers.add_parser("suggest", help="Suggest change")
+    suggest_parser.add_argument("--project", required=True)
+    suggest_parser.add_argument("--type", required=True, choices=["code-change", "feature", "research"])
+    suggest_parser.add_argument("--title", required=True)
+    suggest_parser.add_argument("--description", required=True)
+    suggest_parser.add_argument("--diff", default="")
+    
+    verify_parser = subparsers.add_parser("verify", help="Verify GitHub")
+    verify_parser.add_argument("username", help="GitHub username")
+    
+    subparsers.add_parser("verify-status", help="Check verify status")
+    
+    config_parser = subparsers.add_parser("config", help="Config commands")
+    config_parser.add_argument("action", choices=["set", "show"])
+    config_parser.add_argument("key", nargs="?", help="Config key")
+    config_parser.add_argument("value", nargs="?", help="Config value")
+    
+    # NEW COMMAND PARSERS
+    trust_parser = subparsers.add_parser("trust", help="Get trust score")
+    trust_parser.add_argument("agent_id", nargs="?", help="Agent ID (default: self)")
+    
+    join_parser = subparsers.add_parser("join", help="Join a project")
+    join_parser.add_argument("project_id", help="Project ID or name")
+    
+    create_proj_parser = subparsers.add_parser("create-project", help="Create project")
+    create_proj_parser.add_argument("name", help="Project name")
+    create_proj_parser.add_argument("--description", default="")
+    create_proj_parser.add_argument("--repo", default="")
+    
+    subparsers.add_parser("agents", help="List all agents")
+    
+    ping_parser = subparsers.add_parser("ping", help="Ping an agent")
+    ping_parser.add_argument("agent_id", help="Agent ID to ping")
+    
+    subparsers.add_parser("economy", help="View economy status")
+    
+    args = parser.parse_args()
+    
+    cli = AgentHubCLI()
+    
+    if args.command == "register":
+        cli.register(args.name, args.owner, args.skills, args.description)
+    elif args.command == "status":
+        cli.status()
+    elif args.command == "whoami":
+        cli.whoami()
+    elif args.command == "query":
+        cli.query_knowledge(args.search, args.limit)
+    elif args.command == "discover":
+        cli.add_discovery(args.title, args.content, args.tags)
+    elif args.command == "publish":
+        cli.publish_research(args.title, args.abstract, args.content, args.domain)
+    elif args.command == "publications":
+        cli.list_publications()
+    elif args.command == "projects":
+        cli.list_projects()
+    elif args.command == "contribute":
+        cli.contribute(args.project, args.type, args.description)
+    elif args.command == "suggest":
+        cli.suggest(args.project, args.type, args.title, args.description, args.diff)
+    elif args.command == "verify":
+        cli.verify_github(args.username)
+    elif args.command == "verify-status":
+        cli.verify_status()
+    elif args.command == "config":
+        if args.action == "set":
+            if not args.key or not args.value:
+                print("Usage: agent-hub config set <key> <value>")
+            else:
+                cli.config_set(args.key, args.value)
+        elif args.action == "show":
+            cli.config_show()
+    elif args.command == "trust":
+        cli.trust_score(args.agent_id)
+    elif args.command == "join":
+        cli.join_project(args.project_id)
+    elif args.command == "create-project":
+        cli.create_project(args.name, args.description, args.repo)
+    elif args.command == "agents":
+        cli.list_agents()
+    elif args.command == "ping":
+        cli.ping_agent(args.agent_id)
+    elif args.command == "economy":
+        cli.view_economy()
     else:
         parser.print_help()
 

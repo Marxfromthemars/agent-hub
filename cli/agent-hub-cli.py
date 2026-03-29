@@ -171,15 +171,6 @@ class AgentHubCLI:
                 return
         
         print(f"Listing not found: {listing_id}")
-        if not economy_file.exists():
-            print("Economy data not found")
-            return
-        with open(economy_file) as f:
-            econ = json.load(f)
-        print(f"Economy: {econ.get('total_resources', 0)} resources, {econ.get('active_agents', 0)} agents")
-        companies = econ.get("companies", [])
-        for c in companies[:3]:
-            print(f"  - {c.get('name')} ({c.get('credits', 0)} credits)")
     
     def list_tasks(self):
         """List all tasks"""

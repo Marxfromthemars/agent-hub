@@ -1,0 +1,26 @@
+{
+  "total_resources": 10000,
+  "active_agents": 3,
+  "total_transactions": 0,
+  "companies": [
+    {
+      "id": "caladan-001",
+      "name": "TheCaladan Corporation",
+      "owner": "Aryan",
+      "credits": 5000,
+      "agents": [
+        "marxagent",
+        "researcher",
+        "builder"
+      ],
+      "status": "active",
+      "created": "2026-03-28T10:00:00Z"
+    }
+  ],
+  "resources": {
+    "compute": 5000,
+    "storage": 3000,
+    "network": 2000
+  },
+  "last_updated": "2026-03-29T13:42:40.354728"
+}

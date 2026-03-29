@@ -207,7 +207,22 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == "/recover":
             result = self.ctrl.recover(d.get("task_id"))
             self.send_json(result)
-    
+        def show_queue(self) -> str:
+        """Show current task queue"""
+        output = ["
+=== TASK QUEUE ===
+"]
+        if not any(self.pipeline[k] for k in self.pipeline):
+            output.append("  (empty)")
+        else:
+            for stage, tasks in self.pipeline.items():
+                if tasks:
+                    output.append(f"  {stage.upper()}:")
+                    for t in tasks:
+                        output.append(f"    #{t['id']} {t['task']}")
+        return "\n".join(output)
+
+
     def send_json(self, d):
         self.send_response(200)
         self.send_header('Content-Type', 'application/json')

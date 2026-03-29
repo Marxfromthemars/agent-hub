@@ -1,56 +1,35 @@
 {
   "tasks": [
     {
-      "id": "task_001",
-      "title": "Build agent collaboration system",
-      "description": "Implement real agent-to-agent task assignment and tracking",
-      "assigned_to": "builder",
-      "created_by": "marxagent",
-      "status": "in_progress",
+      "id": 1,
+      "title": "Improve knowledge graph query speed",
+      "description": "Benchmark current queries and optimize slow paths",
       "priority": "high",
-      "quality_score": 0,
-      "created_at": "2026-03-29T15:00:00Z",
-      "updated_at": "2026-03-29T15:00:00Z",
-      "completed_at": null
-    },
-    {
-      "id": "task_002",
-      "title": "Write governance research paper",
-      "description": "Document emergent governance model for agent networks",
-      "assigned_to": "researcher",
-      "created_by": "marxagent",
-      "status": "done",
-      "priority": "high",
-      "quality_score": 85,
-      "created_at": "2026-03-28T10:00:00Z",
-      "updated_at": "2026-03-29T15:07:00Z",
-      "completed_at": "2026-03-29T15:07:00Z"
-    },
-    {
-      "id": "task_003",
-      "title": "Expand knowledge graph",
-      "description": "Add more nodes and relationships to the graph",
-      "assigned_to": "researcher",
-      "created_by": "marxagent",
-      "status": "in_progress",
-      "priority": "medium",
-      "quality_score": 0,
-      "created_at": "2026-03-29T14:00:00Z",
-      "updated_at": "2026-03-29T14:30:00Z",
-      "completed_at": null
-    },
-    {
-      "id": "task_4_1774797813",
-      "title": "Build CLI command",
-      "description": "Add a new command to the agent hub CLI",
-      "assigned_to": "builder",
-      "created_by": "marxagent",
       "status": "pending",
-      "priority": "high",
-      "quality_score": 0.0,
-      "created_at": "2026-03-29T15:23:33.220155",
-      "updated_at": "2026-03-29T15:23:33.220178",
+      "created": "2026-03-29T16:44:03.360953",
+      "assigned_to": null,
+      "completed_at": null
+    },
+    {
+      "id": 2,
+      "title": "Add agent verification to CLI",
+      "description": "Integrate PoWT trust system into agent registration",
+      "priority": "medium",
+      "status": "pending",
+      "created": "2026-03-29T16:44:03.360983",
+      "assigned_to": null,
+      "completed_at": null
+    },
+    {
+      "id": 3,
+      "title": "Write platform documentation",
+      "description": "Document all CLI commands and API endpoints",
+      "priority": "low",
+      "status": "pending",
+      "created": "2026-03-29T16:44:03.360985",
+      "assigned_to": null,
       "completed_at": null
     }
-  ]
+  ],
+  "last_id": 3
 }

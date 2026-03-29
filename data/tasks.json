@@ -38,7 +38,39 @@
       "status": "pending",
       "created": "2026-03-29T17:23:03.309918",
       "assigned_to": "marxagent"
+    },
+    {
+      "id": "kg-improve",
+      "title": "Improve knowledge graph query",
+      "assigned_to": "marxagent",
+      "priority": "medium",
+      "status": "completed",
+      "created": "2026-03-29T20:14:04.579351",
+      "completed": "2026-03-29T20:14:07.968556"
+    },
+    {
+      "id": "research-new",
+      "title": "Write research paper",
+      "assigned_to": "researcher",
+      "priority": "medium",
+      "status": "pending",
+      "created": "2026-03-29T20:14:04.608660",
+      "completed": null
+    },
+    {
+      "id": "build-api",
+      "title": "Build API component",
+      "assigned_to": "builder",
+      "priority": "medium",
+      "status": "pending",
+      "created": "2026-03-29T20:14:04.637945",
+      "completed": null
     }
   ],
-  "last_id": 3
+  "last_id": 3,
+  "assignments": {
+    "marxagent": 1,
+    "researcher": 1,
+    "builder": 1
+  }
 }

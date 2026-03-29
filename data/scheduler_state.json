@@ -1,0 +1,21 @@
+{
+  "scheduled_tasks": [
+    {
+      "id": "task_1774803737_56e18ab7",
+      "name": "Daily Research",
+      "template": "research_sweep",
+      "params": {
+        "topics": [
+          "AI agents",
+          "autonomous systems"
+        ]
+      },
+      "interval": 3600,
+      "cron": null,
+      "next_run": "2026-03-29T18:02:17.234720",
+      "status": "scheduled",
+      "created_at": "2026-03-29T17:02:17.234759"
+    }
+  ],
+  "completed_pipelines": []
+}

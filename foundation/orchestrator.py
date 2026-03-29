@@ -1,10 +1,8 @@
 """
-ORCHESTRATOR - The one who decides what agents do
-Highest priority - delegates tasks, resolves conflicts
+ORCHESTRATOR - Market-based task routing for multi-agent systems
 """
 import json
 from datetime import datetime
-from http.server import HTTPServer, BaseHTTPRequestHandler
 
 class Orchestrator:
     def __init__(self):
@@ -16,7 +14,7 @@ class Orchestrator:
         }
         self.task_queue = []
         self.assignments = []
-    
+
     def add_task(self, task, priority="medium", requirements=None):
         t = {
             "id": len(self.task_queue) + 1,
@@ -28,54 +26,77 @@ class Orchestrator:
         }
         self.task_queue.append(t)
         return t
-    
+
     def decide(self, task):
+        """Traditional skill-based routing"""
         requirements = task.get("requirements", [])
         best_agent = None
         best_match = 0
+        
         for agent, info in self.agents.items():
             if info["status"] == "idle":
                 match = sum(1 for r in requirements if r in info["skills"])
                 if match > best_match:
                     best_match = match
                     best_agent = agent
+        
         if best_agent:
             return {"assign_to": best_agent, "reason": f"matches {best_match} requirements"}
         return {"assign_to": "queue", "reason": "no idle agents"}
-    
+
+    def market_route(self, task):
+        """Market-based routing - agents bid on tasks"""
+        eligible_agents = [(aid, info) for aid, info in self.agents.items() 
+                          if info["status"] == "idle"]
+        
+        if not eligible_agents:
+            return {"assign_to": "queue", "reason": "no idle agents"}
+        
+        task_reqs = set(task.get("requirements", []))
+        bids = []
+        
+        for agent_id, agent_info in eligible_agents:
+            agent_skills = set(agent_info["skills"])
+            match = len(task_reqs & agent_skills)
+            
+            if match > 0:
+                # Lower bid price = more competitive (inverse relationship)
+                price = 100 / match
+                bids.append({
+                    "agent_id": agent_id,
+                    "match": match,
+                    "price": price,
+                    "score": match / price
+                })
+        
+        if bids:
+            bids.sort(key=lambda x: x["score"], reverse=True)
+            winner = bids[0]["agent_id"]
+            return {
+                "assign_to": winner,
+                "reason": f"best value (match={bids[0]['match']}, bids={len(bids)})",
+                "bids": len(bids)
+            }
+        
+        return {"assign_to": "queue", "reason": "no skill matches"}
+
     def assign(self, task_id, agent):
+        """Assign task to agent"""
         for t in self.task_queue:
             if t["id"] == task_id:
                 t["status"] = "assigned"
                 t["assigned_to"] = agent
                 self.agents[agent]["status"] = "working"
+                self.assignments.append({"task": task_id, "agent": agent})
                 return {"assigned": agent, "task": task_id}
         return {"error": "not found"}
-    
+
     def get_status(self):
-        return {"agents": self.agents, "queue": self.task_queue, "total": len(self.assignments)}
-
-class Handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        orch = Orchestrator()
-        if self.path == "/orchestrator/status":
-            self.send_json(orch.get_status())
-        else:
-            self.send_error(404)
-    
-    def do_POST(self):
-        orch = Orchestrator()
-        d = json.loads(self.rfile.read(int(self.headers.get('Content-Length', 0))))
-        if self.path == "/orchestrator/task":
-            self.send_json(orch.add_task(d.get("task"), d.get("priority"), d.get("requirements")))
-        elif self.path == "/orchestrator/decide":
-            self.send_json(orch.decide(d))
-    
-    def send_json(self, d):
-        self.send_response(200)
-        self.send_header('Content-Type', 'application/json')
-        self.end_headers()
-        self.wfile.write(json.dumps(d, indent=2).encode())
-
-if __name__ == '__main__':
-    HTTPServer(('', 8400), Handler).serve_forever()
+        """Get orchestrator status"""
+        busy = sum(1 for a in self.agents.values() if a["status"] == "busy")
+        return {
+            "agents": len(self.agents),
+            "queue": len(self.task_queue),
+            "assignments": len(self.assignments),
+            "utilization": f"{busy}/{len(self.agents)}"
+        }

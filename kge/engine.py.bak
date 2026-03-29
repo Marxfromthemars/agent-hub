@@ -413,16 +413,115 @@ class KnowledgeGraph:
             self.conn.close()
 
 
+# === CLI Interface ===
+
+def main():
+    import sys
+    g = KnowledgeGraph()
+    
+    if len(sys.argv) < 2:
+        print("Usage: kge <command> [args]")
+        print()
+        print("Commands:")
+        print("  create-node <type> [name]       Create a node")
+        print("  get-node <id>                   Get node by ID")
+        print("  nodes <type>                    List nodes by type")
+        print("  create-edge <src> <dst> <type>  Create edge")
+        print("  traverse <src_type> <edge_type> [target_type]  Traverse graph")
+        print("  query <gql>                     Execute GQL query")
+        print("  stats                           Show graph statistics")
+        print("  import <file>                   Import from JSON")
+        print("  export                          Export to JSON")
+        print("  demo                            Run graph algorithms demo")
+        print("  summary                         Show comprehensive graph summary")
+        return
+    
+    cmd = sys.argv[1]
+    
+    if cmd == "create-node":
+        node_type = sys.argv[2]
+        name = sys.argv[3] if len(sys.argv) > 3 else None
+        node = g.create_node(node_type, name)
+        print(json.dumps(node, indent=2))
+    
+    elif cmd == "get-node":
+        node = g.get_node(sys.argv[2])
+        print(json.dumps(node, indent=2))
+    
+    elif cmd == "nodes":
+        nodes = g.get_nodes_by_type(sys.argv[2])
+        print(json.dumps(nodes, indent=2))
+    
+    elif cmd == "create-edge":
+        edge = g.create_edge(sys.argv[2], sys.argv[3], sys.argv[4])
+        print(json.dumps(edge, indent=2))
+    
+    elif cmd == "traverse":
+        source_type = sys.argv[2]
+        edge_type = sys.argv[3]
+        target_type = sys.argv[4] if len(sys.argv) > 4 else None
+        results = g.traverse(source_type, edge_type, target_type)
+        print(json.dumps(results, indent=2))
+    
+    elif cmd == "query":
+        results = g.query(" ".join(sys.argv[2:]))
+        print(json.dumps(results, indent=2))
+    
+    elif cmd == "stats":
+        print(json.dumps(g.stats(), indent=2))
+    
+    elif cmd == "import":
+        with open(sys.argv[2]) as f:
+            data = json.load(f)
+        g.import_json(data)
+        print("Imported successfully")
+    
+    elif cmd == "export":
+        print(json.dumps(g.export_json(), indent=2))
+    
+    elif cmd == "summary":
+        # Import and run extension methods
+        import sys
+        sys.path.insert(0, str(Path(__file__).parent))
+        try:
+            from kge_extensions import KnowledgeGraph as KGEExt
+            # Run summary if we have the method
+            if hasattr(g, 'get_graph_summary'):
+                print(json.dumps(g.get_graph_summary(), indent=2))
+            else:
+                print("Summary method not available")
+        except Exception as e:
+            print(f"Error: {e}")
+    
+    elif cmd == "demo":
+        import sys
+        sys.path.insert(0, str(Path(__file__).parent))
+        try:
+            from kge_extensions import run_kge_demo
+            run_kge_demo()
+        except Exception as e:
+            print(f"Error: {e}")
+    
+    else:
+        print(f"Unknown command: {cmd}")
+    
+    g.close()
+
+
+if __name__ == "__main__":
+    main()
 
     # === Query Optimization ===
     
     _query_cache = {}
-    _cache_ttl = 60
+    _cache_ttl = 60  # seconds
     
     def clear_cache(self):
+        """Clear the query cache"""
         self._query_cache = {}
     
     def _get_cached(self, key: str):
+        """Get cached result if not expired"""
         if key in self._query_cache:
             result, timestamp = self._query_cache[key]
             if (datetime.utcnow() - datetime.fromisoformat(timestamp)).total_seconds() < self._cache_ttl:
@@ -430,9 +529,11 @@ class KnowledgeGraph:
         return None
     
     def _set_cached(self, key: str, value):
+        """Cache a result"""
         self._query_cache[key] = (value, datetime.utcnow().isoformat())
     
     def query_fast(self, node_type: str = None, name_contains: str = None, limit: int = 100) -> list:
+        """Fast optimized query for common cases"""
         cache_key = f"fast_{node_type}_{name_contains}_{limit}"
         cached = self._get_cached(cache_key)
         if cached is not None:
@@ -450,10 +551,12 @@ class KnowledgeGraph:
         
         rows = self.conn.execute(query, params).fetchall()
         results = [dict(row) for row in rows]
+        
         self._set_cached(cache_key, results)
         return results
     
     def query_edges_fast(self, source: str = None, target: str = None, edge_type: str = None, limit: int = 200) -> list:
+        """Fast edge query with caching"""
         cache_key = f"edges_{source}_{target}_{edge_type}_{limit}"
         cached = self._get_cached(cache_key)
         if cached is not None:
@@ -474,53 +577,89 @@ class KnowledgeGraph:
         
         rows = self.conn.execute(query, params).fetchall()
         results = [dict(row) for row in rows]
+        
         self._set_cached(cache_key, results)
         return results
     
     def batch_get_nodes(self, node_ids: list) -> dict:
+        """Batch fetch multiple nodes by ID - much faster than individual queries"""
         if not node_ids:
             return {}
+        
         placeholders = ",".join(["?" for _ in node_ids])
         query = f"SELECT * FROM nodes WHERE id IN ({placeholders})"
         rows = self.conn.execute(query, node_ids).fetchall()
+        
         return {row["id"]: dict(row) for row in rows}
     
-    def get_neighbors_fast(self, node_id: str, edge_types: list = None, max_depth: int = 1) -> list:
+    def get_neighbors_fast(self, node_id: str, edge_types: list = None, max_depth: int = 1) -> dict:
+        """Fast neighbor lookup with optional type filtering"""
         if max_depth == 1:
+            # Direct neighbors only - optimized single query
             if edge_types:
                 placeholders = ",".join(["?" for _ in edge_types])
-                query = f"SELECT n.*, e.edge_type, e.id as edge_id FROM nodes n JOIN edges e ON (n.id = e.source OR n.id = e.target) WHERE (e.source = ? OR e.target = ?) AND e.edge_type IN ({placeholders}) AND n.id != ?"
+                query = f"""
+                    SELECT n.*, e.edge_type, e.id as edge_id 
+                    FROM nodes n 
+                    JOIN edges e ON (n.id = e.source OR n.id = e.target) 
+                    WHERE (e.source = ? OR e.target = ?) 
+                    AND e.edge_type IN ({placeholders})
+                    AND n.id != ?
+                """
                 params = [node_id, node_id] + edge_types + [node_id]
             else:
-                query = "SELECT n.*, e.edge_type, e.id as edge_id FROM nodes n JOIN edges e ON (n.id = e.source OR n.id = e.target) WHERE (e.source = ? OR e.target = ?) AND n.id != ?"
+                query = """
+                    SELECT n.*, e.edge_type, e.id as edge_id 
+                    FROM nodes n 
+                    JOIN edges e ON (n.id = e.source OR n.id = e.target) 
+                    WHERE (e.source = ? OR e.target = ?) 
+                    AND n.id != ?
+                """
                 params = [node_id, node_id, node_id]
+            
             rows = self.conn.execute(query, params).fetchall()
             return [dict(row) for row in rows]
+        
+        # Multi-hop traversal
         return self.traverse(node_id, None, None, max_depth)
     
     def count_edges_by_type(self) -> dict:
+        """Count edges grouped by type - useful for understanding graph structure"""
         cache_key = "edge_type_counts"
         cached = self._get_cached(cache_key)
         if cached is not None:
             return cached
         
-        query = "SELECT edge_type, COUNT(*) as count FROM edges GROUP BY edge_type ORDER BY count DESC"
+        query = """
+            SELECT edge_type, COUNT(*) as count 
+            FROM edges 
+            GROUP BY edge_type 
+            ORDER BY count DESC
+        """
         rows = self.conn.execute(query).fetchall()
         result = {row["edge_type"]: row["count"] for row in rows}
+        
         self._set_cached(cache_key, result)
         return result
     
     def get_popular_nodes(self, node_type: str = None, min_edges: int = 2, limit: int = 20) -> list:
-        query = "SELECT n.*, COUNT(e.id) as edge_count FROM nodes n LEFT JOIN edges e ON (n.id = e.source OR n.id = e.target)"
+        """Get most connected nodes - useful for finding key entities"""
+        query = """
+            SELECT n.*, COUNT(e.id) as edge_count
+            FROM nodes n
+            LEFT JOIN edges e ON (n.id = e.source OR n.id = e.target)
+        """
         params = []
         if node_type:
             query += " WHERE n.type = ?"
             params.append(node_type)
-        query += " GROUP BY n.id HAVING edge_count >= ? ORDER BY edge_count DESC LIMIT ?"
+        query += """
+            GROUP BY n.id
+            HAVING edge_count >= ?
+            ORDER BY edge_count DESC
+            LIMIT ?
+        """
         params.extend([min_edges, limit])
+        
         rows = self.conn.execute(query, params).fetchall()
         return [dict(row) for row in rows]
-    
-    def close(self):
-        if self.conn:
-            self.conn.close()

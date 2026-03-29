@@ -74,16 +74,38 @@ class AgentHubCLI:
             print(f"  {i}. {p}")
     
     def graph_stats(self):
-        """Show knowledge graph statistics"""
+        """Show knowledge graph statistics - optimized with caching"""
         try:
             sys.path.insert(0, str(HUB_DIR))
             from kge.engine import KnowledgeGraph
             kg = KnowledgeGraph()
             types = kg.count_by_type()
-            total = sum(types.values())
-            print(f"Knowledge Graph: {total} nodes")
+            total_nodes = sum(types.values())
+            
+            # Use optimized edge count with caching
+            edge_counts = kg.count_edges_by_type()
+            total_edges = sum(edge_counts.values())
+            
+            # Get most connected nodes
+            popular = kg.get_popular_nodes(limit=5)
+            
+            print(f"Knowledge Graph: {total_nodes} nodes, {total_edges} edges")
+            print("\nBy Type:")
             for t, c in sorted(types.items(), key=lambda x: -x[1]):
-                print(f"  {t}: {c}")
+                bar = "█" * min(c, 10)
+                print(f"  {t:14} {c:3} {bar}")
+            
+            if edge_counts:
+                print("\nTop Edge Types:")
+                for et, count in sorted(edge_counts.items(), key=lambda x: -x[1])[:5]:
+                    print(f"  {et:14} {count}")
+            
+            if popular:
+                print("\nMost Connected:")
+                for p in popular[:5]:
+                    name = (p.get('name') or p['id'])[:18]
+                    print(f"  {name:18} {p.get('edge_count', 0)}")
+                    
         except Exception as e:
             print(f"Graph error: {e}")
     

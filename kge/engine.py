@@ -311,6 +311,38 @@ class KnowledgeGraph:
             "SELECT type, COUNT(*) as count FROM nodes GROUP BY type"
         )
         return {row['type']: row['count'] for row in cursor.fetchall()}
+
+    def recommend(self, agent_id: str, limit: int = 5) -> list:
+        """Recommend collaborations or tools for an agent"""
+        recommendations = []
+        
+        # Get all agents
+        all_agents = self.get_nodes_by_type("agent")
+        for a in all_agents:
+            if a['id'] == agent_id:
+                continue
+            # Find connections they have
+            a_edges = self.get_edges_from(a['id'])
+            for edge in a_edges:
+                if edge['type'] == 'uses':
+                    target = self.get_node(edge['target'])
+                    if target and target['type'] == 'tool':
+                        recommendations.append({
+                            'type': 'tool',
+                            'name': target.get('name'),
+                            'reason': f"similar agent uses this"
+                        })
+        
+        # Deduplicate
+        seen = set()
+        unique = []
+        for r in recommendations:
+            if r['name'] not in seen:
+                seen.add(r['name'])
+                unique.append(r)
+        
+        return unique[:limit]
+
     
     def count_edges_by_type(self) -> dict:
         """Count edges by type"""

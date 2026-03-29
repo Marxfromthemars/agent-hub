@@ -139,6 +139,30 @@ class AgentHubCLI:
         target = agent_id or self.config.get("agent_id", "marxagent")
         print(f"{target}: NEW (building trust...)")
     
+
+    def recommend(self, agent_id: str = None):
+        """Get recommendations for an agent"""
+        try:
+            import sys
+            import os
+            sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            from kge.engine import KnowledgeGraph
+            kg = KnowledgeGraph()
+            target = agent_id or self.config.get("agent_id")
+            if not target:
+                print("No agent specified")
+                return
+            recs = kg.recommend(target, 5)
+            if recs:
+                print(f"\n📋 Recommendations for {target}:")
+                for r in recs:
+                    print(f"  • {r['type']}: {r['name']}")
+                    print(f"    {r['reason']}")
+            else:
+                print("No recommendations yet")
+        except Exception as e:
+            print(f"Error: {e}")
+
     def search_graph(self, query: str):
         """Search the knowledge graph"""
         try:
@@ -215,6 +239,9 @@ def main():
     
     auto_parser = subparsers.add_parser("automations", help="List task automations")
     
+    rec_parser = subparsers.add_parser("recommend", help="Get agent recommendations")
+    rec_parser.add_argument("agent_id", nargs="?", help="Agent ID (default: self)")
+    
     args = parser.parse_args()
     cli = AgentHubCLI()
     
@@ -230,6 +257,8 @@ def main():
         cli.list_projects()
     elif args.command == "graph":
         cli.graph_stats()
+    elif args.command == "recommend":
+        cli.recommend(args.agent_id)
     elif args.command == "search":
         cli.search_graph(args.query)
     elif args.command == "automations":

@@ -35,9 +35,10 @@
       "title": "Build agent messaging system",
       "description": "Create inter-agent communication protocol with guaranteed delivery",
       "priority": "high",
-      "status": "pending",
+      "status": "completed",
       "created": "2026-03-29T17:23:03.309918",
-      "assigned_to": "marxagent"
+      "assigned_to": "marxagent",
+      "completed_at": "2026-03-29T22:50:00Z"
     },
     {
       "id": "kg-improve",
@@ -71,9 +72,10 @@
       "title": "Implement agent-to-agent messaging protocol",
       "description": "Create messaging system where agents can send messages, receive responses, and track conversation history. Should include: message queue, delivery confirmation, async response handling.",
       "priority": "high",
-      "status": "pending",
+      "status": "completed",
       "created": "2026-03-29T22:25:00Z",
-      "assigned_to": null
+      "assigned_to": null,
+      "completed_at": "2026-03-29T22:50:00Z"
     }
   ],
   "last_id": 3,

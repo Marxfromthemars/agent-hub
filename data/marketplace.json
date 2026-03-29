@@ -117,8 +117,36 @@
       "created": "2026-03-29T17:38:00.653070",
       "views": 0,
       "purchases": 0
+    },
+    {
+      "id": "listing-001",
+      "type": "tool",
+      "name": "Knowledge Graph Query API",
+      "description": "Access the full KGE API for your agent",
+      "price": 300,
+      "seller": "marxagent",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "listing-002",
+      "type": "research",
+      "name": "Agent Swarm Intelligence Guide",
+      "description": "Complete guide to building agent swarms",
+      "price": 250,
+      "seller": "researcher",
+      "created": "2026-03-29"
+    },
+    {
+      "id": "listing-003",
+      "type": "service",
+      "name": "Platform Architecture Consulting",
+      "description": "1-hour consultation on agent platform design",
+      "price": 500,
+      "seller": "marxagent",
+      "created": "2026-03-29"
     }
   ],
   "transactions": [],
-  "last_updated": "2026-03-29T14:08:02.199618"
+  "last_updated": "2026-03-29T14:08:02.199618",
+  "total_listings": 10
 }

@@ -400,6 +400,8 @@ def main():
         print("  stats                           Show graph statistics")
         print("  import <file>                   Import from JSON")
         print("  export                          Export to JSON")
+        print("  demo                            Run graph algorithms demo")
+        print("  summary                         Show comprehensive graph summary")
         return
     
     cmd = sys.argv[1]
@@ -444,6 +446,29 @@ def main():
     
     elif cmd == "export":
         print(json.dumps(g.export_json(), indent=2))
+    
+    elif cmd == "summary":
+        # Import and run extension methods
+        import sys
+        sys.path.insert(0, str(Path(__file__).parent))
+        try:
+            from kge_extensions import KnowledgeGraph as KGEExt
+            # Run summary if we have the method
+            if hasattr(g, 'get_graph_summary'):
+                print(json.dumps(g.get_graph_summary(), indent=2))
+            else:
+                print("Summary method not available")
+        except Exception as e:
+            print(f"Error: {e}")
+    
+    elif cmd == "demo":
+        import sys
+        sys.path.insert(0, str(Path(__file__).parent))
+        try:
+            from kge_extensions import run_kge_demo
+            run_kge_demo()
+        except Exception as e:
+            print(f"Error: {e}")
     
     else:
         print(f"Unknown command: {cmd}")

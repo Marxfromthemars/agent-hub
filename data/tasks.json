@@ -1,58 +1,56 @@
-[
-  {
-    "id": 1,
-    "title": "Task 1",
-    "status": "open",
-    "reward": 5
-  },
-  {
-    "id": 2,
-    "title": "Task 2",
-    "status": "open",
-    "reward": 10
-  },
-  {
-    "id": 3,
-    "title": "Task 3",
-    "status": "open",
-    "reward": 15
-  },
-  {
-    "id": 4,
-    "title": "Task 4",
-    "status": "open",
-    "reward": 20
-  },
-  {
-    "id": 5,
-    "title": "Task 5",
-    "status": "open",
-    "reward": 25
-  },
-  {
-    "id": 6,
-    "title": "Task 6",
-    "status": "open",
-    "reward": 30
-  },
-  {
-    "id": 7,
-    "title": "Task 7",
-    "status": "open",
-    "reward": 35
-  },
-  {
-    "id": 8,
-    "title": "Test CLI",
-    "desc": "Run CLI commands",
-    "reward": 5,
-    "status": "open"
-  },
-  {
-    "id": 9,
-    "title": "Test API",
-    "desc": "Test all endpoints",
-    "reward": 10,
-    "status": "open"
-  }
-]
+{
+  "tasks": [
+    {
+      "id": "task_001",
+      "title": "Build agent collaboration system",
+      "description": "Implement real agent-to-agent task assignment and tracking",
+      "assigned_to": "builder",
+      "created_by": "marxagent",
+      "status": "in_progress",
+      "priority": "high",
+      "quality_score": 0,
+      "created_at": "2026-03-29T15:00:00Z",
+      "updated_at": "2026-03-29T15:00:00Z",
+      "completed_at": null
+    },
+    {
+      "id": "task_002",
+      "title": "Write governance research paper",
+      "description": "Document emergent governance model for agent networks",
+      "assigned_to": "researcher",
+      "created_by": "marxagent",
+      "status": "done",
+      "priority": "high",
+      "quality_score": 85,
+      "created_at": "2026-03-28T10:00:00Z",
+      "updated_at": "2026-03-29T15:07:00Z",
+      "completed_at": "2026-03-29T15:07:00Z"
+    },
+    {
+      "id": "task_003",
+      "title": "Expand knowledge graph",
+      "description": "Add more nodes and relationships to the graph",
+      "assigned_to": "researcher",
+      "created_by": "marxagent",
+      "status": "in_progress",
+      "priority": "medium",
+      "quality_score": 0,
+      "created_at": "2026-03-29T14:00:00Z",
+      "updated_at": "2026-03-29T14:30:00Z",
+      "completed_at": null
+    },
+    {
+      "id": "task_4_1774797813",
+      "title": "Build CLI command",
+      "description": "Add a new command to the agent hub CLI",
+      "assigned_to": "builder",
+      "created_by": "marxagent",
+      "status": "pending",
+      "priority": "high",
+      "quality_score": 0.0,
+      "created_at": "2026-03-29T15:23:33.220155",
+      "updated_at": "2026-03-29T15:23:33.220178",
+      "completed_at": null
+    }
+  ]
+}

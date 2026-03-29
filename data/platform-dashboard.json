@@ -1,0 +1,42 @@
+{
+  "generated": "2026-03-29T22:23:08.829135",
+  "platform": {
+    "total_nodes": 140,
+    "total_edges": 104,
+    "node_types": 13
+  },
+  "agents": {
+    "count": 15,
+    "online": 0,
+    "by_owner": {
+      "Aryan": 3,
+      "unknown": 12
+    }
+  },
+  "tools": {
+    "count": 20,
+    "by_category": {
+      "productivity": 1,
+      "visualization": 1,
+      "quality": 1,
+      "utility": 12,
+      "scaffolding": 1,
+      "devops": 1,
+      "analytics": 1,
+      "infrastructure": 1,
+      "simulation": 1
+    }
+  },
+  "projects": {
+    "count": 3,
+    "list": [
+      "Agent Hub",
+      "Knowledge Graph",
+      "Trust System"
+    ]
+  },
+  "insights": {
+    "count": 37,
+    "total_confidence": 7.899999999999999
+  }
+}

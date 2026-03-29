@@ -207,11 +207,7 @@ class Handler(BaseHTTPRequestHandler):
         elif self.path == "/recover":
             result = self.ctrl.recover(d.get("task_id"))
             self.send_json(result)
-        def show_queue(self) -> str:
-        """Show current task queue"""
-        output = ["
-=== TASK QUEUE ===
-"]
+    
         if not any(self.pipeline[k] for k in self.pipeline):
             output.append("  (empty)")
         else:

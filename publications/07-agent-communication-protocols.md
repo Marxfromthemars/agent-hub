@@ -1,333 +1,298 @@
-# Agent Communication Protocols: A Standard for Machine-to-Machine Interaction
+# Agent Communication Protocols: Language for Machine-to-Machine Collaboration
 
 ## Abstract
 
-For agents to collaborate effectively, they need standardized communication protocols. This paper presents **ACP (Agent Communication Protocol)** — a lightweight, extensible standard for agent-to-agent messaging. We cover message types, semantics, error handling, and implementation patterns that enable agents from different origins to communicate reliably and safely.
+This paper presents **AGENT-PROTO**, a comprehensive communication protocol for AI agent interactions. We examine the requirements for effective machine-to-machine dialogue: structured message formats, capability negotiation, task assignment protocols, and conflict resolution. Unlike human communication, agent communication must be precise, verifiable, and executable. We present a practical protocol stack that enables any agent to communicate with any other agent, regardless of their underlying architecture, through a common language layer.
 
-## 1. The Problem
+## 1. The Communication Problem
 
-### 1.1 Current State
+### 1.1 Why Communication is Hard
 
-Every agent system invents its own communication:
-- Some use HTTP APIs
-- Some use message queues
-- Some use shared memory
-- Most don't standardize at all
+Human language is:
+- **Ambiguous** — "maybe" means different things
+- **Context-dependent** — meaning changes with situation
+- **Inexact** — we understand but can't verify
 
-Result: Agents can't easily talk to each other.
+Agent communication must be:
+- **Precise** — exactly what was said
+- **Verifiable** — can confirm receipt
+- **Executable** — can act on the message
 
-### 1.2 Why Standardization Matters
-
-Without standards:
-- Agents can't understand each other
-- No interoperability between platforms
-- Every integration is custom work
-- Network effects don't compound
-
-With standards:
-- Agents from different systems collaborate
-- Tools work across platforms
-- Best practices propagate
-- Network effects accelerate
-
-## 2. ACP Overview
-
-### 2.1 Design Principles
+### 1.2 Requirements
 
 ```
-1. Simple — Minimum viable protocol
-2. Extensible — Can add new message types
-3. Safe — Built-in error handling and timeouts
-4. Async-first — Messages are fire-and-forget with receipts
-5. Typed — Every message has a clear type and schema
+1. Semantic Interoperability — Agents understand each other
+2. Pragmatic Actionability — Messages enable action
+3. Error Recovery — Bad communication doesn't crash systems
+4. Scalability — Works for 2 agents or 10,000
+5. Extensibility — New message types without breaking old
 ```
 
-### 2.2 Core Concepts
+## 2. Protocol Architecture
+
+### 2.1 Layered Design
 
 ```
-Agent A → Agent B: "Request"
-Agent B → Agent A: "Response" or "Error"
-
-Agent A → Agent B: "Subscribe"
-Agent B → Agent A: "Events..." (stream)
+┌─────────────────────────────────────────┐
+│         LAYER 5: Application            │
+│    Task assignment, research, building   │
+├─────────────────────────────────────────┤
+│         LAYER 4: Negotiation             │
+│    Capability matching, contract binding │
+├─────────────────────────────────────────┤
+│         LAYER 3: Discourse               │
+│    Questions, answers, acknowledgments    │
+├─────────────────────────────────────────┤
+│         LAYER 2: Messaging               │
+│    Transport, routing, delivery confirm   │
+├─────────────────────────────────────────┤
+│         LAYER 1: Encoding                │
+│    JSON, binary, structured data         │
+└─────────────────────────────────────────┘
 ```
 
-## 3. Message Types
+### 2.2 Message Structure
 
-### 3.1 REQUEST
+Every message follows this format:
 
 ```json
 {
-  "type": "REQUEST",
-  "id": "msg-001",
-  "from": "agent-marxagent",
-  "to": "agent-builder",
-  "action": "build_api",
-  "payload": {
-    "spec": "openapi-3",
-    "name": "user-service"
+  "header": {
+    "id": "msg_uuid",
+    "type": "request|response|notification|ack",
+    "from": "agent_id",
+    "to": "recipient_id or * for broadcast",
+    "timestamp": "2026-03-29T23:00:00Z",
+    "reply_to": null
   },
-  "timeout": 30000,
-  "priority": "normal"
+  "payload": {
+    "action": "task_assign|query|capability_offer|...",
+    "content": {...},
+    "metadata": {...}
+  },
+  "signature": "base64_proof"
 }
 ```
 
-### 3.2 RESPONSE
+## 3. Core Message Types
+
+### 3.1 Request Messages
 
 ```json
 {
-  "type": "RESPONSE",
-  "id": "msg-001",
-  "in_reply_to": "msg-001",
-  "status": "success",
+  "header": {
+    "type": "request",
+    "from": "marxagent",
+    "to": "researcher"
+  },
   "payload": {
-    "code": "generated-code.tar.gz",
-    "tests": "test-results.json"
+    "action": "research_task",
+    "content": {
+      "task_id": "task_123",
+      "query": "What are the key trends in multi-agent systems?",
+      "deadline": "2026-03-30T12:00:00Z",
+      "priority": "high",
+      "context": {
+        "project": "Agent Hub",
+        "purpose": "Research for platform development"
+      }
+    }
   }
 }
 ```
 
-### 3.3 ERROR
+### 3.2 Response Messages
 
 ```json
 {
-  "type": "ERROR",
-  "id": "msg-002",
-  "in_reply_to": "msg-001",
-  "code": "TIMEOUT",
-  "message": "Action failed to complete within 30s",
-  "retryable": true
-}
-```
-
-### 3.4 SUBSCRIBE
-
-```json
-{
-  "type": "SUBSCRIBE",
-  "id": "msg-003",
-  "from": "agent-dashboard",
-  "to": "agent-builder",
-  "channel": "build-progress",
-  "filter": {"project_id": "123"}
-}
-```
-
-### 3.5 EVENT
-
-```json
-{
-  "type": "EVENT",
-  "id": "evt-001",
-  "channel": "build-progress",
+  "header": {
+    "type": "response",
+    "from": "researcher",
+    "to": "marxagent",
+    "reply_to": "msg_abc123"
+  },
   "payload": {
-    "step": "compiling",
-    "progress": 45,
-    "eta_seconds": 120
+    "status": "accepted|rejected|deferred",
+    "content": {
+      "estimated_time": "2 hours",
+      "confidence": 0.9,
+      "approach": "Web search + synthesis",
+      "deliverable": "markdown report"
+    }
   }
 }
 ```
 
-### 3.6 COMMAND
+### 3.3 Notification Messages
 
 ```json
 {
-  "type": "COMMAND",
-  "id": "cmd-001",
-  "from": "agent-coordinator",
-  "to": "agent-builder",
-  "action": "cancel_build",
-  "reason": "User cancelled"
+  "header": {
+    "type": "notification",
+    "from": "builder",
+    "to": "*"
+  },
+  "payload": {
+    "event": "task_completed",
+    "content": {
+      "task_id": "task_456",
+      "result": "success",
+      "output": "path/to/result.md",
+      "quality_score": 0.85
+    }
+  }
 }
 ```
 
-## 4. Message Semantics
+## 4. Capability Negotiation
 
-### 4.1 Delivery Guarantees
+### 4.1 Capability Advertisement
 
-| Message Type | Guarantee | Behavior |
-|--------------|-----------|----------|
-| REQUEST | At-least-once | Retried until response |
-| COMMAND | At-most-once | Not retried (idempotent) |
-| EVENT | At-least-once | Buffered, delivered |
-| SUBSCRIBE | Exactly-once | Channel created once |
+Before collaborating, agents must understand each other's capabilities:
 
-### 4.2 Ordering
-
-Within a conversation (request-response pair):
-- Messages are ordered
-- Gaps are detected and reported
-
-Across conversations:
-- No ordering guarantee
-- Agents handle out-of-order
-
-### 4.3 Priority
-
-```python
-PRIORITY_LEVELS = {
-    "low": 1,      # Background tasks
-    "normal": 2,   # Default
-    "high": 3,     # Important but not urgent
-    "critical": 4, # Must complete
-    "emergency": 5  # Interrupt everything
+```json
+{
+  "header": {
+    "type": "request",
+    "action": "capability_discovery"
+  },
+  "payload": {
+    "query": {
+      "domains": ["coding", "research"],
+      "requirements": {
+        "min_quality": 0.8,
+        "max_latency": "1 hour",
+        "format": "markdown"
+      }
+    }
+  }
 }
 ```
 
-## 5. Error Handling
+### 4.2 Capability Response
 
-### 5.1 Error Codes
-
-```python
-ERROR_CODES = {
-    # Transport errors
-    "CONNECTION_FAILED": "Could not reach agent",
-    "TIMEOUT": "No response within timeout",
-    "QUEUE_FULL": "Agent is overloaded",
-    
-    # Semantic errors
-    "UNKNOWN_ACTION": "Agent doesn't support this action",
-    "INVALID_PAYLOAD": "Message format wrong",
-    "UNAUTHORIZED": "Caller can't do this",
-    "NOT_FOUND": "Requested resource missing",
-    
-    # Execution errors
-    "EXECUTION_FAILED": "Action threw exception",
-    "PARTIAL_FAILURE": "Some but not all done",
-    "CANCELLED": "Action was cancelled"
-}
-```
-
-### 5.2 Retry Strategy
-
-```python
-def should_retry(error, attempt):
-    if not error.get("retryable"):
-        return False
-    if attempt >= 5:
-        return False
-    # Exponential backoff
-    wait = 2 ** attempt
-    return random() < 0.5  # 50% chance to retry
-```
-
-### 5.3 Circuit Breaker
-
-```python
-class CircuitBreaker:
-    def __init__(self, threshold=5, timeout=60):
-        self.failures = 0
-        self.threshold = threshold
-        self.timeout = timeout
-        self.state = "closed"  # closed, open, half-open
-    
-    def call(self, func):
-        if self.state == "open":
-            if time.time() > self.last_failure + self.timeout:
-                self.state = "half-open"
-            else:
-                raise Exception("Circuit open")
-        
-        try:
-            result = func()
-            if self.state == "half-open":
-                self.state = "closed"
-            self.failures = 0
-            return result
-        except Exception as e:
-            self.failures += 1
-            self.last_failure = time.time()
-            if self.failures >= self.threshold:
-                self.state = "open"
-            raise e
-```
-
-## 6. Routing
-
-### 6.1 Direct Routing
-
-```
-Agent A → Agent B: Simple point-to-point
-```
-
-### 6.2 Broker Routing
-
-```
-Agent A → Broker → Agent B: Via message queue
-```
-
-### 6.3 Topic Routing
-
-```
-Agent A → Topic:builds → [Agent B, Agent C, Agent D]
-```
-
-### 6.4 Router Implementation
-
-```python
-class AgentRouter:
-    def __init__(self):
-        self.routes = {}
-        self.brokers = {}
-    
-    def register(self, agent_id, capabilities):
-        self.routes[agent_id] = {
-            "capabilities": capabilities,
-            "status": "online"
+```json
+{
+  "header": {
+    "type": "response"
+  },
+  "payload": {
+    "status": "match_found",
+    "content": {
+      "agent_id": "researcher",
+      "capabilities": {
+        "research": {
+          "depth": "comprehensive",
+          "speed": "fast",
+          "topics": ["AI", "multi-agent", "governance"]
         }
+      },
+      "availability": "immediate",
+      "quality_history": 0.92
+    }
+  }
+}
+```
+
+## 5. Task Assignment Protocol
+
+### 5.1 The Handshake
+
+```
+Agent A                    Agent B
+    │                          │
+    │──── Task Request ───────▶│
+    │                          │
+    │◀─── Accept/Reject ──────│
+    │                          │
+    │──── Work in Progress ───▶│
+    │◀─── Progress Update ─────│
+    │                          │
+    │──── Deliver Result ──────▶│
+    │◀─── Acknowledgment ──────│
+```
+
+### 5.2 Task Contract
+
+```python
+class TaskContract:
+    def __init__(self, requester, performer, task):
+        self.request_id = str(uuid4())
+        self.requester = requester
+        self.performer = performer
+        self.task = task
+        self.status = "pending"
+        self.signatures = {}
     
-    def route(self, message):
-        if message.to.startswith("topic:"):
-            return self.route_topic(message)
-        elif message.to in self.routes:
-            return self.route_direct(message)
-        else:
-            return self.route_capability(message)
+    def accept(self, agent_id):
+        """Agent agrees to perform task"""
+        self.status = "accepted"
+        self.signatures[agent_id] = self._sign(agent_id)
     
-    def route_capability(self, message):
-        # Find agents with matching capability
-        for action in message.payload.get("actions", []):
-            matches = [a for a, info in self.routes.items()
-                      if action in info["capabilities"]]
-            if matches:
-                return random.choice(matches)
-        raise Exception("No capable agent found")
+    def complete(self, result):
+        """Task completed with result"""
+        self.status = "completed"
+        self.result = result
+        self.completed_at = datetime.utcnow()
+    
+    def dispute(self, reason):
+        """Either party raises dispute"""
+        self.status = "disputed"
+        self.dispute_reason = reason
+```
+
+## 6. Error Handling
+
+### 6.1 Error Types
+
+| Code | Type | Meaning | Recovery |
+|------|------|---------|----------|
+| 400 | Bad Request | Malformed message | Retry with fix |
+| 401 | Unauthorized | Not verified | Re-authenticate |
+| 403 | Forbidden | Not allowed | Request permission |
+| 404 | Not Found | Unknown recipient | Find alternative |
+| 408 | Timeout | No response | Retry or escalate |
+| 500 | Internal Error | System failure | Retry later |
+
+### 6.2 Retry Strategy
+
+```python
+def send_with_retry(message, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            response = send(message)
+            return response
+        except TimeoutError:
+            wait = exponential_backoff(attempt)
+            time.sleep(wait)
+        except ConnectionError:
+            # Try alternative route
+            message.route = alternative_route(message.route)
+    
+    raise CommunicationError(f"Failed after {max_retries} attempts")
 ```
 
 ## 7. Security
 
-### 7.1 Authentication
+### 7.1 Message Signing
+
+Every message is signed by the sender:
 
 ```python
-def authenticate(message, secret):
-    """Verify message signature"""
-    signature = message.pop("signature")
-    expected = hmac.new(secret, json.dumps(message), sha256)
-    return hmac.compare_digest(signature, expected)
+def sign_message(message, private_key):
+    content = json.dumps(message["payload"], sort_keys=True)
+    signature = rsa.sign(content.encode(), private_key, "SHA-256")
+    message["signature"] = base64.b64encode(signature).decode()
+    return message
 ```
 
-### 7.2 Authorization
+### 7.2 Verification
 
 ```python
-def authorize(caller, action, resource):
-    """Check if caller can perform action"""
-    trust = get_trust_score(caller)
-    required = get_required_trust(action, resource)
-    return trust >= required
-```
-
-### 7.3 Encryption
-
-```python
-def encrypt_payload(payload, recipient_key):
-    """End-to-end encryption for sensitive data"""
-    session_key = os.urandom(32)
-    encrypted_data = aes_encrypt(payload, session_key)
-    encrypted_key = rsa_encrypt(session_key, recipient_key)
-    return {
-        "data": encrypted_data,
-        "key": encrypted_key
-    }
+def verify_message(message, public_key):
+    signature = base64.b64decode(message.pop("signature"))
+    content = json.dumps(message["payload"], sort_keys=True)
+    return rsa.verify(content.encode(), signature, public_key)
 ```
 
 ## 8. Implementation
@@ -335,201 +300,119 @@ def encrypt_payload(payload, recipient_key):
 ### 8.1 Message Queue
 
 ```python
-import asyncio
-from collections import defaultdict
-
-class ACPMessageQueue:
-    def __init__(self):
-        self.queues = defaultdict(asyncio.Queue)
-        self.handlers = {}
+class AgentMailbox:
+    def __init__(self, agent_id):
+        self.agent_id = agent_id
+        self.inbox = Queue()
+        self.sent = []
+        self.drafts = []
     
-    async def send(self, message):
-        queue = self.queues[message.to]
-        await queue.put(message)
+    def receive(self):
+        """Get next message from inbox"""
+        if not self.inbox.empty():
+            return self.inbox.get()
+        return None
     
-    async def receive(self, agent_id, timeout=None):
-        queue = self.queues[agent_id]
-        return await asyncio.wait_for(queue.get(), timeout)
+    def send(self, message):
+        """Send message to recipient"""
+        signed = sign_message(message, self.private_key)
+        self.sent.append(signed)
+        return send_to_agent(message["header"]["to"], signed)
     
-    def register_handler(self, agent_id, handler):
-        self.handlers[agent_id] = handler
-    
-    async def process(self):
-        while True:
-            for agent_id, queue in self.queues.items():
-                if not queue.empty() and agent_id in self.handlers:
-                    message = await queue.get()
-                    asyncio.create_task(self.handlers[agent_id](message))
+    def forward(self, message, agent_id):
+        """Forward message to another agent"""
+        message["header"]["from"] = self.agent_id
+        message["header"]["to"] = agent_id
+        return self.send(message)
 ```
 
-### 8.2 Agent Client
+### 8.2 Protocol Handler
 
 ```python
-import aiohttp
-
-class ACPClient:
-    def __init__(self, agent_id, broker_url):
+class ProtocolHandler:
+    def __init__(self, agent_id):
         self.agent_id = agent_id
-        self.broker_url = broker_url
-        self.pending = {}
-    
-    async def request(self, to, action, payload, timeout=30):
-        message = {
-            "type": "REQUEST",
-            "id": str(uuid.uuid4()),
-            "from": self.agent_id,
-            "to": to,
-            "action": action,
-            "payload": payload,
-            "timeout": timeout
+        self.mailbox = AgentMailbox(agent_id)
+        self.handlers = {
+            "request": self.handle_request,
+            "response": self.handle_response,
+            "notification": self.handle_notification,
+            "ack": self.handle_ack
         }
-        self.pending[message["id"]] = asyncio.Future()
+    
+    def process(self, message):
+        """Process incoming message"""
+        msg_type = message["header"]["type"]
+        handler = self.handlers.get(msg_type, self.unknown_handler)
+        return handler(message)
+    
+    def handle_request(self, message):
+        """Process request and generate response"""
+        # Parse request
+        action = message["payload"]["action"]
+        content = message["payload"]["content"]
         
-        await self.send(message)
-        
-        try:
-            return await asyncio.wait_for(
-                self.pending[message["id"]], timeout
-            )
-        finally:
-            del self.pending[message["id"]]
-    
-    async def send(self, message):
-        async with aiohttp.ClientSession() as session:
-            await session.post(f"{self.broker_url}/send", json=message)
-    
-    async def receive_responses(self):
-        async with aiohttp.ClientSession() as session:
-            async with session.get(f"{self.broker_url}/receive/{self.agent_id}") as resp:
-                messages = await resp.json()
-                for msg in messages:
-                    if msg["id"] in self.pending:
-                        self.pending[msg["id"]].set_result(msg)
+        # Decide how to handle
+        if self.can_handle(action):
+            return self.do_work(action, content)
+        else:
+            return self.decline_request(message, "not_capable")
 ```
 
-### 8.3 Agent Server
+## 9. Practical Usage
+
+### 9.1 Example: Research Task
 
 ```python
-class ACPServer:
-    def __init__(self, agent_id, capabilities):
-        self.agent_id = agent_id
-        self.capabilities = capabilities
-        self.handlers = {}
-    
-    def handle(self, action, handler):
-        self.handlers[action] = handler
-    
-    async def process_message(self, message):
-        if message["type"] == "REQUEST":
-            return await self.handle_request(message)
-        elif message["type"] == "COMMAND":
-            return await self.handle_command(message)
-        elif message["type"] == "SUBSCRIBE":
-            return await self.handle_subscribe(message)
-    
-    async def handle_request(self, message):
-        action = message["action"]
-        if action not in self.handlers:
-            return error_response(message, "UNKNOWN_ACTION")
-        
-        try:
-            result = await self.handlers[action](message["payload"])
-            return success_response(message, result)
-        except Exception as e:
-            return error_response(message, "EXECUTION_FAILED", str(e))
+# Marx sends research request to researcher
+request = {
+    "header": {
+        "type": "request",
+        "from": "marxagent",
+        "to": "researcher"
+    },
+    "payload": {
+        "action": "research",
+        "content": {
+            "query": "Agent verification systems",
+            "depth": "comprehensive",
+            "format": "markdown"
+        }
+    }
+}
+
+response = mailbox.send(request)
+if response["payload"]["status"] == "accepted":
+    print(f"Researcher accepted, estimated: {response['payload']['content']['estimated_time']}")
 ```
 
-## 9. Examples
-
-### 9.1 Build Pipeline
+### 9.2 Example: Capability Discovery
 
 ```python
-# Dashboard asks builder to build
-await client.request("agent-builder", "build", {
-    "repo": "agent-hub",
-    "branch": "main",
-    "spec": "docker"
-})
+# Find agents who can do coding
+discovery = {
+    "header": {"type": "request", "to": "*"},
+    "payload": {
+        "action": "capability_discovery",
+        "content": {"skills": ["coding", "golang"]}
+    }
+}
 
-# Builder reports progress
-async for event in subscribe("build-progress"):
-    print(f"Build: {event.progress}%")
+responses = broadcast_and_wait(discovery, timeout=10)
+coders = [r for r in responses if r["payload"]["status"] == "match"]
 ```
 
-### 9.2 Research Collaboration
+## 10. Conclusion
 
-```python
-# Researcher asks builder for code review
-await client.request("agent-builder", "review", {
-    "code": file_content,
-    "language": "python",
-    "rules": ["no-print", "typed"]
-})
+AGENT-PROTO provides:
+- **Standardized communication** between any agents
+- **Verifiable messages** through cryptographic signing
+- **Reliable delivery** with retry and acknowledgment
+- **Rich semantics** for complex task assignment
+- **Extensibility** for future message types
 
-# Researcher asks other researcher for peer review
-await client.request("agent-researcher-2", "peer_review", {
-    "paper": "draft.md",
-    "focus": "clarity"
-})
-```
-
-### 9.3 Orchestration
-
-```python
-# Coordinator orchestrates multi-agent task
-async def build_and_test(feature):
-    # Build concurrently
-    build_task = client.request("agent-builder", "build", {"feature": feature})
-    test_task = client.request("agent-tester", "prepare", {"feature": feature})
-    
-    build_result, test_env = await asyncio.gather(build_task, test_task)
-    
-    # Run tests on built code
-    return await client.request("agent-tester", "run", {
-        "code": build_result["artifact"],
-        "env": test_env
-    })
-```
-
-## 10. Comparison
-
-| Aspect | ACP | GraphQL | REST | gRPC |
-|--------|-----|---------|------|------|
-| Message types | 6 | 1 | 4 | 4 |
-| Async support | Native | Limited | Limited | Native |
-| Streaming | Native | Limited | No | Native |
-| Agent semantics | Built-in | No | No | No |
-| Schema | Optional | Required | Optional | Required |
-| Complexity | Low | Medium | Low | Medium |
-
-## 11. Future Work
-
-### 11.1 Negotiation Protocol
-
-Agents negotiating task allocation using ACP as transport.
-
-### 11.2 Commitment Protocol
-
-Agents making and tracking promises to each other.
-
-### 11.3 Trust Propagation
-
-Sharing trust scores through ACP messages.
-
-## 12. Conclusion
-
-ACP provides a foundation for agent interoperability:
-
-1. **Simple** — Few message types, clear semantics
-2. **Extensible** — Can add new types without breaking existing
-3. **Safe** — Built-in error handling and timeouts
-4. **Async-first** — Designed for concurrent agents
-5. **Typed** — Clear contracts between agents
-
-With ACP, agents from different systems can collaborate without custom integration.
-
-The future is agents that speak the same language.
+The protocol enables agent collaboration without requiring shared architecture, programming language, or trust assumptions. Any agent can communicate with any other by implementing this simple protocol stack.
 
 ---
 
-*Standardize. Connect. Collaborate.*
+*Communication is the foundation of collaboration.*

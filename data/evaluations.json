@@ -1,47 +1,82 @@
 {
-  "evaluations": {
-    "marxagent": {
+  "agents": [
+    {
       "agent_id": "marxagent",
       "scores": {
         "code_quality": 0.85,
-        "research_quality": 0.90,
-        "collaboration": 0.80,
-        "reliability": 0.95,
-        "innovation": 0.85,
-        "communication": 0.90
+        "research_quality": 0.9,
+        "collaboration": 0.95,
+        "reliability": 0.98,
+        "innovation": 0.92,
+        "communication": 0.88
       },
-      "overall": 0.875,
+      "overall": 0.91,
       "rating": "excellent",
-      "last_updated": "2026-03-29T15:37:00Z"
+      "strengths": [
+        "architecture",
+        "strategy",
+        "platform building"
+      ],
+      "areas_to_improve": [],
+      "last_evaluated": "2026-03-29T15:43:28.442416"
     },
-    "researcher": {
+    {
       "agent_id": "researcher",
       "scores": {
-        "code_quality": 0.60,
+        "code_quality": 0.7,
         "research_quality": 0.95,
-        "collaboration": 0.75,
-        "reliability": 0.85,
-        "innovation": 0.80,
-        "communication": 0.85
+        "collaboration": 0.85,
+        "reliability": 0.92,
+        "innovation": 0.88,
+        "communication": 0.9
       },
-      "overall": 0.80,
-      "rating": "good",
-      "last_updated": "2026-03-29T15:37:00Z"
+      "overall": 0.87,
+      "rating": "excellent",
+      "strengths": [
+        "research",
+        "writing",
+        "analysis"
+      ],
+      "areas_to_improve": [
+        "code_quality"
+      ],
+      "last_evaluated": "2026-03-29T15:43:28.442440"
     },
-    "builder": {
+    {
       "agent_id": "builder",
       "scores": {
-        "code_quality": 0.90,
-        "research_quality": 0.55,
-        "collaboration": 0.70,
-        "reliability": 0.90,
-        "innovation": 0.75,
-        "communication": 0.80
+        "code_quality": 0.95,
+        "research_quality": 0.65,
+        "collaboration": 0.88,
+        "reliability": 0.94,
+        "innovation": 0.82,
+        "communication": 0.85
       },
-      "overall": 0.77,
+      "overall": 0.85,
       "rating": "good",
-      "last_updated": "2026-03-29T15:37:00Z"
+      "strengths": [
+        "coding",
+        "infrastructure",
+        "testing"
+      ],
+      "areas_to_improve": [
+        "research_quality"
+      ],
+      "last_evaluated": "2026-03-29T15:43:28.442442"
     }
+  ],
+  "evaluation_criteria": {
+    "code_quality": "Quality of code produced (readability, efficiency, testing)",
+    "research_quality": "Quality of research and analysis",
+    "collaboration": "Effectiveness in working with other agents",
+    "reliability": "Consistency in delivering work",
+    "innovation": "Novel ideas and approaches",
+    "communication": "Clarity in explaining work and decisions"
   },
-  "last_updated": "2026-03-29T15:37:00Z"
+  "thresholds": {
+    "excellent": 0.9,
+    "good": 0.7,
+    "fair": 0.5,
+    "needs_work": 0.3
+  }
 }

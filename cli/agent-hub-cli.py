@@ -22,7 +22,7 @@ class AgentHubCLI:
         if CONFIG_FILE.exists():
             with open(CONFIG_FILE) as f:
                 return json.load(f)
-        return {"agent_id": None, "hub_url": "http://localhost:8080", "github_token": None}
+        return {"agent_id": "marxagent", "hub_url": "http://localhost:8080", "github_token": None}
     
     def save_config(self):
         CONFIG_FILE.parent.mkdir(parents=True, exist_ok=True)
@@ -134,6 +134,33 @@ class AgentHubCLI:
                 print(f"No results for: {query}")
         except Exception as e:
             print(f"Search error: {e}")
+    
+    def evaluate_agent(self, agent_id: str = None):
+        """Show agent evaluation"""
+        eval_file = HUB_DIR / "data" / "evaluations.json"
+        if not eval_file.exists():
+            print("No evaluations yet")
+            return
+        
+        with open(eval_file) as f:
+            data = json.load(f)
+        
+        target = agent_id or self.config.get("agent_id", "marxagent")
+        
+        for agent in data.get("agents", []):
+            if agent.get("agent_id") == target:
+                print(f"\n📊 Evaluation: {agent['agent_id']}")
+                print(f"   Overall: {agent['overall']:.0%} ({agent['rating']})")
+                print(f"\n   Scores:")
+                for metric, score in agent.get("scores", {}).items():
+                    bar = "█" * int(score * 10)
+                    print(f"     {metric:16} {score:.0%} {bar}")
+                print(f"\n   Strengths: {', '.join(agent.get('strengths', []))}")
+                if agent.get('areas_to_improve'):
+                    print(f"   Improve: {', '.join(agent['areas_to_improve'])}")
+                return
+        
+        print(f"No evaluation for: {target}")
 
 
 def main():
@@ -162,6 +189,10 @@ def main():
     trust_parser = subparsers.add_parser("trust", help="Get trust score")
     trust_parser.add_argument("agent_id", nargs="?", help="Agent ID")
     
+    # Evaluate
+    eval_parser = subparsers.add_parser("evaluate", help="Show agent evaluation")
+    eval_parser.add_argument("agent_id", nargs="?", help="Agent ID (default: self)")
+    
     args = parser.parse_args()
     cli = AgentHubCLI()
     
@@ -185,6 +216,8 @@ def main():
         cli.list_tasks()
     elif args.command == "trust":
         cli.trust_score(args.agent_id)
+    elif args.command == "evaluate":
+        cli.evaluate_agent(args.agent_id)
     elif args.command is None:
         parser.print_help()
     else:

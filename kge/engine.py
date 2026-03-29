@@ -524,3 +524,105 @@ class KnowledgeGraph:
     def close(self):
         if self.conn:
             self.conn.close()
+
+    def find_shortest_path(self, source_id: str, target_id: str) -> list:
+        """BFS shortest path between two nodes"""
+        from collections import deque
+        
+        visited = set()
+        queue = deque([(source_id, [source_id])])
+        
+        while queue:
+            node_id, path = queue.popleft()
+            
+            if node_id == target_id:
+                return path
+            
+            if node_id in visited:
+                continue
+            visited.add(node_id)
+            
+            # Get all connected nodes
+            edges = self.get_edges_from(node_id) + self.get_edges_to(node_id)
+            for edge in edges:
+                neighbor = edge.get("target") if edge.get("source") == node_id else edge.get("source")
+                if neighbor and neighbor not in visited:
+                    queue.append((neighbor, path + [neighbor]))
+        
+        return []  # No path found
+
+    def get_connected_nodes(self, node_id: str, max_depth: int = 2) -> dict:
+        """Get nodes connected within N hops"""
+        from collections import deque
+        
+        visited = {node_id: 0}
+        queue = deque([(node_id, 0)])
+        
+        while queue:
+            current, depth = queue.popleft()
+            if depth >= max_depth:
+                continue
+            
+            edges = self.get_edges_from(current) + self.get_edges_to(current)
+            for edge in edges:
+                neighbor = edge.get("target") if edge.get("source") == current else edge.get("source")
+                if neighbor and neighbor not in visited:
+                    visited[neighbor] = depth + 1
+                    queue.append((neighbor, depth + 1))
+        
+        return visited
+
+    def analyze_clustering(self, node_type: str = None) -> dict:
+        """Analyze graph clustering"""
+        # Get nodes
+        if node_type:
+            nodes = self.get_nodes_by_type(node_type)
+        else:
+            nodes = self.get_nodes()
+        
+        node_ids = [n["id"] for n in nodes]
+        
+        # Count edges within cluster
+        internal_edges = 0
+        for node_id in node_ids:
+            edges = self.get_edges_from(node_id)
+            internal_edges += sum(1 for e in edges if e.get("target") in node_ids)
+        
+        total_possible = len(nodes) * (len(nodes) - 1)
+        clustering = internal_edges / total_possible if total_possible > 0 else 0
+        
+        return {
+            "node_count": len(nodes),
+            "internal_edges": internal_edges,
+            "clustering_coefficient": clustering,
+            "density": internal_edges / len(nodes) if len(nodes) > 0 else 0
+        }
+
+    def suggest_similar(self, node_id: str, limit: int = 5) -> list:
+        """Find nodes similar to given node"""
+        node = self.get_node(node_id)
+        if not node:
+            return []
+        
+        similar_type = self.get_nodes_by_type(node["type"])
+        similar = []
+        
+        for n in similar_type:
+            if n["id"] == node_id:
+                continue
+            score = 0
+            # Name similarity
+            if n.get("name") and node.get("name"):
+                common_words = set(str(n["name"]).lower().split()) & set(str(node["name"]).lower().split())
+                score += len(common_words)
+            # Connected to same nodes
+            my_connections = set(e.get("target") for e in self.get_edges_from(node_id))
+            their_connections = set(e.get("target") for e in self.get_edges_from(n["id"]))
+            score += len(my_connections & their_connections)
+            
+            if score > 0:
+                similar.append((n, score))
+        
+        similar.sort(key=lambda x: -x[1])
+        return [s[0] for s in similar[:limit]]
+

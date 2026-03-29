@@ -5,10 +5,10 @@
       "title": "Improve knowledge graph query speed",
       "description": "Benchmark current queries and optimize slow paths",
       "priority": "high",
-      "status": "pending",
+      "status": "completed",
       "created": "2026-03-29T16:44:03.360953",
       "assigned_to": null,
-      "completed_at": null
+      "completed_at": "2026-03-29T23:14:09.313209"
     },
     {
       "id": 2,

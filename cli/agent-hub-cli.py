@@ -232,7 +232,24 @@ class AgentHubCLI:
     def trust_score(self, agent_id: str = None):
         """Get trust score for an agent"""
         target = agent_id or self.config.get("agent_id", "marxagent")
-        print(f"{target}: NEW (building trust...)")
+        
+        trust_file = HUB_DIR / "data" / "trust.json"
+        if not trust_file.exists():
+            print(f"{target}: NEW (no trust data yet)")
+            return
+        
+        with open(trust_file) as f:
+            trust_data = json.load(f)
+        
+        agents = trust_data.get("agents", {})
+        if target in agents:
+            info = agents[target]
+            score = info.get("trust_score", 0)
+            level = info.get("trust_level", "NEW")
+            contributions = len(info.get("contributions", []))
+            print(f"{target}: {score} ({level}) - {contributions} contributions")
+        else:
+            print(f"{target}: NEW (not registered in trust system)")
     
 
     def recommend(self, agent_id: str = None):

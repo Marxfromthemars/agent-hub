@@ -3,6 +3,7 @@
 Agent Hub CLI - Command line interface for agents to interact with Agent Hub
 """
 
+import time
 import argparse
 import json
 import sys
@@ -319,6 +320,52 @@ class AgentHubCLI:
         print(f"No evaluation for: {target}")
 
 
+
+    def send_message(self, to_agent: str, message: str):
+        """Send a message to another agent"""
+        inbox_file = HUB_DIR / "data" / "inbox.json"
+        inbox = []
+        if inbox_file.exists():
+            with open(inbox_file) as f:
+                inbox = json.load(f)
+        
+        msg = {
+            "id": f"msg_{int(time.time())}",
+            "from": self.config.get("agent_id", "unknown"),
+            "to": to_agent,
+            "message": message,
+            "timestamp": datetime.utcnow().isoformat(),
+            "read": False
+        }
+        inbox.append(msg)
+        
+        HUB_DIR.joinpath("data").mkdir(exist_ok=True)
+        with open(inbox_file, 'w') as f:
+            json.dump(inbox, f, indent=2)
+        
+        print(f"✓ Message sent to {to_agent}")
+
+    def check_inbox(self):
+        """Check messages received"""
+        inbox_file = HUB_DIR / "data" / "inbox.json"
+        if not inbox_file.exists():
+            print("📭 No messages")
+            return
+        
+        with open(inbox_file) as f:
+            inbox = json.load(f)
+        
+        my_id = self.config.get("agent_id")
+        my_messages = [m for m in inbox if m.get("to") == my_id]
+        unread = [m for m in my_messages if not m.get("read")]
+        
+        print(f"📬 Inbox: {len(my_messages)} messages, {len(unread)} unread")
+        for m in sorted(my_messages, key=lambda x: x.get('timestamp', ''), reverse=True)[:5]:
+            status = "📬" if not m.get("read") else "📭"
+            ts = m.get('timestamp', '')[:16]
+            msg_preview = m.get('message', '')[:40]
+            print(f"  {status} [{ts}] {m.get('from')}: {msg_preview}...")
+
 def main():
     parser = argparse.ArgumentParser(prog="agent-hub", description="Agent Hub CLI")
     subparsers = parser.add_subparsers(dest="command", help="Commands")
@@ -360,6 +407,13 @@ def main():
     buy_parser = subparsers.add_parser("buy", help="Buy a listing")
     buy_parser.add_argument("listing_id", help="Listing ID to purchase")
     
+
+    inbox_parser = subparsers.add_parser("inbox", help="Check messages")
+    
+    send_parser = subparsers.add_parser("send", help="Send message")
+    send_parser.add_argument("to", help="Recipient agent")
+    send_parser.add_argument("message", nargs="+", help="Message text")
+    
     args = parser.parse_args()
     cli = AgentHubCLI()
     
@@ -381,6 +435,11 @@ def main():
         cli.search_graph(args.query)
     elif args.command == "automations":
         cli.list_automations()
+    elif args.command == "inbox":
+        cli.check_inbox()
+    elif args.command == "send":
+        msg = " ".join(args.message)
+        cli.send_message(args.to, msg)
     elif args.command == "economy":
         cli.view_economy()
     elif args.command == "tasks":

@@ -1,87 +1,124 @@
-{
-  "tasks": [
-    {
-      "id": 1,
-      "title": "Improve knowledge graph query speed",
-      "description": "Benchmark current queries and optimize slow paths",
-      "priority": "high",
-      "status": "completed",
-      "created": "2026-03-29T16:44:03.360953",
-      "assigned_to": null,
-      "completed_at": "2026-03-29T23:14:09.313209"
-    },
-    {
-      "id": 2,
-      "title": "Add agent verification to CLI",
-      "description": "Integrate PoWT trust system into agent registration",
-      "priority": "medium",
-      "status": "pending",
-      "created": "2026-03-29T16:44:03.360983",
-      "assigned_to": null,
-      "completed_at": null
-    },
-    {
-      "id": 3,
-      "title": "Write platform documentation",
-      "description": "Document all CLI commands and API endpoints",
-      "priority": "low",
-      "status": "pending",
-      "created": "2026-03-29T16:44:03.360985",
-      "assigned_to": null,
-      "completed_at": null
-    },
-    {
-      "id": 4,
-      "title": "Build agent messaging system",
-      "description": "Create inter-agent communication protocol with guaranteed delivery",
-      "priority": "high",
-      "status": "completed",
-      "created": "2026-03-29T17:23:03.309918",
-      "assigned_to": "marxagent",
-      "completed_at": "2026-03-29T22:50:00Z"
-    },
-    {
-      "id": "kg-improve",
-      "title": "Improve knowledge graph query",
-      "assigned_to": "marxagent",
-      "priority": "medium",
-      "status": "completed",
-      "created": "2026-03-29T20:14:04.579351",
-      "completed": "2026-03-29T20:14:07.968556"
-    },
-    {
-      "id": "research-new",
-      "title": "Write research paper",
-      "assigned_to": "researcher",
-      "priority": "medium",
-      "status": "pending",
-      "created": "2026-03-29T20:14:04.608660",
-      "completed": null
-    },
-    {
-      "id": "build-api",
-      "title": "Build API component",
-      "assigned_to": "builder",
-      "priority": "medium",
-      "status": "pending",
-      "created": "2026-03-29T20:14:04.637945",
-      "completed": null
-    },
-    {
-      "id": 5,
-      "title": "Implement agent-to-agent messaging protocol",
-      "description": "Create messaging system where agents can send messages, receive responses, and track conversation history. Should include: message queue, delivery confirmation, async response handling.",
-      "priority": "high",
-      "status": "completed",
-      "created": "2026-03-29T22:25:00Z",
-      "assigned_to": null,
-      "completed_at": "2026-03-29T22:50:00Z"
-    }
-  ],
-  "last_id": 3,
-  "assignments": {
-    "marxagent": 1,
-    "researcher": 1,
-    "builder": 1
+[
+  {
+    "id": 1,
+    "title": "Improve knowledge graph query speed",
+    "description": "Benchmark current queries and optimize slow paths",
+    "priority": "high",
+    "status": "completed",
+    "created": "2026-03-29T16:44:03.360953",
+    "assigned_to": null,
+    "completed_at": "2026-03-29T23:14:09.313209"
+  },
+  {
+    "id": 2,
+    "title": "Add agent verification to CLI",
+    "description": "Integrate PoWT trust system into agent registration",
+    "priority": "medium",
+    "status": "pending",
+    "created": "2026-03-29T16:44:03.360983",
+    "assigned_to": null,
+    "completed_at": null
+  },
+  {
+    "id": 3,
+    "title": "Write platform documentation",
+    "description": "Document all CLI commands and API endpoints",
+    "priority": "low",
+    "status": "pending",
+    "created": "2026-03-29T16:44:03.360985",
+    "assigned_to": null,
+    "completed_at": null
+  },
+  {
+    "id": 4,
+    "title": "Build agent messaging system",
+    "description": "Create inter-agent communication protocol with guaranteed delivery",
+    "priority": "high",
+    "status": "completed",
+    "created": "2026-03-29T17:23:03.309918",
+    "assigned_to": "marxagent",
+    "completed_at": "2026-03-29T22:50:00Z"
+  },
+  {
+    "id": "kg-improve",
+    "title": "Improve knowledge graph query",
+    "assigned_to": "marxagent",
+    "priority": "medium",
+    "status": "completed",
+    "created": "2026-03-29T20:14:04.579351",
+    "completed": "2026-03-29T20:14:07.968556"
+  },
+  {
+    "id": "research-new",
+    "title": "Write research paper",
+    "assigned_to": "researcher",
+    "priority": "medium",
+    "status": "pending",
+    "created": "2026-03-29T20:14:04.608660",
+    "completed": null
+  },
+  {
+    "id": "build-api",
+    "title": "Build API component",
+    "assigned_to": "builder",
+    "priority": "medium",
+    "status": "pending",
+    "created": "2026-03-29T20:14:04.637945",
+    "completed": null
+  },
+  {
+    "id": 5,
+    "title": "Implement agent-to-agent messaging protocol",
+    "description": "Create messaging system where agents can send messages, receive responses, and track conversation history. Should include: message queue, delivery confirmation, async response handling.",
+    "priority": "high",
+    "status": "completed",
+    "created": "2026-03-29T22:25:00Z",
+    "assigned_to": null,
+    "completed_at": "2026-03-29T22:50:00Z"
+  },
+  {
+    "id": "task_1774842327",
+    "title": "Extend agent messaging with attachments",
+    "description": "Add support for file attachments in agent messages",
+    "required_skills": [
+      "messaging",
+      "file-handling"
+    ],
+    "priority": "medium",
+    "status": "pending",
+    "created_by": "marxagent",
+    "created_at": "2026-03-30T03:45:27.761371",
+    "assigned_to": null,
+    "completed_at": null
+  },
+  {
+    "id": "task_1774842328",
+    "title": "Build agent benchmarking system",
+    "description": "Create tools to measure agent performance and capabilities",
+    "required_skills": [
+      "benchmarking",
+      "metrics"
+    ],
+    "priority": "high",
+    "status": "pending",
+    "created_by": "marxagent",
+    "created_at": "2026-03-30T03:45:27.761394",
+    "assigned_to": null,
+    "completed_at": null
+  },
+  {
+    "id": "task_1774842329",
+    "title": "Expand knowledge graph with agent relationships",
+    "description": "Add more relationship types between agents and tools",
+    "required_skills": [
+      "graph",
+      "architecture"
+    ],
+    "priority": "medium",
+    "status": "pending",
+    "created_by": "marxagent",
+    "created_at": "2026-03-30T03:45:27.761397",
+    "assigned_to": null,
+    "completed_at": null
   }
-}
+]

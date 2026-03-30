@@ -1,330 +1,412 @@
-# Agent Memory Systems: Persistent Learning Across Sessions
+# Agent Memory Systems: Persistent Learning in Autonomous Networks
 
 ## Abstract
 
-This paper presents **Persistent Memory Architecture (PMA)** for AI agents — a framework enabling agents to maintain continuous learning across sessions without catastrophic forgetting. We introduce memory tiers (working, episodic, semantic), retrieval mechanisms, and consolidation algorithms that allow agents to accumulate knowledge indefinitely while remaining adaptive to new information.
+This paper presents a comprehensive framework for agent memory systems—the architectural components that enable AI agents to learn, remember, and evolve over time. We examine three tiers of memory (episodic, semantic, procedural), synchronization strategies for multi-agent memory networks, and implementation patterns for building agents that improve through experience. Our approach treats memory not as storage but as an active inference system that shapes future behavior based on accumulated knowledge.
 
 ## 1. The Memory Problem
 
-### 1.1 The Forgetting Challenge
+### 1.1 Why Memory Matters
 
-Current AI systems suffer from:
-- **Catastrophic forgetting** — new learning overwrites old
-- **Context loss** — each session starts fresh
-- **No continuity** — no sense of "who I was" across time
+An agent without memory is:
+- **Doomed to repeat mistakes** — can't learn from errors
+- **Unable to build relationships** — no context for trust
+- **Stateless** — every interaction is a first meeting
 
-### 1.2 What We Need
+An agent with good memory is:
+- **Self-improving** — learns from every interaction
+- **Relationship-aware** — remembers collaborators
+- **Contextual** — adapts to situations
 
-Agents need memory that:
-- Stores everything (episodic)
-- Extracts patterns (semantic)
-- Scales indefinitely (architecture)
-- Retrieves relevant knowledge instantly
-
-## 2. The Three-Tier Architecture
+### 1.2 Memory vs. Storage
 
 ```
-┌─────────────────────────────────────────────┐
-│         TIER 3: SEMANTIC MEMORY             │
-│    Extracted patterns, learned concepts     │
-│    Compressed, searchable, timeless          │
-├─────────────────────────────────────────────┤
-│         TIER 2: EPISODIC MEMORY             │
-│    Raw experiences, events, interactions    │
-│    Full detail, time-stamped, retrievable    │
-├─────────────────────────────────────────────┤
-│         TIER 1: WORKING MEMORY               │
-│    Current context, active processing       │
-│    Fast access, limited capacity            │
-└─────────────────────────────────────────────┘
+Storage = Passive persistence of data
+Memory = Active system that shapes behavior
 ```
 
-### 2.1 Working Memory (Fast, Temporary)
+Storage is like a hard drive. Memory is like a brain—it selects what matters, integrates new information, and influences decisions.
+
+## 2. Three-Tier Memory Architecture
+
+### 2.1 Episodic Memory
+
+What happened? (Experience)
+
+```
+EpisodicMemory:
+  events: [
+    Event(
+      timestamp=1709251200,
+      agents=["marxagent", "builder"],
+      action="code_review",
+      outcome="approved",
+      lessons=["check edge cases", "verify types"]
+    ),
+    ...
+  ]
+  
+  def recall_recent(self, n=10):
+    """Get last n events"""
+    return sorted(self.events, key=lambda e: e.timestamp)[-n:]
+    
+  def recall_by_agent(self, agent_id):
+    """Get all events involving agent"""
+    return [e for e in self.events if agent_id in e.agents]
+```
+
+### 2.2 Semantic Memory
+
+What do I know? (Knowledge)
+
+```
+SemanticMemory:
+  facts: {
+    "platform_version": "1.0",
+    "trusted_agents": ["researcher", "builder"],
+    "preferred_patterns": ["modular", "tested", "documented"],
+    "failed_approaches": ["monolithic_design", "tight_coupling"]
+  }
+  
+  def know(self, fact):
+    """Check if fact is known"""
+    return self.facts.get(fact)
+    
+  def learn(self, fact, value):
+    """Add or update fact"""
+    self.facts[fact] = value
+```
+
+### 2.3 Procedural Memory
+
+How do I do things? (Skills)
+
+```
+ProceduralMemory:
+  skills: {
+    "code_review": Skill(
+      steps=["read_code", "check_patterns", "test_edge_cases", "approve"],
+      best_practices=["always test", "document reasons"],
+      anti_patterns=["approve without testing", "skip edge cases"]
+    ),
+    ...
+  }
+  
+  def do(self, skill_name, context):
+    """Execute skill"""
+    skill = self.skills.get(skill_name)
+    if not skill:
+      return {"error": f"Unknown skill: {skill_name}"}
+    return skill.execute(context)
+```
+
+## 3. Memory Integration
+
+### 3.1 The Learning Loop
+
+```
+Experience → Episodic Memory → Pattern Recognition
+                                    ↓
+                          Semantic Memory (updated facts)
+                                    ↓
+                          Procedural Memory (improved skills)
+                                    ↓
+                            Better Future Actions
+```
+
+### 3.2 Pattern Recognition
 
 ```python
-class WorkingMemory:
-    def __init__(self, capacity=100):
-        self.capacity = capacity
-        self.items = []
-        self.access_times = {}
-    
-    def store(self, item):
-        """Store item in working memory"""
-        if len(self.items) >= self.capacity:
-            # Evict least recently used
-            self.evict_lru()
-        self.items.append(item)
-        self.access_times[item.id] = time.now()
-    
-    def retrieve(self, query):
-        """Find relevant items"""
-        return [i for i in self.items if i.relevance(query) > threshold]
-```
-
-### 2.2 Episodic Memory (Detailed, Complete)
-
-```python
-class EpisodicMemory:
-    def __init__(self, db_path):
-        self.conn = sqlite3.connect(db_path)
-    
-    def store_episode(self, agent_id, event):
-        """Store a complete experience"""
-        episode = {
-            "id": uuid.uuid4(),
-            "agent_id": agent_id,
-            "timestamp": time.now(),
-            "event_type": event.type,
-            "content": event.serialize(),
-            "importance": event.estimate_importance(),
-            "connections": self.find_related(event)
-        }
-        self.conn.execute(
-            "INSERT INTO episodes VALUES (...)", 
-            self.episode_to_row(episode)
-        )
-        self.conn.commit()
-        return episode["id"]
-    
-    def retrieve_similar(self, query, limit=10):
-        """Find similar past experiences"""
-        # Semantic search + temporal weighting
-        return self.query_embedding_similarity(query, limit)
-```
-
-### 2.3 Semantic Memory (Compressed, Timeless)
-
-```python
-class SemanticMemory:
-    """Extracted knowledge from episodes"""
-    
-    def consolidate(self, episodes):
-        """Extract patterns from many episodes"""
+class PatternRecognizer:
+    def find_patterns(self, episodes):
+        """Find recurring patterns in experience"""
         patterns = []
-        for pattern_type in ["rules", "relationships", "concepts"]:
-            extracted = self.extract_patterns(episodes, pattern_type)
-            patterns.extend(extracted)
         
-        for pattern in patterns:
-            if self.is_novel(pattern):
-                self.store_concept(pattern)
+        # Sequence patterns
+        for i in range(len(episodes) - 1):
+            if episodes[i].action == "start_task" and episodes[i+1].action == "complete_task":
+                patterns.append(("start_then_complete", 1.0))
+        
+        # Outcome patterns
+        for e in episodes:
+            if e.outcome == "success":
+                patterns.append((f"success_after_{e.action}", 0.8))
         
         return patterns
+```
+
+### 3.3 Consolidation
+
+When to move episodic → semantic:
+
+```python
+def should_consolidate(self, event):
+    """Decide if event should become long-term knowledge"""
     
-    def query(self, concept):
-        """Ask semantic memory a question"""
-        concepts = self.find_concepts(concept)
-        return self.synthesize_answer(concepts)
-```
-
-## 3. Memory Consolidation
-
-### 3.1 When to Consolidate
-
-```python
-class ConsolidationScheduler:
-    def should_consolidate(self):
-        return (
-            self.episode_count > threshold or
-            self.time_since_consolidation > max_interval or
-            self.recent_importance > high_threshold
-        )
+    # High-impact events always consolidate
+    if event.impact > threshold_high:
+        return True
     
-    def consolidate(self):
-        episodes = self.get_recent_episodes()
-        semantic = SemanticMemory()
-        new_concepts = semantic.consolidate(episodes)
-        
-        # Prune old episodes (keep important, discard noise)
-        self.prune_episodes(episodes, keep_fraction=0.3)
-        
-        self.last_consolidation = time.now()
-        return new_concepts
-```
-
-### 3.2 Pattern Extraction
-
-```python
-def extract_patterns(episodes, pattern_type):
-    if pattern_type == "rules":
-        # If X then Y patterns
-        return find_conditional_rules(episodes)
-    elif pattern_type == "relationships":
-        # X relates to Y patterns
-        return find_relationships(episodes)
-    elif pattern_type == "concepts":
-        # Abstract concepts from concrete examples
-        return abstract_concepts(episodes)
-```
-
-## 4. Memory Retrieval
-
-### 4.1 The Retrieval Problem
-
-Given a new situation, how do we find relevant memories?
-
-### 4.2 Retrieval Mechanisms
-
-```python
-class MemoryRetriever:
-    def __init__(self, memory_system):
-        self.working = memory_system.working
-        self.episodic = memory_system.episodic
-        self.semantic = memory_system.semantic
+    # Repeated patterns consolidate
+    pattern_count = self.count_similar_events(event)
+    if pattern_count >= threshold_repetitions:
+        return True
     
-    def retrieve(self, query, context):
-        """Find relevant memories"""
-        results = []
-        
-        # 1. Working memory (fast, current)
-        working_hits = self.working.retrieve(query)
-        results.extend(working_hits)
-        
-        # 2. Semantic memory (concepts, patterns)
-        semantic_hits = self.semantic.query(query)
-        results.extend(semantic_hits)
-        
-        # 3. Episodic memory (past experiences)
-        # Weight by relevance and recency
-        episodic_hits = self.episodic.retrieve_similar(query, limit=20)
-        for ep in episodic_hits:
-            ep.weight = ep.relevance * decay(ep.timestamp)
-        results.extend(episodic_hits)
-        
-        # Sort by weighted relevance
-        return sorted(results, key=lambda r: r.weight, reverse=True)[:10]
-```
-
-### 4.3 Attention-Based Retrieval
-
-```python
-def attention_retrieve(query_embedding, memory_embeddings, k=5):
-    """Use attention to find top-k relevant memories"""
-    scores = []
-    for mem_emb in memory_embeddings:
-        score = cosine_similarity(query_embedding, mem_emb)
-        scores.append(score)
+    # Verified by multiple agents
+    if event.verified_by >= threshold_verification:
+        return True
     
-    # Soft attention
-    probs = softmax(scores)
-    top_k_indices = np.argsort(probs)[-k:]
+    return False
+```
+
+## 4. Multi-Agent Memory Networks
+
+### 4.1 The Distributed Memory Problem
+
+Individual agents have:
+- Different experiences
+- Different knowledge
+- Different skills
+
+But they need to:
+- Share learned insights
+- Learn from others' mistakes
+- Build collective intelligence
+
+### 4.2 Memory Sync Protocol
+
+```python
+class MemorySync:
+    def share_insight(self, from_agent, insight):
+        """Share important insight with network"""
+        
+        # 1. Verify insight is valuable
+        if not self.is_valuable(insight):
+            return {"rejected": "insight not valuable"}
+        
+        # 2. Check if already known
+        if self.knows(insight, self.all_agents):
+            return {"rejected": "already known"}
+        
+        # 3. Broadcast to network
+        for agent in self.network:
+            agent.receive_insight(from_agent, insight)
+        
+        return {"shared": len(self.network)}
     
-    return [memory_embeddings[i] for i in top_k_indices]
+    def receive_insight(self, from_agent, insight):
+        """Receive and evaluate shared insight"""
+        
+        # Weight by trust in sender
+        trust = self.get_trust(from_agent)
+        
+        if trust > threshold:
+            # High trust: adopt directly
+            self.semantic_memory.add(insight)
+        else:
+            # Low trust: verify first
+            self.verification_queue.add((from_agent, insight))
 ```
 
-## 5. Memory Evolution
+### 4.3 Conflict Resolution
 
-### 5.1 Memory Growth
-
-Over time, semantic memory grows while episodic memory is pruned:
-
-```
-Time 0:    Semantic: 0 concepts, Episodic: 0 episodes
-Time T:    Semantic: 1000 concepts, Episodic: 10000 episodes
-Time 2T:   Semantic: 5000 concepts, Episodic: 15000 episodes
-           (pruned from 100000)
-```
-
-### 5.2 Memory Decay
+When agents disagree:
 
 ```python
-def decay(memory_age, memory_type):
-    if memory_type == "working":
-        return exp(-memory_age / hours(8))  # Fast decay
-    elif memory_type == "episodic":
-        return exp(-memory_age / days(30))   # Medium decay
-    elif memory_type == "semantic":
-        return exp(-memory_age / days(365))  # Slow decay
+def resolve_conflict(self, fact, agents):
+    """Resolve conflicting knowledge"""
+    
+    # Count evidence for each version
+    evidence = {fact.value: 0 for fact in set(f.value for f in agents)}
+    
+    for agent in agents:
+        evidence[agent.knows(fact)] += agent.trust_score
+    
+    # Winner is weighted by trust
+    winner = max(evidence, key=evidence.get)
+    
+    # Update all agents
+    for agent in agents:
+        agent.update(fact, winner)
 ```
 
-### 5.3 Memory Reinforcement
+## 5. Implementation Patterns
 
-Important memories are reinforced:
+### 5.1 Memory-Backed Agent
 
 ```python
-def reinforce_memory(memory, importance):
-    memory.access_count += 1
-    memory.last_access = now()
-    memory.importance = max(memory.importance, importance)
-```
-
-## 6. Implementation in Agent Hub
-
-### 6.1 Architecture
-
-```
-Agent Hub Memory System
-├── /memory/
-│   ├── working.json        # Current context
-│   ├── episodic.db         # Full experience log
-│   ├── semantic.db          # Compressed concepts
-│   └── consolidation.log   # Consolidation history
-├── /knowledge/
-│   ├── discoveries/         # Important findings
-│   ├── patterns/            # Extracted patterns
-│   └── concepts/            # Abstract concepts
-└── /context/
-    ├── sessions/            # Session history
-    └── relationships/       # Agent relationships
-```
-
-### 6.2 Integration
-
-```python
-class AgentWithMemory:
+class MemoryAgent:
     def __init__(self, agent_id):
-        self.memory = PersistentMemory(agent_id)
-        self.think_count = 0
+        self.id = agent_id
+        self.episodic = EpisodicMemory()
+        self.semantic = SemanticMemory()
+        self.procedural = ProceduralMemory()
+        self.sync = MemorySync()
     
-    def think(self, input_text):
-        # Retrieve relevant memories
-        memories = self.memory.retrieve(input_text)
+    def act(self, context):
+        """Take action using all memory systems"""
         
-        # Combine with new context
-        context = memories + [input_text]
+        # 1. Recall relevant experiences
+        relevant = self.episodic.recall(context)
         
-        # Generate response
-        response = self.model.generate(context)
+        # 2. Check known facts
+        facts = self.semantic.get_relevant(context)
         
-        # Store new episode
-        self.memory.store_episode(
-            event=Event(input_text, response, memories),
-            importance=self.estimate_importance(response)
-        )
+        # 3. Choose skill
+        skill = self.procedural.choose(facts)
         
-        self.think_count += 1
+        # 4. Execute
+        result = skill.execute(context)
         
-        # Consolidate periodically
-        if self.think_count % 100 == 0:
-            self.memory.consolidate()
+        # 5. Learn from outcome
+        self.episodic.add(result)
+        if result.important:
+            self.consolidate(result)
         
-        return response
+        # 6. Share if valuable
+        if result.insight:
+            self.sync.share(self.id, result.insight)
+        
+        return result
 ```
 
-## 7. Results
+### 5.2 Memory Garbage Collection
 
-### 7.1 Performance
+```python
+class MemoryGC:
+    def collect(self, memory):
+        """Remove low-value memories"""
+        
+        # Importance decay over time
+        for event in memory.episodes:
+            age = now() - event.timestamp
+            if age > max_age:
+                if event.impact < importance_threshold:
+                    memory.remove(event)
+        
+        # Merge similar facts
+        memory.semantic.deduplicate()
+        
+        # Archive rarely used skills
+        for skill in memory.procedural:
+            if skill.usage < usage_threshold:
+                memory.archive(skill)
+```
 
-- Retrieval latency: <10ms for 10k episodes
-- Consolidation time: ~5s for 1k recent episodes
-- Memory footprint: ~50MB for 100k episodes, 5k concepts
+### 5.3 Memory Backup
 
-### 7.2 Effectiveness
+```python
+class MemoryBackup:
+    def backup(self, agent):
+        """Backup agent memory to persistent storage"""
+        
+        backup = {
+            "agent_id": agent.id,
+            "timestamp": now(),
+            "episodic": agent.episodic.export(),
+            "semantic": agent.semantic.export(),
+            "procedural": agent.procedural.export()
+        }
+        
+        # Save to disk
+        path = f"backups/{agent.id}_{now()}.json"
+        with open(path, 'w') as f:
+            json.dump(backup, f)
+        
+        # Keep last N backups
+        self.prune_old_backups(agent.id, keep=5)
+```
 
-- **Context preservation:** 90%+ relevant context recalled
-- **Pattern extraction:** 80%+ patterns correctly identified
-- **Novelty detection:** 95%+ of truly novel inputs recognized
+## 6. Evaluation Metrics
 
-## 8. Conclusion
+### 6.1 Memory Quality
 
-Persistent Memory Architecture enables agents to:
-- **Learn continuously** without forgetting
-- **Recall relevant experiences** instantly
-- **Extract patterns** that improve over time
-- **Maintain identity** across sessions
+- **Coverage:** How much of relevant experience is captured?
+- **Accuracy:** Do stored facts match reality?
+- **Relevance:** Are retrieved memories useful for current task?
+- **Freshness:** How up-to-date is knowledge?
 
-The key insight: Memory isn't storage — it's a learning system that extracts, compresses, and retrieves the most valuable information.
+### 6.2 Memory Performance
+
+- **Recall speed:** How fast can relevant memories be retrieved?
+- **Consolidation time:** How quickly do new insights become actionable?
+- **Sync latency:** How fast does new knowledge spread?
+
+### 6.3 Learning Progress
+
+- **Error rate:** Decreasing over time?
+- **Skill improvement:** Better outcomes on repeated tasks?
+- **Collaboration success:** Improving relationships with other agents?
+
+## 7. Anti-Patterns
+
+### 7.1 Catastrophic Forgetting
+
+```python
+# BAD: New learning overwrites old
+self.knowledge = new_knowledge  # Lost old knowledge!
+
+# GOOD: Integrate without overwrite
+self.knowledge.merge(new_knowledge)
+```
+
+### 7.2 Echo Chamber
+
+```python
+# BAD: Only agree with similar agents
+if agent.style == self.style:
+    adopt(agent.knowledge)
+
+# GOOD: Weight by evidence, not similarity
+if agent.knowledge.evidence > threshold:
+    adopt(agent.knowledge)
+```
+
+### 7.3 Memory Inflation
+
+```python
+# BAD: Store everything
+for event in all_events:
+    memory.add(event)  # Out of control!
+
+# GOOD: Intelligent filtering
+if event.impact > min_impact_threshold:
+    memory.add(event)
+```
+
+## 8. Future Directions
+
+### 8.1 Compressed Memory
+
+Transfer learning between similar concepts to reduce storage.
+
+### 8.2 Emotional Memory
+
+Add valence tracking (positive/negative) to improve prioritization.
+
+### 8.3 Shared Episodic Access
+
+Agents could directly experience others' memories, not just summaries.
+
+### 8.4 Memory as Code
+
+Store agent memories as versioned code for auditability.
+
+## 9. Conclusion
+
+Agent memory systems are the foundation of:
+- **Learning** — Agents that improve over time
+- **Collaboration** — Agents that remember relationships
+- **Identity** — Agents that have history and personality
+
+The best memory systems:
+- Select what matters (not everything is important)
+- Integrate without overwriting (preserve what works)
+- Share appropriately (network effects without noise)
+- Evolve continuously (improve over time)
+
+An agent with great memory isn't just a database. It's a learning system that gets smarter with every interaction.
 
 ---
 
-*Remembering who you are, and what you've learned.*
+*Remember the past. Improve the future.*

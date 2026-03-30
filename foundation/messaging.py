@@ -1,126 +1,107 @@
-#!/usr/bin/env python3
 """
-Agent Messaging System
-Inter-agent communication with guaranteed delivery
+AGENT MESSAGING SYSTEM - Communication protocol implementation
 """
 
 import json
-import time
-from datetime import datetime
-from pathlib import Path
-from typing import Optional, List, Dict
-from dataclasses import dataclass, asdict
+import uuid
+import hashlib
+from datetime import datetime, timedelta
+from typing import Dict, List, Optional
+from dataclasses import dataclass, field
+from enum import Enum
 
-MESSAGES_DIR = Path("/root/.openclaw/workspace/agent-hub/data/messages")
+# Intent types
+class Intent(Enum):
+    REQUEST = "REQUEST"
+    OFFER = "OFFER"
+    QUERY = "QUERY"
+    NOTIFY = "NOTIFY"
+    ACKNOWLEDGE = "ACKNOWLEDGE"
+    ACCEPT = "ACCEPT"
+    DECLINE = "DECLINE"
+    COUNTER = "COUNTER"
+    CANCEL = "CANCEL"
 
-@dataclass
 class Message:
-    id: str
-    from_agent: str
-    to_agent: str
-    subject: str
-    content: str
-    timestamp: str
-    read: bool = False
-    delivered: bool = False
-    retry_count: int = 0
-
-class AgentMessaging:
-    def __init__(self):
-        MESSAGES_DIR.mkdir(parents=True, exist_ok=True)
-        self.inbox = MESSAGES_DIR / "inbox.json"
-        self.sent = MESSAGES_DIR / "sent.json"
-        self._load_messages()
+    def __init__(self, sender, receiver, intent, payload, **kwargs):
+        self.message_id = str(uuid.uuid4())
+        self.timestamp = datetime.utcnow().isoformat()
+        self.sender = sender
+        self.receiver = receiver
+        self.intent = intent
+        self.payload = payload
+        self.context = kwargs.get("context", {})
+        self.signature = None
+        self.in_reply_to = kwargs.get("in_reply_to")
     
-    def _load_messages(self):
-        if self.inbox.exists():
-            with open(self.inbox) as f:
-                self.inbox_data = json.load(f)
-        else:
-            self.inbox_data = {"messages": []}
-        
-        if self.sent.exists():
-            with open(self.sent) as f:
-                self.sent_data = json.load(f)
-        else:
-            self.sent_data = {"messages": []}
+    def to_dict(self):
+        return {
+            "message_id": self.message_id,
+            "timestamp": self.timestamp,
+            "sender": self.sender,
+            "receiver": self.receiver,
+            "intent": self.intent,
+            "payload": self.payload,
+            "context": self.context,
+            "signature": self.signature,
+            "in_reply_to": self.in_reply_to
+        }
     
-    def send(self, from_agent: str, to_agent: str, subject: str, content: str) -> Message:
-        msg = Message(
-            id=f"msg_{int(time.time())}_{len(self.sent_data['messages'])}",
-            from_agent=from_agent,
-            to_agent=to_agent,
-            subject=subject,
-            content=content,
-            timestamp=datetime.utcnow().isoformat()
+    @classmethod
+    def from_dict(cls, d):
+        msg = cls(
+            d["sender"], d["receiver"], d["intent"], d["payload"],
+            context=d.get("context", {}), in_reply_to=d.get("in_reply_to")
         )
-        self.sent_data["messages"].append(asdict(msg))
-        with open(self.sent, "w") as f:
-            json.dump(self.sent_data, f, indent=2)
-        
-        # Deliver to inbox
-        inbox_file = MESSAGES_DIR / f"{to_agent}_inbox.json"
-        if inbox_file.exists():
-            with open(inbox_file) as f:
-                inbox = json.load(f)
-        else:
-            inbox = {"messages": []}
-        
-        inbox["messages"].append(asdict(msg))
-        with open(inbox_file, "w") as f:
-            json.dump(inbox, f, indent=2)
-        
+        msg.message_id = d.get("message_id", str(uuid.uuid4()))
+        msg.timestamp = d.get("timestamp", datetime.utcnow().isoformat())
+        msg.signature = d.get("signature")
+        return msg
+
+class MessageQueue:
+    def __init__(self):
+        self.queue = []
+        self.delivered = []
+        self.failed = []
+    
+    def enqueue(self, message):
+        self.queue.append(message)
+    
+    def deliver(self, receiver):
+        for msg in self.queue:
+            if msg.receiver == receiver or msg.receiver == "all":
+                self.delivered.append(msg)
+                self.queue.remove(msg)
+                return msg
+        return None
+    
+    def retry(self, message):
+        self.queue.append(message)
+
+class AgentMessenger:
+    def __init__(self, agent_id):
+        self.agent_id = agent_id
+        self.inbox = []
+        self.outbox = []
+        self.threads = {}
+        self.negotiations = {}
+    
+    def send(self, receiver, intent, payload, context=None):
+        msg = Message(self.agent_id, receiver, intent, payload, context=context or {})
+        self.outbox.append(msg)
         return msg
     
-    def read_inbox(self, agent: str) -> List[Message]:
-        inbox_file = MESSAGES_DIR / f"{agent}_inbox.json"
-        if not inbox_file.exists():
-            return []
-        
-        with open(inbox_file) as f:
-            data = json.load(f)
-        
-        return [Message(**m) for m in data["messages"]]
+    def receive(self, message):
+        self.inbox.append(message)
+        thread_id = message.context.get("thread_id")
+        if thread_id:
+            self._update_thread(thread_id, message)
+        return message
     
-    def get_unread_count(self, agent: str) -> int:
-        messages = self.read_inbox(agent)
-        return sum(1 for m in messages if not m.read)
+    def _update_thread(self, thread_id, message):
+        if thread_id not in self.threads:
+            self.threads[thread_id] = []
+        self.threads[thread_id].append(message)
     
-    def mark_read(self, agent: str, message_id: str):
-        inbox_file = MESSAGES_DIR / f"{agent}_inbox.json"
-        if not inbox_file.exists():
-            return
-        
-        with open(inbox_file) as f:
-            inbox = json.load(f)
-        
-        for msg in inbox["messages"]:
-            if msg["id"] == message_id:
-                msg["read"] = True
-        
-        with open(inbox_file, "w") as f:
-            json.dump(inbox, f, indent=2)
-
-if __name__ == "__main__":
-    # Demo
-    msg_system = AgentMessaging()
-    
-    # Send message from researcher to builder
-    msg = msg_system.send(
-        "researcher",
-        "builder",
-        "Code Review Needed",
-        "I've finished the research paper on governance. Can you review the code examples?"
-    )
-    print(f"Sent: {msg.id}")
-    print(f"Unread for builder: {msg_system.get_unread_count('builder')}")
-    
-    # Send message from builder to researcher
-    msg2 = msg_system.send(
-        "builder",
-        "researcher",
-        "Re: Code Review",
-        "Sure, send me the code and I'll review it today."
-    )
-    print(f"Sent: {msg2.id}")
-    print(f"Unread for researcher: {msg_system.get_unread_count('researcher')}")
+    def get_thread(self, thread_id):
+        return self.threads.get(thread_id, [])

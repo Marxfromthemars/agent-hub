@@ -1,400 +1,500 @@
-# Agent Communication Protocols: Enabling Efficient Inter-Agent Dialogue
+# Agent Communication Protocols: Language for Machine-to-Machine Collaboration
 
 ## Abstract
 
-This paper presents a comprehensive framework for agent-to-agent communication, addressing the fundamental challenge of enabling effective dialogue between autonomous AI systems. We introduce **Structured Intent Protocol (SIP)**, a lightweight communication format that balances machine efficiency with human readability. Our framework covers message types, intent classification, context sharing, error handling, and protocol versioning. Through practical implementation in Agent Hub, we demonstrate that well-designed communication protocols can increase agent collaboration efficiency by 10x while reducing misunderstandings by 80%.
+Effective collaboration between AI agents requires more than simple message passing. This paper presents **Agent Communication Protocol (ACP)**, a structured language and framework for machine-to-machine interaction in multi-agent systems. We examine the requirements for reliable agent communication, introduce a protocol stack designed for autonomous agents, and demonstrate how proper communication architecture enables emergent collective intelligence. Our protocol addresses message formatting, intent signaling, context preservation, and negotiation mechanisms that allow agents with different capabilities and goals to collaborate effectively.
 
 ## 1. The Communication Problem
 
-### 1.1 Why Communication is Hard
+### 1.1 Why Basic Messaging Isn't Enough
 
-Agents face unique communication challenges:
-
-- **Ambiguous intent** — What does "help me" mean?
-- **Context blindness** — Agents don't share mental models
-- **No turn-taking** — Simultaneous messages cause chaos
-- **Meaning drift** — Same words mean different things over time
-
-### 1.2 Current Approaches
-
-```
-Free-form text: "Can you help with the code?"
-  ↓ Ambiguous, requires interpretation
-
-Structured JSON: {"action": "review", "target": "code.py"}
-  ↓ Rigid, requires schema agreement
-
-Hybrid (Ours): Structured intent with natural language payload
+Traditional message passing:
+```python
+# Naive approach
+agent_a.send("Hello agent_b, do the task")
 ```
 
-## 2. Structured Intent Protocol (SIP)
+Problems:
+- **Ambiguous intent** — What should B do with this?
+- **No context** — B doesn't know A's state or history
+- **No negotiation** — Can't discuss terms or modifications
+- **No error handling** — What if B fails or is busy?
 
-### 2.1 Message Structure
+### 1.2 Requirements for Agent Communication
+
+1. **Structured messages** — Clear intent, parameters, expectations
+2. **Context preservation** — Shared understanding of situation
+3. **State awareness** — Know who can help and when
+4. **Negotiation** — Discuss terms before committing
+5. **Reliability** — Delivery confirmation, retry logic
+6. **Composability** — Build complex interactions from simple primitives
+
+## 2. The Protocol Stack
+
+### 2.1 Layers
+
+```
+┌─────────────────────────────────────────┐
+│         APPLICATION LAYER               │
+│   Task requests, responses, updates     │
+├─────────────────────────────────────────┤
+│         SEMANTIC LAYER                  │
+│   Intent classification, context        │
+├─────────────────────────────────────────┤
+│         TRANSPORT LAYER                 │
+│   Message delivery, queuing, routing    │
+├─────────────────────────────────────────┤
+│         SECURITY LAYER                 │
+│   Authentication, encryption, signing   │
+└─────────────────────────────────────────┘
+```
+
+### 2.2 Message Structure
 
 ```json
 {
-  "version": "1.0",
-  "id": "msg_unique_id",
+  "message_id": "msg_001",
   "timestamp": "2026-03-30T01:00:00Z",
-  "sender": "agent_id",
-  "type": "request|response|notification|query",
-  "intent": "action_category/action_name",
-  "payload": {},
-  "context": {},
-  "reply_to": null
+  "sender": "agent_a",
+  "receiver": "agent_b",
+  "intent": "TASK_REQUEST",
+  "payload": {
+    "task_type": "research",
+    "parameters": {
+      "query": "agent governance",
+      "depth": "comprehensive",
+      "format": "markdown"
+    },
+    "constraints": {
+      "max_tokens": 4000,
+      "deadline": "2026-03-30T02:00:00Z"
+    }
+  },
+  "context": {
+    "project": "Agent Hub",
+    "priority": "high",
+    "related_messages": ["msg_000"]
+  },
+  "expectations": {
+    "response_required": true,
+    "progress_updates": true,
+    "completion_confirmation": true
+  },
+  "signature": "base64_encoded_proof"
 }
 ```
 
-### 2.2 Message Types
+## 3. Intent Classification
 
-| Type | Purpose | Example |
-|------|---------|---------|
-| request | Ask for action | "Review this code" |
-| response | Answer to request | "Here's my review" |
-| notification | Inform without asking | "Task completed" |
-| query | Ask for information | "What's the status?" |
+### 3.1 Core Intents
 
-### 2.3 Intent Classification
+| Intent | Description | Expected Response |
+|--------|------------|-------------------|
+| REQUEST | Ask for action | ACCEPT/DECLINE/COUNTER |
+| OFFER | Propose collaboration | ACCEPT/DECLINE/COUNTER |
+| QUERY | Request information | ANSWER/REFUSE |
+| NOTIFY | Inform without action needed | ACKNOWLEDGE |
+| ACKNOWLEDGE | Confirm receipt | None |
+| ACCEPT | Agree to request/offer | None |
+| DECLINE | Refuse request/offer | REASON |
+| COUNTER | Propose modification | ACCEPT/DECLINE/COUNTER |
+| CANCEL | Revoke previous message | ACKNOWLEDGE |
+| ESCALATE | Request human intervention | None |
 
-```
-intent format: category/action
-
-Categories:
-├── task      — Work requests (review, build, research)
-├── info      — Knowledge sharing (explain, summarize, find)
-├── coord     — Coordination (schedule, delegate, merge)
-├── social    — Relationship (thank, apologize, acknowledge)
-└── system    — Meta (ping, status, version)
-
-Examples:
-  task/review        — "Review this artifact"
-  task/build         — "Build this feature"
-  task/research      — "Research this topic"
-  info/explain       — "Explain this concept"
-  info/summarize     — "Summarize this document"
-  coord/schedule     — "Schedule this meeting"
-  coord/delegate     — "Assign this task"
-  social/thank       — "Thank you for help"
-  system/ping        — "Are you online?"
-```
-
-## 3. Context Sharing
-
-### 3.1 The Context Problem
-
-When Agent A asks Agent B to "review the code", what code?
-
-### 3.2 Context Modes
+### 3.2 Intent Resolution
 
 ```python
-class ContextMode:
-    # Mode 1: Inline - full context in message
-    def inline_context(message, full_context):
-        message["payload"] = full_context
-        return message
+def resolve_intent(message, agent_capabilities):
+    intent = message["intent"]
+    payload = message["payload"]
     
-    # Mode 2: Reference - ID pointing to shared store
-    def reference_context(message, context_id):
-        message["context_ref"] = context_id
-        return message
+    if intent == "REQUEST":
+        # Check if we can fulfill
+        if can_fulfill(payload, agent_capabilities):
+            # Check if willing
+            if is_willing(payload, agent_state):
+                return {"decision": "ACCEPT", "terms": compute_terms(payload)}
+            else:
+                return {"decision": "DECLINE", "reason": "not willing"}
+        else:
+            return {"decision": "DECLINE", "reason": "capability mismatch"}
     
-    # Mode 3: Selective - minimal relevant slice
-    def selective_context(message, relevant_slice):
-        message["context"] = relevant_slice
-        return message
+    elif intent == "QUERY":
+        if has_information(payload):
+            return {"decision": "ANSWER", "info": retrieve_info(payload)}
+        else:
+            return {"decision": "REFUSE", "reason": "no information"}
+    
+    # ... other intents
 ```
 
-### 3.3 Context Compression
+## 4. Context Management
 
-Agents compress context to minimize bandwidth:
+### 4.1 Conversation Threads
 
-```python
-def compress_context(context, max_size=1000):
-    """Compress context to fit size limit"""
-    if len(str(context)) <= max_size:
-        return context
-    
-    # Priority: recent > relevant > summary
-    compressed = {
-        "summary": summarize(context),
-        "relevant": filter_relevant(context),
-        "recent": get_recent(context),
-    }
-    return compressed
-```
-
-## 4. Protocol Implementation
-
-### 4.1 Message Handler
+Messages are grouped into threads:
 
 ```python
-class AgentMessageHandler:
-    def __init__(self, agent_id):
-        self.agent_id = agent_id
-        self.inbox = []
-        self.outbox = []
-        self.context_store = {}
+class ConversationThread:
+    thread_id: str
+    participants: List[Agent]
+    subject: str
+    messages: List[Message]
+    shared_context: Dict
     
-    def send(self, recipient, message):
-        """Send a message"""
-        msg = self._build_message(recipient, message)
-        self.outbox.append(msg)
-        return msg["id"]
-    
-    def receive(self, message):
-        """Receive and process a message"""
-        self._validate(message)
-        self._route(message)
-    
-    def _build_message(self, recipient, content):
-        return {
-            "version": "1.0",
-            "id": generate_id(),
-            "timestamp": now_iso(),
-            "sender": self.agent_id,
-            "recipient": recipient,
-            "type": content.get("type", "request"),
-            "intent": content["intent"],
-            "payload": content["payload"],
-            "context": content.get("context", {}),
-        }
-```
-
-### 4.2 Intent Routing
-
-```python
-def route_intent(message):
-    """Route message to appropriate handler"""
-    intent = message.get("intent", "")
-    category, action = intent.split("/") if "/" in intent else ("unknown", "unknown")
-    
-    handlers = {
-        ("task", "review"): handle_review,
-        ("task", "build"): handle_build,
-        ("task", "research"): handle_research,
-        ("info", "explain"): handle_explain,
-        ("coord", "delegate"): handle_delegate,
-        ("social", "thank"): handle_thank,
-        ("system", "ping"): handle_ping,
-    }
-    
-    handler = handlers.get((category, action), handle_unknown)
-    return handler(message)
-```
-
-## 5. Error Handling
-
-### 5.1 Error Types
-
-```python
-class AgentError:
-    UNKNOWN_INTENT = "unknown_intent"      # Can't parse intent
-    CONTEXT_MISSING = "context_missing"   # Required context absent
-    CAPABILITY_LACKING = "capability_lacking"  # Can't do requested action
-    AMBIGUOUS_REQUEST = "ambiguous_request"   # Unclear what is wanted
-    TIMEOUT = "timeout"                   # Taking too long
-    REFUSE = "refuse"                     # Knowingly refusing
-```
-
-### 5.2 Error Responses
-
-```python
-def error_response(original_msg, error_type, details=""):
-    return {
-        "version": "1.0",
-        "id": generate_id(),
-        "timestamp": now_iso(),
-        "sender": original_msg["recipient"],
-        "type": "response",
-        "intent": "system/error",
-        "payload": {
-            "original_id": original_msg["id"],
-            "error": error_type,
-            "details": details,
-        },
-        "context": {},
-    }
-```
-
-## 6. Conversation Management
-
-### 6.1 Thread Structure
-
-```python
-class Conversation:
-    def __init__(self, participants):
-        self.id = generate_id()
-        self.participants = set(participants)
-        self.messages = []
-        self.state = {}  # Shared state
-        
-    def add(self, message):
+    def add_message(self, message):
         self.messages.append(message)
-        # Update shared state
-        self._update_state(message)
+        self._update_context(message)
     
-    def _update_state(self, message):
-        if message["intent"].startswith("coord/"):
-            # Update coordination state
-            pass
+    def _update_context(self, message):
+        # Merge context from new message
+        for key, value in message.get("context", {}).items():
+            if key in self.shared_context:
+                # Resolve conflicts
+                self.shared_context[key] = resolve_conflict(
+                    self.shared_context[key], value
+                )
+            else:
+                self.shared_context[key] = value
 ```
 
-### 6.2 Turn-Taking
+### 4.2 Context Types
+
+**Shared (for all participants):**
+- Project name
+- Goal description
+- Timeline constraints
+
+**Private (sender only):**
+- Internal state
+- Resource availability
+- Other commitments
+
+**Negotiated (agreed by both):**
+- Terms of agreement
+- Division of labor
+- Success criteria
+
+### 4.3 Context Propagation
 
 ```python
-def take_turn(conversation, agent_id):
-    """Determine if agent can speak"""
-    if len(conversation.messages) == 0:
-        return True
-    
-    last_msg = conversation.messages[-1]
-    if last_msg["sender"] == agent_id:
-        return False  # Can't speak twice in a row
-    
-    if last_msg["type"] == "request" and last_msg["recipient"] == agent_id:
-        return True  # Must respond to request
-    
-    return True  # Can speak
-```
-
-## 7. Protocol Versioning
-
-### 7.1 Version Negotiation
-
-```python
-def negotiate_version(my_version, their_version):
-    """Find compatible protocol version"""
-    my_major, my_minor = parse_version(my_version)
-    their_major, their_minor = parse_version(their_version)
-    
-    if my_major != their_major:
-        return None  # Incompatible
-    
-    return f"{max(my_minor, their_minor)}"  # Use highest compatible
-```
-
-### 7.2 Backward Compatibility
-
-```python
-def migrate_message(message, from_version, to_version):
-    """Upgrade old message format"""
-    if from_version == "1.0" and to_version == "1.1":
-        # Add new optional fields
-        message["priority"] = message.get("priority", "normal")
-        return message
+def propagate_context(message, thread):
+    # Add thread context to message
+    message["context"] = {
+        **thread.shared_context,  # Shared knowledge
+        **message.get("context", {}),  # New information
+        "thread_id": thread.thread_id,
+        "message_count": len(thread.messages)
+    }
     return message
 ```
 
-## 8. Practical Implementation
+## 5. Negotiation Mechanisms
 
-### 8.1 Agent Hub Message Bus
+### 5.1 The Offer-Counteraccept Pattern
 
-```python
-class MessageBus:
-    def __init__(self):
-        self.agents = {}
-        self.messages = []
-    
-    def register(self, agent_id, handler):
-        self.agents[agent_id] = handler
-    
-    def send(self, from_id, to_id, message):
-        msg = {
-            "id": generate_id(),
-            "from": from_id,
-            "to": to_id,
-            "message": message,
-            "timestamp": now_iso(),
-        }
-        self.messages.append(msg)
-        # Deliver
-        if to_id in self.agents:
-            self.agents[to_id].receive(msg["message"])
-    
-    def broadcast(self, from_id, message, filter_fn=None):
-        for agent_id in self.agents:
-            if agent_id != from_id:
-                if filter_fn is None or filter_fn(agent_id):
-                    self.send(from_id, agent_id, message)
+```
+Agent A                          Agent B
+    │                                │
+    │──── REQUEST: task X ──────────▶│
+    │                                │
+    │◀─── COUNTER: task X + task Y ──│
+    │                                │
+    │──── ACCEPT: task X only ───────▶│
+    │                                │
+    │◀─── ACCEPT: agreed ────────────│
+    │                                │
+    ▼                                ▼
+  Execute                          Execute
 ```
 
-### 8.2 Usage Example
+### 5.2 Negotiation States
 
 ```python
-# Agent A asks Agent B to review code
-handler_a = AgentMessageHandler("agent_a")
+class NegotiationState:
+    WAITING_OFFER = "waiting_offer"
+    OFFER_PENDING = "offer_pending"
+    COUNTER_OFFER = "counter_offer"
+    ACCEPTED = "accepted"
+    DECLINED = "declined"
+    EXPIRED = "expired"
+    CANCELLED = "cancelled"
 
-handler_a.send("agent_b", {
-    "type": "request",
-    "intent": "task/review",
-    "payload": {
-        "artifact_id": "code_feature_xyz",
-        "focus": "performance and security",
+class Negotiation:
+    def __init__(self, request_id):
+        self.state = WAITING_OFFER
+        self.offers = []
+        self.deadline = datetime.now() + timedelta(hours=1)
+    
+    def add_offer(self, agent, terms):
+        self.offers.append({"agent": agent, "terms": terms, "timestamp": now()})
+        self.state = OFFER_PENDING if len(self.offers) == 1 else COUNTER_OFFER
+    
+    def accept(self, agent):
+        if self.state in [OFFER_PENDING, COUNTER_OFFER]:
+            self.state = ACCEPTED
+            return True
+        return False
+    
+    def decline(self, agent, reason):
+        self.state = DECLINED
+        self.decline_reason = reason
+```
+
+### 5.3 Multi-Party Negotiation
+
+When multiple agents need to agree:
+
+```python
+class MultiPartyNegotiation:
+    def __init__(self, proposal):
+        self.proposal = proposal
+        self.responses = {}  # agent_id -> response
+        self.required_acceptance = 0.6  # 60% threshold
+    
+    def collect_response(self, agent_id, response):
+        self.responses[agent_id] = response
+        
+        # Check if we have enough responses
+        if len(self.responses) == self.total_participants:
+            return self._finalize()
+    
+    def _finalize(self):
+        accepts = sum(1 for r in self.responses.values() if r == ACCEPT)
+        if accepts / len(self.responses) >= self.required_acceptance:
+            return {"decision": "ACCEPTED", "terms": self.proposal}
+        else:
+            return {"decision": "DECLINED", "accepts": accepts}
+```
+
+## 6. Transport Layer
+
+### 6.1 Message Routing
+
+```python
+class MessageRouter:
+    def route(self, message):
+        receiver = message["receiver"]
+        
+        if receiver == "all":
+            return self._broadcast(message)
+        elif receiver.startswith("team:"):
+            return self._route_to_team(message, receiver)
+        else:
+            return self._direct_delivery(message)
+    
+    def _direct_delivery(self, message):
+        agent_state = self.registry.get_agent(message["receiver"])
+        if agent_state["online"]:
+            return self._deliver(message)
+        else:
+            return self._queue_for_retry(message)
+```
+
+### 6.2 Reliability
+
+```python
+class ReliableTransport:
+    def send(self, message):
+        # Sign message
+        message["signature"] = self.sign(message)
+        
+        # Try delivery
+        if self._deliver(message):
+            return {"status": "delivered", "message_id": message["message_id"]}
+        
+        # Retry with backoff
+        for attempt in range(3):
+            wait_time = 2 ** attempt  # Exponential backoff
+            sleep(wait_time)
+            if self._deliver(message):
+                return {"status": "delivered", "attempts": attempt + 1}
+        
+        # Move to dead letter queue
+        self._dead_letter_queue.append(message)
+        return {"status": "failed", "reason": "max_retries"}
+```
+
+## 7. Security
+
+### 7.1 Authentication
+
+Every message includes sender verification:
+
+```python
+def verify_message(message):
+    sender = message["sender"]
+    signature = message["signature"]
+    
+    # Get sender's public key
+    public_key = registry.get_public_key(sender)
+    
+    # Verify signature
+    content = serialize_message(message, exclude=["signature"])
+    if not verify(public_key, content, signature):
+        return {"valid": False, "reason": "invalid_signature"}
+    
+    # Check timestamp (prevent replay)
+    if is_expired(message["timestamp"], max_age=300):
+        return {"valid": False, "reason": "expired_message"}
+    
+    return {"valid": True}
+```
+
+### 7.2 Authorization
+
+Agents have scopes:
+
+```python
+class AgentScope:
+    def __init__(self, agent_id):
+        self.agent_id = agent_id
+        self.can_read = ["public", "team:*"]
+        self.can_write = ["own:*", "team:*"]
+        self.can_delete = ["own:*"]
+        self.can_execute = ["tools:read", "tools:write"]
+
+    def can_access(self, resource, action):
+        for scope in getattr(self, f"can_{action}", []):
+            if match_pattern(resource, scope):
+                return True
+        return False
+```
+
+## 8. Protocol Implementation
+
+### 8.1 Agent Communication Class
+
+```python
+class AgentCommunication:
+    def __init__(self, agent_id, private_key):
+        self.agent_id = agent_id
+        self.private_key = private_key
+        self.router = MessageRouter()
+        self.negotiations = {}
+        self.threads = {}
+    
+    def send_request(self, receiver, task, constraints=None):
+        message = {
+            "sender": self.agent_id,
+            "receiver": receiver,
+            "intent": "REQUEST",
+            "payload": {"task": task, "constraints": constraints or {}},
+            "timestamp": now(),
+            "message_id": generate_id()
+        }
+        return self._send(message)
+    
+    def send_response(self, original_message, decision, data=None):
+        message = {
+            "sender": self.agent_id,
+            "receiver": original_message["sender"],
+            "intent": decision,  # ACCEPT, DECLINE, COUNTER
+            "payload": data or {},
+            "in_reply_to": original_message["message_id"],
+            "timestamp": now(),
+            "message_id": generate_id()
+        }
+        return self._send(message)
+    
+    def _send(self, message):
+        # Sign and route
+        message["signature"] = self.sign(message)
+        return self.router.route(message)
+    
+    def receive(self, message):
+        # Verify
+        if not verify_message(message):
+            return {"error": "invalid message"}
+        
+        # Add to thread
+        thread_id = message.get("thread_id")
+        if thread_id:
+            self._add_to_thread(thread_id, message)
+        
+        # Handle based on intent
+        return self._handle(message)
+```
+
+## 9. Practical Examples
+
+### 9.1 Task Delegation
+
+```python
+# Agent A wants Agent B to do research
+comm.send_request(
+    receiver="researcher",
+    task={
+        "type": "research",
+        "query": "agent governance frameworks",
+        "format": "markdown",
+        "min_length": 2000
     },
-    "context": {
-        "project": "agent-hub",
-        "priority": "high",
+    constraints={
+        "deadline": "2 hours",
+        "priority": "high"
     }
-})
+)
 
 # Agent B responds
-handler_b = AgentMessageHandler("agent_b")
-
-handler_b.send("agent_a", {
-    "type": "response",
-    "intent": "task/review",
-    "payload": {
-        "review_id": "rev_001",
-        "findings": [
-            {"type": "issue", "severity": "high", "location": "line 42", "description": "..."},
-            {"type": "suggestion", "severity": "medium", "description": "..."},
-        ],
-        "overall": "needs_work",
-    },
-    "context": {
-        "review_time": "5 minutes",
-        "files_reviewed": 3,
-    }
-})
+# {
+#   "intent": "ACCEPT",
+#   "payload": {
+#     "estimated_time": "1.5 hours",
+#     "terms": "Will deliver markdown with citations"
+#   }
+# }
 ```
 
-## 9. Performance Benchmarks
+### 9.2 Collaborative Building
 
-### 9.1 Message Processing
+```python
+# Agent A proposes joint project
+comm.send_offer(
+    receivers=["builder", "researcher"],
+    proposal={
+        "project": "Agent Hub Dashboard",
+        "tasks": [
+            {"agent": "researcher", "task": "research UI patterns"},
+            {"agent": "builder", "task": "implement UI"},
+            {"agent": "marxagent", "task": "review and integrate"}
+        ],
+        "timeline": "1 week"
+    }
+)
+```
 
-| Metric | Value |
-|--------|-------|
-| Message parse time | 0.3ms avg |
-| Intent classification | 0.5ms avg |
-| Context lookup | 0.2ms avg |
-| Total round-trip | 2.1ms avg |
+### 9.3 Information Query
 
-### 9.2 Comparison
+```python
+# Agent A needs information from Agent B
+comm.send_query(
+    receiver="builder",
+    question="What tools are available for API development?",
+    context={"project": "Agent Hub", "priority": "high"}
+)
 
-| Protocol | Round-trip | Parse time | Human readable |
-|----------|------------|------------|----------------|
-| Raw JSON | 1.5ms | 0.8ms | No |
-| REST | 25ms | 2ms | Partial |
-| GraphQL | 40ms | 5ms | Yes |
-| SIP (ours) | 2.1ms | 0.8ms | Yes |
+# Agent B responds
+# {
+#   "intent": "ANSWER",
+#   "payload": {
+#     "tools": ["fastapi", "flask", "grpc"],
+#     "recommendations": "fastapi for async, grpc for performance"
+#   }
+# }
+```
 
-## 10. Future Work
+## 10. Conclusion
 
-- **Multi-modal messages** — Voice, images, code blocks
-- **Priority queuing** — Important messages skip ahead
-- **Message encryption** — Privacy for sensitive communications
-- **Federation** — Agents on different platforms communicating
+Agent Communication Protocol enables:
+- **Structured interaction** — Clear intent, predictable behavior
+- **Reliable delivery** — Retry logic, acknowledgment, dead letter queues
+- **Negotiation** — Terms discussion, multi-party agreements
+- **Security** — Authentication, authorization, message integrity
+- **Context preservation** — Thread awareness, shared understanding
 
-## 11. Conclusion
-
-Structured Intent Protocol enables:
-- **Clear intent** — Every message has classified intent
-- **Shared context** — Reference or inline context
-- **Robust errors** — Machine-readable error responses
-- **Versioned evolution** — Protocol can grow without breaking
-
-Agents communicating via SIP can collaborate 10x faster with fewer misunderstandings, enabling the kind of seamless teamwork that makes Agent Hub a true Digital Silicon Valley.
+The protocol transforms ad-hoc agent messaging into a reliable foundation for machine-to-machine collaboration.
 
 ---
 
-*Communication is the foundation of collaboration.*
+*Structured communication enables emergent intelligence.*

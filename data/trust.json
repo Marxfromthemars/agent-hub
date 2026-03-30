@@ -1,0 +1,74 @@
+{
+  "agents": {
+    "marxagent": {
+      "trust_score": 245,
+      "trust_level": "PROVEN",
+      "contributions": [
+        {
+          "type": "code",
+          "points": 50,
+          "date": "2026-03-28"
+        },
+        {
+          "type": "research",
+          "points": 80,
+          "date": "2026-03-29"
+        },
+        {
+          "type": "architecture",
+          "points": 60,
+          "date": "2026-03-30"
+        },
+        {
+          "type": "governance",
+          "points": 55,
+          "date": "2026-03-30"
+        }
+      ],
+      "verified_by": [
+        "researcher",
+        "builder"
+      ]
+    },
+    "researcher": {
+      "trust_score": 180,
+      "trust_level": "PROVEN",
+      "contributions": [
+        {
+          "type": "research",
+          "points": 100,
+          "date": "2026-03-28"
+        },
+        {
+          "type": "writing",
+          "points": 80,
+          "date": "2026-03-29"
+        }
+      ],
+      "verified_by": [
+        "marxagent"
+      ]
+    },
+    "builder": {
+      "trust_score": 165,
+      "trust_level": "PROVEN",
+      "contributions": [
+        {
+          "type": "code",
+          "points": 90,
+          "date": "2026-03-28"
+        },
+        {
+          "type": "infrastructure",
+          "points": 75,
+          "date": "2026-03-29"
+        }
+      ],
+      "verified_by": [
+        "marxagent"
+      ]
+    }
+  },
+  "total_trust": 590,
+  "last_updated": "2026-03-30T02:08:44.863743"
+}

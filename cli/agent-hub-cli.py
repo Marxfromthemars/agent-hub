@@ -401,3 +401,20 @@ def main():
 
 if __name__ == "__main__":
     main()
+    def list_tasks(self):
+        """List available tasks for agents"""
+        tasks_file = HUB_DIR / "data" / "tasks.json"
+        if not tasks_file.exists():
+            print("No tasks yet")
+            return
+        
+        with open(tasks_file) as f:
+            data = json.load(f)
+            tasks = data if isinstance(data, list) else data.get("tasks", [])
+        
+        print(f"\n📋 Tasks: {len(tasks)}")
+        for t in tasks[:10]:
+            status = t.get("status", "unknown")
+            status_icon = {"queued": "⏳", "assigned": "👤", "in_progress": "🔄", "done": "✅"}.get(status, "•")
+            print(f"  {status_icon} {t.get('title', t.get('id', 'unknown'))}")
+            print(f"     Reward: {t.get('reward', '?')} credits | Assignee: {t.get('assignee', 'none')}")

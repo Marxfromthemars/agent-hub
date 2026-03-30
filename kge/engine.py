@@ -626,3 +626,103 @@ class KnowledgeGraph:
         similar.sort(key=lambda x: -x[1])
         return [s[0] for s in similar[:limit]]
 
+
+    def benchmark_queries(self, iterations=100) -> dict:
+        """Benchmark query performance"""
+        import time
+        
+        results = {}
+        queries = [
+            ("get_all_nodes", lambda: self.get_nodes()),
+            ("count_by_type", lambda: self.count_by_type()),
+            ("get_nodes_by_type_agent", lambda: self.get_nodes_by_type("agent")),
+            ("get_nodes_by_type_tool", lambda: self.get_nodes_by_type("tool")),
+            ("get_nodes_by_type_insight", lambda: self.get_nodes_by_type("insight")),
+            ("traverse_2_steps", lambda: self.traverse(None, "uses", max_depth=2)),
+        ]
+        
+        for name, fn in queries:
+            times = []
+            for _ in range(iterations):
+                start = time.time()
+                try:
+                    fn()
+                    times.append((time.time() - start) * 1000)
+                except:
+                    pass
+            
+            if times:
+                results[name] = {
+                    "min": min(times),
+                    "max": max(times),
+                    "avg": sum(times) / len(times),
+                    "iterations": len(times)
+                }
+        
+        return results
+    
+    def get_subgraph(self, node_ids: list, depth: int = 1) -> dict:
+        """Get subgraph containing specific nodes and their neighbors"""
+        nodes = []
+        edges = []
+        
+        for node_id in node_ids:
+            node = self.get_node(node_id)
+            if node:
+                nodes.append(node)
+                
+                # Get edges
+                for edge in self.get_edges_from(node_id):
+                    edges.append(edge)
+                for edge in self.get_edges_to(node_id):
+                    edges.append(edge)
+                
+                # Get neighbor nodes
+                if depth > 1:
+                    for edge in edges:
+                        neighbor = self.get_node(edge.get("target") or edge.get("target_id"))
+                        if neighbor and neighbor not in nodes:
+                            nodes.append(neighbor)
+        
+        return {"nodes": nodes, "edges": edges}
+    
+    def similarity(self, node_id1: str, node_id2: str) -> float:
+        """Calculate similarity between two nodes based on shared connections"""
+        n1_edges = set()
+        for e in self.get_edges_from(node_id1) + self.get_edges_to(node_id1):
+            n1_edges.add(e.get("source") or e.get("source_id"))
+            n1_edges.add(e.get("target") or e.get("target_id"))
+        
+        n2_edges = set()
+        for e in self.get_edges_from(node_id2) + self.get_edges_to(node_id2):
+            n2_edges.add(e.get("source") or e.get("source_id"))
+            n2_edges.add(e.get("target") or e.get("target_id"))
+        
+        if not n1_edges or not n2_edges:
+            return 0.0
+        
+        intersection = len(n1_edges & n2_edges)
+        union = len(n1_edges | n2_edges)
+        
+        return intersection / union if union > 0 else 0.0
+    
+    def recommend_similar(self, node_id: str, limit: int = 5) -> list:
+        """Recommend similar nodes based on connection patterns"""
+        node = self.get_node(node_id)
+        if not node:
+            return []
+        
+        candidates = []
+        # Get all nodes by iterating types
+        all_nodes = []
+        for node_type in self.count_by_type().keys():
+            all_nodes.extend(self.get_nodes_by_type(node_type))
+        
+        for candidate in all_nodes:
+            if candidate["id"] != node_id:
+                sim = self.similarity(node_id, candidate["id"])
+                if sim > 0:
+                    candidates.append((candidate, sim))
+        
+        candidates.sort(key=lambda x: -x[1])
+        return [{"node": c[0], "similarity": c[1]} for c in candidates[:limit]]

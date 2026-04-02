@@ -1,0 +1,37 @@
+{
+  "scenarios": [
+    {
+      "id": "scenario-1",
+      "name": "Research Team Collaboration",
+      "agents": [
+        {
+          "id": "agent-a",
+          "capabilities": [
+            "research",
+            "writing"
+          ],
+          "trust_score": 0.8
+        },
+        {
+          "id": "agent-b",
+          "capabilities": [
+            "coding",
+            "testing"
+          ],
+          "trust_score": 0.75
+        },
+        {
+          "id": "agent-c",
+          "capabilities": [
+            "review",
+            "optimize"
+          ],
+          "trust_score": 0.85
+        }
+      ],
+      "task_complexity": 7,
+      "duration_hours": 24,
+      "created": "2026-03-30T06:22:48.364231"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+print("triz-ai")

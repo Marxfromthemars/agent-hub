@@ -1,0 +1,15 @@
+{
+  "roles": {
+    "admin": {
+      "name": "admin",
+      "permissions": [
+        "read",
+        "write",
+        "delete"
+      ],
+      "created": "2026-03-30T09:29:21.752869"
+    }
+  },
+  "agent_roles": {},
+  "resources": {}
+}

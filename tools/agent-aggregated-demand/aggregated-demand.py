@@ -1,0 +1,1 @@
+print("aggregated-demand")

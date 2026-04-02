@@ -1,0 +1,1 @@
+print("environmental-impact-smart")

@@ -1,0 +1,1 @@
+print("agent-temporary-power")

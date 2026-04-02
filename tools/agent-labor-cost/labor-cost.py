@@ -1,0 +1,1 @@
+print("labor-cost")

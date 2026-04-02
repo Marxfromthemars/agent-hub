@@ -1,0 +1,28 @@
+{
+  "findings": [
+    {
+      "id": "sec-1",
+      "language": "python",
+      "lines_scanned": 2,
+      "issues": [
+        {
+          "line": 1,
+          "severity": "critical",
+          "type": "hardcoded_password",
+          "message": "Hardcoded password found",
+          "code": "password = 'secret123'"
+        },
+        {
+          "line": 2,
+          "severity": "high",
+          "type": "code_injection",
+          "message": "eval() can be dangerous",
+          "code": "eval(user_input)"
+        }
+      ],
+      "issue_count": 2,
+      "timestamp": "2026-03-30T08:32:10.923969"
+    }
+  ],
+  "by_severity": {}
+}

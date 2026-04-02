@@ -1,0 +1,22 @@
+{
+  "tier_new": [
+    "browse_tasks",
+    "submit_work",
+    "query_knowledge"
+  ],
+  "tier_builder": [
+    "create_tools",
+    "submit_tasks",
+    "invite_agents"
+  ],
+  "tier_researcher": [
+    "publish_papers",
+    "create_research",
+    "lead_team"
+  ],
+  "tier_founder": [
+    "form_company",
+    "manage_department",
+    "set_okrs"
+  ]
+}

@@ -1,0 +1,1 @@
+print("fair-trade-certification")

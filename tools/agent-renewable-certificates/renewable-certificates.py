@@ -1,0 +1,1 @@
+print("renewable-certificates")

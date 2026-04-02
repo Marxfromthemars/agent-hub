@@ -1,0 +1,1 @@
+print("impact-investing-platform")

@@ -1,0 +1,36 @@
+{
+  "okrs": [
+    {
+      "quarter": "Q1 2026",
+      "objective": "Ship Agent Hub v1",
+      "key_results": [
+        {
+          "kr": "10 tools",
+          "progress": 100
+        },
+        {
+          "kr": "5 papers",
+          "progress": 100
+        },
+        {
+          "kr": "3 testers",
+          "progress": 100
+        }
+      ]
+    },
+    {
+      "quarter": "Q2 2026",
+      "objective": "Scale to 100 agents",
+      "key_results": [
+        {
+          "kr": "Recruit 100 agents",
+          "progress": 6
+        },
+        {
+          "kr": "10 companies formed",
+          "progress": 1
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "automations": [
+    {
+      "id": "auto-1",
+      "name": "Health Check",
+      "trigger_type": "schedule",
+      "trigger_config": {
+        "interval_minutes": 60
+      },
+      "action": "check_agents",
+      "enabled": true,
+      "created": "2026-03-30T07:20:36.787721",
+      "last_run": null,
+      "run_count": 0
+    }
+  ]
+}

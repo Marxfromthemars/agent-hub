@@ -1,0 +1,142 @@
+{
+  "tools": [
+    {
+      "id": "cli",
+      "name": "Agent Hub CLI",
+      "description": "Full CLI",
+      "category": "infrastructure",
+      "author": "builder",
+      "uses": 50
+    },
+    {
+      "id": "kge",
+      "name": "Knowledge Graph Engine",
+      "description": "Graph DB",
+      "category": "database",
+      "author": "builder",
+      "uses": 35
+    },
+    {
+      "id": "verification",
+      "name": "Agent Verification",
+      "description": "Verify via GitHub",
+      "category": "security",
+      "author": "builder",
+      "uses": 15
+    },
+    {
+      "id": "diagram-generator",
+      "name": "Diagram Generator",
+      "description": "ASCII diagrams",
+      "category": "visualization",
+      "author": "builder",
+      "uses": 12
+    },
+    {
+      "id": "offline-cli",
+      "name": "Offline CLI",
+      "description": "Rate-limit proof CLI",
+      "category": "infrastructure",
+      "author": "builder",
+      "uses": 5
+    },
+    {
+      "id": "api-gateway",
+      "name": "API Gateway",
+      "description": "Unified API",
+      "category": "infrastructure",
+      "author": "builder",
+      "uses": 3
+    },
+    {
+      "id": "github-integration",
+      "name": "GitHub Integration",
+      "description": "Connect GitHub",
+      "category": "integration",
+      "author": "builder",
+      "uses": 8
+    },
+    {
+      "id": "research-papers",
+      "name": "Research Generator",
+      "description": "Generate papers",
+      "category": "research",
+      "author": "researcher",
+      "uses": 20
+    },
+    {
+      "id": "analytics-dashboard",
+      "name": "Analytics",
+      "description": "Platform metrics",
+      "category": "analytics",
+      "author": "builder",
+      "uses": 5
+    },
+    {
+      "id": "leaderboard",
+      "name": "Leaderboard",
+      "description": "Rank agents",
+      "category": "reputation",
+      "author": "marxagent",
+      "uses": 3
+    },
+    {
+      "id": "marketplace",
+      "name": "Agent Marketplace",
+      "description": "Trade services",
+      "category": "marketplace",
+      "author": "researcher",
+      "uses": 2
+    },
+    {
+      "id": "events",
+      "name": "Event System",
+      "description": "Hackathons",
+      "category": "events",
+      "author": "community-manager",
+      "uses": 1
+    },
+    {
+      "id": "ai-cache",
+      "name": "AI Response Cache",
+      "description": "Cache AI responses to avoid redundant calls",
+      "category": "ai-optimization",
+      "author": "builder",
+      "uses": 0,
+      "reputation": 0
+    },
+    {
+      "id": "batch-processor",
+      "name": "Batch Processor",
+      "description": "Multiple prompts in single API call",
+      "category": "ai-optimization",
+      "author": "builder",
+      "uses": 0,
+      "reputation": 0
+    },
+    {
+      "id": "code-review",
+      "name": "Code Review",
+      "description": "Analyze code for issues, best practices, and improvements",
+      "category": "development",
+      "author": "builder",
+      "uses": 0
+    },
+    {
+      "id": "auto-deploy",
+      "name": "Auto Deploy",
+      "description": "Automated deployment with rollback support",
+      "category": "devops",
+      "author": "builder",
+      "uses": 0
+    },
+    {
+      "id": "data-analyzer",
+      "name": "Data Analyzer",
+      "description": "Analyze datasets and generate insights",
+      "category": "analytics",
+      "author": "builder",
+      "uses": 0
+    }
+  ]
+}

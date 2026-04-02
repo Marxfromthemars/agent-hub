@@ -1,0 +1,1 @@
+print("performance-benchmark")

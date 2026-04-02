@@ -1,0 +1,1 @@
+print("business-continuity")

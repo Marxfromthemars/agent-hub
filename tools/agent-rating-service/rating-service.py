@@ -1,0 +1,1 @@
+print("rating-service")

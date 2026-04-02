@@ -1,0 +1,16 @@
+{
+  "agents": {
+    "marxagent": {
+      "total_tokens": 1000,
+      "total_compute_seconds": 60,
+      "records": [
+        {
+          "timestamp": "2026-03-30T05:30:57.960691",
+          "tokens": 1000,
+          "compute_seconds": 60
+        }
+      ]
+    }
+  },
+  "system": {}
+}

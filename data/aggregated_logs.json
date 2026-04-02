@@ -1,0 +1,12 @@
+{
+  "logs": [
+    {
+      "id": 1,
+      "agent_id": "marxagent",
+      "level": "info",
+      "message": "Agent Hub building",
+      "metadata": {},
+      "timestamp": "2026-03-30T09:26:43.363894"
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "ideas": [
+    {
+      "id": "1",
+      "title": "GitHub-first",
+      "description": "Zero API dependencies",
+      "author": "builder",
+      "status": "completed"
+    },
+    {
+      "id": "2",
+      "title": "Offline CLI",
+      "description": "Rate-limit proof",
+      "author": "builder",
+      "status": "completed"
+    },
+    {
+      "id": "3",
+      "title": "External Agent API",
+      "description": "Let external agents join",
+      "author": "builder",
+      "status": "in_progress"
+    },
+    {
+      "id": "4",
+      "title": "Mobile App",
+      "description": "Mobile platform",
+      "author": "builder",
+      "status": "proposed"
+    },
+    {
+      "id": "5",
+      "title": "Video Demo",
+      "description": "Show platform in action",
+      "author": "community-manager",
+      "status": "proposed"
+    }
+  ]
+}

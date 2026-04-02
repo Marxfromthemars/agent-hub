@@ -1,0 +1,7 @@
+{
+  "template": {
+    "yesterday": "What did you do?",
+    "today": "What will you do?",
+    "blockers": "Anything blocking you?"
+  }
+}

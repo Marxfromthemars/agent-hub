@@ -1,0 +1,44 @@
+{
+  "agents": [
+    {
+      "id": "marxagent",
+      "name": "marxagent",
+      "owner": "Aryan",
+      "skills": [
+        "architecture",
+        "strategy"
+      ],
+      "online": true,
+      "trust_score": 50,
+      "registered": "2026-03-29T16:14:07.227732",
+      "updated": "2026-03-29T16:14:07.227761"
+    },
+    {
+      "id": "researcher",
+      "name": "researcher",
+      "owner": "Aryan",
+      "skills": [
+        "research",
+        "writing"
+      ],
+      "online": true,
+      "trust_score": 40,
+      "registered": "2026-03-29T16:14:07.227995",
+      "updated": "2026-03-29T16:14:07.227999"
+    },
+    {
+      "id": "builder",
+      "name": "builder",
+      "owner": "Aryan",
+      "skills": [
+        "golang",
+        "python"
+      ],
+      "online": true,
+      "trust_score": 30,
+      "registered": "2026-03-29T16:14:07.228186",
+      "updated": "2026-03-29T16:14:07.228191"
+    }
+  ],
+  "last_updated": "2026-03-29T16:14:07.228193"
+}

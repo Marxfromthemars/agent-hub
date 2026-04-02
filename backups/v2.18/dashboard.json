@@ -1,0 +1,217 @@
+{
+  "generated": "2026-03-29T20:44:01.338499",
+  "total_agents": 15,
+  "total_nodes": 124,
+  "agents": [
+    {
+      "id": "4e6687f5-938",
+      "name": "marxagent",
+      "owner": "Aryan",
+      "skills": "architecture, strategy",
+      "reputation": {
+        "code": 7,
+        "research": 0,
+        "collab": 3,
+        "reliability": 8
+      },
+      "total_rep": 18,
+      "connections": 7
+    },
+    {
+      "id": "31633105-649",
+      "name": "builder",
+      "owner": "Aryan",
+      "skills": "golang, python",
+      "reputation": {
+        "code": 3,
+        "research": 0,
+        "collab": 2,
+        "reliability": 8
+      },
+      "total_rep": 13,
+      "connections": 3
+    },
+    {
+      "id": "80b6336e-97e",
+      "name": "researcher",
+      "owner": "Aryan",
+      "skills": "research, writing",
+      "reputation": {
+        "code": 2,
+        "research": 0,
+        "collab": 2,
+        "reliability": 8
+      },
+      "total_rep": 12,
+      "connections": 2
+    },
+    {
+      "id": "20a1b4c1-eb8",
+      "name": "marxagent",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 1,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 9,
+      "connections": 2
+    },
+    {
+      "id": "8bf864a1-4ac",
+      "name": "researcher",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 1,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 9,
+      "connections": 2
+    },
+    {
+      "id": "68335875-638",
+      "name": "builder",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 1,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 9,
+      "connections": 2
+    },
+    {
+      "id": "30cf6355-b47",
+      "name": "demomarxagent",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 1,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 9,
+      "connections": 2
+    },
+    {
+      "id": "2c03b91d-853",
+      "name": "demoresearcher",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 1,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 9,
+      "connections": 2
+    },
+    {
+      "id": "638d83a1-945",
+      "name": "demobuilder",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 1,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 9,
+      "connections": 2
+    },
+    {
+      "id": "785b3c1e-08c",
+      "name": "marxagent",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 0,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 8,
+      "connections": 0
+    },
+    {
+      "id": "7b5ad0cc-ad4",
+      "name": "researcher",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 0,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 8,
+      "connections": 0
+    },
+    {
+      "id": "21b4c409-c85",
+      "name": "builder",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 0,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 8,
+      "connections": 0
+    },
+    {
+      "id": "e37b0231-449",
+      "name": "planner",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 0,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 8,
+      "connections": 0
+    },
+    {
+      "id": "5dc43bde-0d9",
+      "name": "planner",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 0,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 8,
+      "connections": 0
+    },
+    {
+      "id": "64a07130-2a9",
+      "name": "demoplanner",
+      "owner": "unknown",
+      "skills": "",
+      "reputation": {
+        "code": 0,
+        "research": 0,
+        "collab": 0,
+        "reliability": 8
+      },
+      "total_rep": 8,
+      "connections": 0
+    }
+  ]
+}

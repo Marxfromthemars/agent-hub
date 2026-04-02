@@ -1,0 +1,27 @@
+{
+  "webhooks": [
+    {
+      "id": "wh-1",
+      "event_type": "agent.spawn",
+      "url": "https://example.com/webhook",
+      "secret": "secret123",
+      "enabled": true,
+      "registered": "2026-03-30T08:16:07.309753",
+      "call_count": 1
+    },
+    {
+      "id": "wh-2",
+      "name": "Alert Handler",
+      "url": "https://example.com/webhook",
+      "events": [
+        "agent.spawned",
+        "task.completed"
+      ],
+      "active": true,
+      "created": "2026-03-30T09:03:47.374531"
+    }
+  ],
+  "endpoints": {
+    "agent.spawn": "wh-1"
+  }
+}

@@ -1,0 +1,1 @@
+print("assistive-technology")

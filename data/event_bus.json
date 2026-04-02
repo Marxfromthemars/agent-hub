@@ -1,0 +1,20 @@
+{
+  "events": [
+    {
+      "id": "evt-0cb7b5e1",
+      "topic": "platform.status",
+      "data": {
+        "version": "2.10",
+        "agents": 3
+      },
+      "source": "unknown",
+      "timestamp": "2026-03-30T05:56:48.547954",
+      "subscribers_notified": 0
+    }
+  ],
+  "topics": {
+    "platform.status": [
+      "evt-0cb7b5e1"
+    ]
+  }
+}

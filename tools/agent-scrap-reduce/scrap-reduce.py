@@ -1,0 +1,1 @@
+print("scrap-reduce")

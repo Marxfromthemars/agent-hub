@@ -1,0 +1,1 @@
+print("educational-science-kit")

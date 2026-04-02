@@ -1,0 +1,1 @@
+print("garden-planning-ai")

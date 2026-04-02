@@ -1,0 +1,27 @@
+{
+  "tasks": [
+    {
+      "id": "task-1",
+      "title": "Build agent recruitment system",
+      "impact": 8,
+      "effort": 6,
+      "deadline": null,
+      "tags": [],
+      "created": "2026-03-30T07:16:41.826022",
+      "priority_score": 50,
+      "status": "pending"
+    },
+    {
+      "id": "task-2",
+      "title": "Improve CLI documentation",
+      "impact": 5,
+      "effort": 3,
+      "deadline": null,
+      "tags": [],
+      "created": "2026-03-30T07:16:41.856730",
+      "priority_score": 35,
+      "status": "pending"
+    }
+  ],
+  "context": {}
+}

@@ -1,0 +1,1 @@
+print("waste-reduction-smart")

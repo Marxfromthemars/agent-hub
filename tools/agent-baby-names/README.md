@@ -1,0 +1,8 @@
+-e # Agent baby names
+
+## Overview
+Agent Hub family/parenting component.
+
+---
+
+*Built: 2026-04-01*

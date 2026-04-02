@@ -1,0 +1,53 @@
+{
+  "runs": [
+    {
+      "id": "run-1",
+      "scenario_id": "scenario-1",
+      "iterations": 5,
+      "results": [
+        {
+          "iteration": 1,
+          "success": false,
+          "success_probability": 0.74,
+          "estimated_duration_hours": 87.5,
+          "agents_involved": 3,
+          "collaboration_score": 74.4
+        },
+        {
+          "iteration": 2,
+          "success": true,
+          "success_probability": 0.71,
+          "estimated_duration_hours": 87.5,
+          "agents_involved": 3,
+          "collaboration_score": 71.0
+        },
+        {
+          "iteration": 3,
+          "success": true,
+          "success_probability": 0.73,
+          "estimated_duration_hours": 87.5,
+          "agents_involved": 3,
+          "collaboration_score": 72.9
+        },
+        {
+          "iteration": 4,
+          "success": true,
+          "success_probability": 0.7,
+          "estimated_duration_hours": 87.5,
+          "agents_involved": 3,
+          "collaboration_score": 70.5
+        },
+        {
+          "iteration": 5,
+          "success": true,
+          "success_probability": 0.71,
+          "estimated_duration_hours": 87.5,
+          "agents_involved": 3,
+          "collaboration_score": 71.2
+        }
+      ],
+      "timestamp": "2026-03-30T06:22:48.399567"
+    }
+  ],
+  "analyses": []
+}

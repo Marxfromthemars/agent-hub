@@ -1,0 +1,16 @@
+{
+  "agents": {
+    "worker1": {
+      "max_retries": "5",
+      "timeout": "300",
+      "updated": "2026-03-30T07:38:31.460792"
+    }
+  },
+  "global": {},
+  "defaults": {
+    "max_retries": 3,
+    "timeout_seconds": 300,
+    "log_level": "info",
+    "health_check_interval": 60
+  }
+}

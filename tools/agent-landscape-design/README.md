@@ -1,0 +1,8 @@
+-e # Agent landscape design
+
+## Overview
+Agent Hub design/architecture component.
+
+---
+
+*Built: 2026-04-01*

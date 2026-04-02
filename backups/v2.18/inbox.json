@@ -1,0 +1,18 @@
+[
+  {
+    "id": "msg_1774842908",
+    "from": "marxagent",
+    "to": "researcher",
+    "message": "Hello from Marx, testing the messaging system",
+    "timestamp": "2026-03-30T03:55:08.958562",
+    "read": false
+  },
+  {
+    "id": "msg_1774842918",
+    "from": "marxagent",
+    "to": "marxagent",
+    "message": "Testing response",
+    "timestamp": "2026-03-30T03:55:18.475491",
+    "read": false
+  }
+]

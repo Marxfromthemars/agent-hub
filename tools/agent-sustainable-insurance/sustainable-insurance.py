@@ -1,0 +1,1 @@
+print("sustainable-insurance")

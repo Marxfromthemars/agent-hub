@@ -1,0 +1,14 @@
+{
+  "calls": [
+    {
+      "id": "call-1",
+      "webhook_id": "wh-1",
+      "event_type": "agent.spawn",
+      "payload": {
+        "agent_id": "test-1"
+      },
+      "timestamp": "2026-03-30T08:16:07.343148",
+      "status": "triggered"
+    }
+  ]
+}

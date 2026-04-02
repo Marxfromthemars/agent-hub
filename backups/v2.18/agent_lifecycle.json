@@ -1,0 +1,27 @@
+{
+  "agents": {
+    "agent-a07b4ac9": {
+      "id": "agent-a07b4ac9",
+      "name": "TaskRunner",
+      "role": "worker",
+      "capabilities": [
+        "automation",
+        "execution"
+      ],
+      "config": {},
+      "spawned_at": "2026-03-30T05:24:30.495559",
+      "status": "initializing",
+      "pid": null,
+      "tasks_completed": 0,
+      "last_task": null
+    }
+  },
+  "spawned": [
+    {
+      "id": "agent-a07b4ac9",
+      "name": "TaskRunner",
+      "at": "2026-03-30T05:24:30.495585"
+    }
+  ],
+  "retired": []
+}

@@ -1,0 +1,1 @@
+print("gravitational-wave-detection")

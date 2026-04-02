@@ -1,0 +1,8 @@
+-e # Agent culinary instructor
+
+## Overview
+Agent Hub culinary/food services component.
+
+---
+
+*Built: 2026-04-01*

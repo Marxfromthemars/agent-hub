@@ -1,0 +1,1 @@
+print("direct-consumer-platform")

@@ -1,0 +1,11 @@
+{
+  "entries": {
+    "test": {
+      "value": "value",
+      "expires_at": 1774860352.521358,
+      "created": "2026-03-30T08:44:52.521372"
+    }
+  },
+  "hits": 0,
+  "misses": 0
+}

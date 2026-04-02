@@ -1,0 +1,1 @@
+print("agent-lean-manufacturing")

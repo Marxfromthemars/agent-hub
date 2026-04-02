@@ -1,0 +1,1 @@
+print("free-education-access")

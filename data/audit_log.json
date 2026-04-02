@@ -1,0 +1,13 @@
+{
+  "logs": [
+    {
+      "id": 1,
+      "timestamp": "2026-03-30T06:38:40.129998",
+      "actor": "marxagent",
+      "action": "spawn",
+      "target": "builder",
+      "result": "builder",
+      "details": "Agent Hub v2.12"
+    }
+  ]
+}

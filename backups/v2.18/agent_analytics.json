@@ -1,0 +1,27 @@
+{
+  "agents": {
+    "marxagent": {
+      "tasks_completed": 1,
+      "tasks_failed": 0,
+      "total_duration": 120,
+      "task_types": {
+        "research": {
+          "count": 1,
+          "total_duration": 120
+        }
+      },
+      "first_seen": "2026-03-30T05:28:51.069413",
+      "last_activity": "2026-03-30T05:28:51.069435"
+    }
+  },
+  "daily_stats": {
+    "2026-03-30": {
+      "tasks": 1,
+      "agents": [
+        "marxagent"
+      ]
+    }
+  },
+  "performance_trends": {},
+  "collaborations": []
+}

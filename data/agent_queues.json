@@ -1,0 +1,17 @@
+{
+  "queues": {
+    "tasks": {
+      "name": "tasks",
+      "priority": 0,
+      "items": [
+        {
+          "id": "item-1",
+          "item": "Build feature X",
+          "priority": 5,
+          "enqueued_at": "2026-03-30T08:52:14.232592"
+        }
+      ],
+      "created": "2026-03-30T08:52:14.199512"
+    }
+  }
+}

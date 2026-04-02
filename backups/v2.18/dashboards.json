@@ -1,0 +1,21 @@
+{
+  "dashboards": [
+    {
+      "id": "dash-1",
+      "name": "Agent Hub Overview",
+      "widgets": [
+        {
+          "type": "metric",
+          "title": "Active Agents",
+          "data": {
+            "value": 3,
+            "status": "normal"
+          }
+        }
+      ],
+      "created": "2026-03-30T07:45:13.800634",
+      "last_updated": "2026-03-30T07:45:13.800664"
+    }
+  ],
+  "current_dashboard": null
+}

@@ -1,0 +1,1 @@
+print("iot-platform-smart")

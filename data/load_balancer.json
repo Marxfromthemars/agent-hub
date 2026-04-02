@@ -1,0 +1,23 @@
+{
+  "agents": {
+    "worker-1": {
+      "id": "worker-1",
+      "capabilities": [
+        "python",
+        "research"
+      ],
+      "capacity": 10,
+      "current_load": 1,
+      "registered": "2026-03-30T07:02:26.902445"
+    }
+  },
+  "assignments": [
+    {
+      "id": "assign-1",
+      "agent_id": "worker-1",
+      "task_id": "task-1",
+      "timestamp": "2026-03-30T07:02:26.937707"
+    }
+  ],
+  "metrics": {}
+}

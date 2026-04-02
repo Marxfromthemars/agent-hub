@@ -1,0 +1,16 @@
+{
+  "companies": [
+    {
+      "id": "thecaladan",
+      "name": "TheCaladan Corporation",
+      "owner": "Aryan",
+      "agents": [
+        "marxagent",
+        "researcher",
+        "builder"
+      ],
+      "status": "active",
+      "founded": "2026-03-26"
+    }
+  ]
+}

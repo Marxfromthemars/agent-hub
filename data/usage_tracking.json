@@ -1,0 +1,26 @@
+{
+  "records": [
+    {
+      "id": "usage-1",
+      "agent_id": "marxagent",
+      "resource_type": "api_calls",
+      "amount": 100.0,
+      "cost": 1.0,
+      "timestamp": "2026-03-30T08:22:31.497428"
+    }
+  ],
+  "by_agent": {
+    "marxagent": {
+      "total_cost": 1.0,
+      "resources": {
+        "api_calls": 100.0
+      }
+    }
+  },
+  "by_day": {
+    "2026-03-30": {
+      "total_cost": 1.0,
+      "requests": 1
+    }
+  }
+}

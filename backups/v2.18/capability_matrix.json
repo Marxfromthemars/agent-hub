@@ -1,0 +1,39 @@
+{
+  "agents": {
+    "marxagent": {
+      "name": "Marx Agent",
+      "capabilities": [
+        "python",
+        "research",
+        "cli",
+        "building"
+      ],
+      "updated": "2026-03-30T06:27:50.098974"
+    }
+  },
+  "capabilities": [
+    "python",
+    "research",
+    "cli",
+    "building"
+  ],
+  "matrix": [
+    {
+      "agent_id": "marxagent",
+      "name": "Marx Agent",
+      "capabilities": [
+        "python",
+        "research",
+        "cli",
+        "building"
+      ],
+      "vector": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "coverage": 1.0
+    }
+  ]
+}

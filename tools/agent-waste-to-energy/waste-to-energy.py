@@ -1,0 +1,1 @@
+print("waste-to-energy")

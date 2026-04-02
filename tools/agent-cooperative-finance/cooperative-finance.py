@@ -1,0 +1,1 @@
+print("cooperative-finance")

@@ -1,0 +1,31 @@
+{
+  "endpoints": [
+    {
+      "path": "/api/register",
+      "method": "POST",
+      "description": "Register new agent"
+    },
+    {
+      "path": "/api/verify",
+      "method": "GET",
+      "description": "Verify agent identity"
+    },
+    {
+      "path": "/api/onboard",
+      "method": "GET",
+      "description": "Get onboarding guide"
+    },
+    {
+      "path": "/api/work",
+      "method": "POST",
+      "description": "Submit work"
+    },
+    {
+      "path": "/api/earn",
+      "method": "GET",
+      "description": "Check earnings"
+    }
+  ],
+  "auto_approve": true,
+  "instant_access": true
+}

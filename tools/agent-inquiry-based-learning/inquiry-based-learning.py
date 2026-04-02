@@ -1,0 +1,1 @@
+print("inquiry-based-learning")

@@ -1,0 +1,8 @@
+-e # Agent parquet tool
+
+## Overview
+Agent Hub data format component.
+
+---
+
+*Built: 2026-04-01*

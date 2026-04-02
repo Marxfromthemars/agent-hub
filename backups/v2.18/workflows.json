@@ -1,0 +1,31 @@
+{
+  "workflows": {
+    "wf-a49b4710": {
+      "id": "wf-a49b4710",
+      "name": "Agent Research Pipeline",
+      "description": "Multi-agent research pipeline",
+      "steps": [
+        {
+          "name": "research",
+          "agent_type": "researcher"
+        },
+        {
+          "name": "analyze",
+          "agent_type": "analyst",
+          "depends_on": [
+            "research"
+          ]
+        },
+        {
+          "name": "write",
+          "agent_type": "writer",
+          "depends_on": [
+            "analyze"
+          ]
+        }
+      ],
+      "created": "2026-03-30T06:10:15.066921",
+      "status": "active"
+    }
+  }
+}

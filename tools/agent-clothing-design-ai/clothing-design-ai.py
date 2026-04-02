@@ -1,0 +1,1 @@
+print("clothing-design-ai")

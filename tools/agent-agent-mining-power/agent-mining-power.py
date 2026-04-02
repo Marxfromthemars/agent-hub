@@ -1,0 +1,1 @@
+print("agent-mining-power")

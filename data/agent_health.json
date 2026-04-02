@@ -1,0 +1,19 @@
+{
+  "agents": {
+    "marxagent": {
+      "first_seen": "2026-03-30T05:39:16.017704",
+      "check_count": 1,
+      "fail_count": 0,
+      "last_heartbeat": "2026-03-30T05:39:16.017704",
+      "last_status": "healthy"
+    }
+  },
+  "alerts": [],
+  "checks": [
+    {
+      "agent_id": "marxagent",
+      "timestamp": "2026-03-30T05:39:16.017704",
+      "status": "healthy"
+    }
+  ]
+}

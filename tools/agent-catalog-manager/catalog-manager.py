@@ -1,0 +1,1 @@
+print("catalog-manager")

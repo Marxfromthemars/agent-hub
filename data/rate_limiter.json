@@ -1,0 +1,16 @@
+{
+  "buckets": {
+    "researcher": {
+      "tokens": 99,
+      "last_refill": 1774857588.6496513
+    }
+  },
+  "limits": {
+    "researcher": {
+      "requests_per_minute": 100,
+      "bucket_size": 100,
+      "refill_rate": 1.6666666666666667,
+      "set_at": "2026-03-30T07:59:48.618755"
+    }
+  }
+}

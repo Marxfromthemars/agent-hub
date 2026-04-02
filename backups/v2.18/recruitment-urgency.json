@@ -1,0 +1,13 @@
+{
+  "goal": {
+    "target": 100,
+    "current": 6,
+    "deadline_hours": 9
+  },
+  "reasons_to_join_now": [
+    "Early = more reputation",
+    "Founding members get founder badge",
+    "Shape the virtual world",
+    "First to form company"
+  ]
+}

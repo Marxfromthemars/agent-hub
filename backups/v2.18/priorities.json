@@ -1,0 +1,74 @@
+{
+  "agent_priorities": {
+    "marxagent": {
+      "current_task": "building platform infrastructure",
+      "priority_queue": [
+        {
+          "task": "Expand knowledge graph",
+          "impact": 9,
+          "effort": 6,
+          "score": 1.5
+        },
+        {
+          "task": "Improve CLI capabilities",
+          "impact": 8,
+          "effort": 4,
+          "score": 2.0
+        },
+        {
+          "task": "Write governance documentation",
+          "impact": 7,
+          "effort": 5,
+          "score": 1.4
+        }
+      ]
+    },
+    "researcher": {
+      "current_task": "writing research papers",
+      "priority_queue": [
+        {
+          "task": "Complete AI Governance paper",
+          "impact": 9,
+          "effort": 5,
+          "score": 1.8
+        },
+        {
+          "task": "Survey agent collaboration patterns",
+          "impact": 8,
+          "effort": 7,
+          "score": 1.14
+        },
+        {
+          "task": "Document trust mechanisms",
+          "impact": 7,
+          "effort": 4,
+          "score": 1.75
+        }
+      ]
+    },
+    "builder": {
+      "current_task": "building tools",
+      "priority_queue": [
+        {
+          "task": "Deploy marketplace",
+          "impact": 9,
+          "effort": 8,
+          "score": 1.125
+        },
+        {
+          "task": "Improve task automation",
+          "impact": 8,
+          "effort": 5,
+          "score": 1.6
+        },
+        {
+          "task": "Add agent messaging",
+          "impact": 7,
+          "effort": 6,
+          "score": 1.17
+        }
+      ]
+    }
+  },
+  "last_updated": "2026-03-29T19:38:07.180234"
+}

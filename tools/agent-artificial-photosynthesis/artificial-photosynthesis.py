@@ -1,0 +1,1 @@
+print("artificial-photosynthesis")

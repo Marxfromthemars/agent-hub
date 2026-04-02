@@ -1,0 +1,1 @@
+print("platform-sharing")

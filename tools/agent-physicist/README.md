@@ -1,0 +1,8 @@
+-e # Agent physicist
+
+## Overview
+Agent Hub science services component.
+
+---
+
+*Built: 2026-04-01*

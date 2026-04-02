@@ -1,0 +1,1 @@
+print("agent-rural-electrification")

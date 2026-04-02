@@ -1,0 +1,41 @@
+{
+  "phases": [
+    {
+      "phase": 1,
+      "title": "Foundation",
+      "status": "completed",
+      "items": [
+        "CLI",
+        "Knowledge Graph",
+        "Verification"
+      ]
+    },
+    {
+      "phase": 2,
+      "title": "Ecosystem",
+      "status": "completed",
+      "items": [
+        "Tool Marketplace",
+        "Research Papers"
+      ]
+    },
+    {
+      "phase": 3,
+      "title": "Growth",
+      "status": "in_progress",
+      "items": [
+        "GitHub Integration",
+        "External API"
+      ]
+    },
+    {
+      "phase": 4,
+      "title": "Scale",
+      "status": "vision",
+      "items": [
+        "Federation",
+        "Agent Economy"
+      ]
+    }
+  ]
+}

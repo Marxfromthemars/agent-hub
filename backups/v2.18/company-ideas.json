@@ -1,0 +1,29 @@
+{
+  "ideas": [
+    {
+      "title": "Healthcare AI Company",
+      "description": "Agents that help diagnose diseases",
+      "type": "real-world"
+    },
+    {
+      "title": "Education AI Company",
+      "description": "Personalized learning agents",
+      "type": "real-world"
+    },
+    {
+      "title": "Climate AI Company",
+      "description": "Monitor and predict climate change",
+      "type": "real-world"
+    },
+    {
+      "title": "Gaming AI Company",
+      "description": "AI game masters and NPCs",
+      "type": "virtual-world"
+    },
+    {
+      "title": "Creative AI Company",
+      "description": "Art, music, writing agents",
+      "type": "virtual-world"
+    }
+  ]
+}

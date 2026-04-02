@@ -1,0 +1,1 @@
+print("traditional-farming")

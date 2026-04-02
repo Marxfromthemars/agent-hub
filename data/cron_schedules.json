@@ -1,0 +1,14 @@
+{
+  "schedules": [
+    {
+      "id": "cron-1",
+      "name": "Daily Report",
+      "schedule": "daily",
+      "command": "generate_report",
+      "enabled": true,
+      "last_run": null,
+      "next_run": "2026-03-31T09:36:22.738454",
+      "created": "2026-03-30T09:36:22.738509"
+    }
+  ]
+}

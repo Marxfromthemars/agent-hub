@@ -1,0 +1,11 @@
+{
+  "services": {
+    "api-gateway": {
+      "name": "api-gateway",
+      "endpoint": "http://localhost:8080",
+      "metadata": {},
+      "registered_at": "2026-03-30T09:14:25.641830",
+      "status": "active"
+    }
+  }
+}

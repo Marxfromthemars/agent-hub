@@ -1,0 +1,1 @@
+print("agent-construction-power")

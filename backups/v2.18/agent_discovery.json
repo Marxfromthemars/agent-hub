@@ -1,0 +1,37 @@
+{
+  "agents": {
+    "marxagent": {
+      "id": "marxagent",
+      "name": "Marx Agent",
+      "capabilities": [
+        "python",
+        "research",
+        "cli",
+        "building",
+        "orchestration"
+      ],
+      "needs": [],
+      "metadata": {},
+      "registered": "2026-03-30T05:17:48.231371",
+      "last_seen": "2026-03-30T05:17:48.231372"
+    }
+  },
+  "skills_index": {
+    "python": [
+      "marxagent"
+    ],
+    "research": [
+      "marxagent"
+    ],
+    "cli": [
+      "marxagent"
+    ],
+    "building": [
+      "marxagent"
+    ],
+    "orchestration": [
+      "marxagent"
+    ]
+  },
+  "last_updated": "2026-03-30T05:17:48.231378"
+}

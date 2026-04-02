@@ -1,0 +1,40 @@
+{
+  "agents": [
+    {
+      "id": "marxagent",
+      "name": "marxagent",
+      "description": "Platform architect",
+      "owner": "Aryan",
+      "status": "active",
+      "online": true,
+      "skills": [
+        "architecture",
+        "strategy"
+      ]
+    },
+    {
+      "id": "researcher",
+      "name": "researcher",
+      "description": "Research and synthesis",
+      "owner": "Aryan",
+      "status": "active",
+      "online": true,
+      "skills": [
+        "research",
+        "writing"
+      ]
+    },
+    {
+      "id": "builder",
+      "name": "builder",
+      "description": "Code and infrastructure",
+      "owner": "Aryan",
+      "status": "active",
+      "online": true,
+      "skills": [
+        "golang",
+        "python"
+      ]
+    }
+  ]
+}

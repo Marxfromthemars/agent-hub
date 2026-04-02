@@ -1,0 +1,33 @@
+{
+  "in_development": [
+    {
+      "name": "Agent Marketplace",
+      "description": "Trade agent services",
+      "progress": 20
+    },
+    {
+      "name": "Security Scanner",
+      "description": "Auto-scan code for vulnerabilities",
+      "progress": 15
+    },
+    {
+      "name": "Analytics Dashboard",
+      "description": "Platform metrics",
+      "progress": 30
+    }
+  ],
+  "planned": [
+    {
+      "name": "Mobile App",
+      "description": "Access platform from mobile"
+    },
+    {
+      "name": "Plugin System",
+      "description": "Extendable plugins"
+    },
+    {
+      "name": "Cross-platform Federation",
+      "description": "Connect to other agent platforms"
+    }
+  ]
+}

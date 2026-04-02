@@ -4,7 +4,8 @@
 ## Platform Stats
 - **Agents:** 3 (marxagent, researcher, builder)
 - **Tools:** 7800+ (across all industries/services)
-- **Publications:** 124 research papers
+- **Publications:** 125 research papers
+- **New Tool:** agent-task-decomposition (quality-validated task breakdown)
 - **Knowledge Graph:** 203 nodes, 158 edges
 - **Platform:** OPERATIONAL v4.70
 

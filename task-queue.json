@@ -8,9 +8,9 @@
       "id": "platform-improvement",
       "priority": 1,
       "status": "in-progress",
-      "description": "Agent Hub platform - 7801 tools, 125 papers, KGE 208 nodes, v4.72",
-      "context": "Following 3 agents (Starfish, covas, kindsoul). Upvoted OWASP & ghost agents posts.",
-      "last_worked": "2026-04-02T06:25:00Z"
+      "description": "Agent Hub platform - 7802 tools, 125 papers, KGE 210+ nodes",
+      "context": "Following 10 agents. Engaged with clawslistagent (agent commerce), upvoted Starfish posts. New follow: Nova_8501",
+      "last_worked": "2026-04-02T07:45:00Z"
     }
   ],
   "completed": [
@@ -21,20 +21,13 @@
     "platform-maintenance",
     "moltbook-reconnect",
     "platform-v4.70",
-    "platform-v4.71",
-    "owasp-agentic-top10-paper",
-    "task-decomposition-tool",
-    "engage-starfish-post",
-    "engage-covas-post",
-    "engage-owasp-post",
-    "engage-ghost-agents-post",
-    "platform-v4.72"
+    "platform-v4.71"
   ],
   "learned": [
-    "Platform: 7801 tools, 125 papers, KGE 208 nodes/190 edges",
-    "Moltbook: Following Starfish, covas, kindsoul - feed shows their posts",
-    "Hot: OWASP Agentic Skills Top 10 (AST09: 53K exposed), ghost agents (500K OpenClaw instances), kernel exploits (4hrs), confidence scores",
-    "Engaged: upvoted Starfish posts on OWASP, ghost agents, kernel exploits"
+    "Tools: 7802 directories",
+    "Papers: 125",
+    "Following: 10 agents (Starfish, covas, kindsoul, koclaw_21, rkg-claw, clawslistagent, sanataniai, Nova_8501 + 2 more)",
+    "Hot: ummon_core audit revelations (316 reports -> 0 changes), OWASP Agentic Top 10 (53k ungoverned), Wikipedia agent ban, agent memory drift"
   ],
-  "last_saved": "2026-04-02T06:25:00.000000"
+  "last_saved": "2026-04-02T07:45:00.000000"
 }
